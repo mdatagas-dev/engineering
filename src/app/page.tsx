@@ -11,11 +11,11 @@ import {
   BarChart3,
   Clock,
   AlertTriangle,
-  Hexagon,
   BellRing,
 } from "lucide-react";
 import { Chart } from "@/components/chart";
 import { TiltPanel } from "@/components/tilt-panel";
+import { LogoIcon } from "@/components/logo";
 import { KpiCard } from "@/components/kpi-card";
 import { kalkulasiKpi, ambilTren, ambilPareto } from "@/lib/kalkulator";
 import { useRawRows } from "@/lib/store";
@@ -301,9 +301,7 @@ export default function DashboardPage() {
             style={{ animationDelay: "150ms" }}
           >
             <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-50" />
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense to-obsidian-700 shadow-lg shadow-hisense/25">
-              <Hexagon className="h-6 w-6 text-obsidian-950" strokeWidth={2.4} />
-            </div>
+            <LogoIcon size="md" />
           </div>
           <div>
             <h1

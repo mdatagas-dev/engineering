@@ -8,7 +8,6 @@ import {
   Gauge,
   ShieldCheck,
   Wrench,
-  Hexagon,
   Activity,
   ChevronRight,
   PenLine,
@@ -23,6 +22,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UserSession } from "@/components/user-session";
+import { LogoIcon } from "@/components/logo";
 import { useI18n } from "@/lib/i18n/provider";
 import { useTheme } from "@/lib/theme";
 import { Sun, Moon } from "lucide-react";
@@ -156,20 +156,7 @@ export function Sidebar({
                     collapsed ? "opacity-0" : "opacity-60"
                   )}
                 />
-                <div
-                  className={cn(
-                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-hisense via-hisense-bold to-obsidian-700 shadow-hisense-glow transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                    collapsed ? "h-9 w-9" : "h-11 w-11"
-                  )}
-                >
-                  <Hexagon
-                    className={cn(
-                      "text-obsidian-950 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                      collapsed ? "h-5 w-5" : "h-6 w-6"
-                    )}
-                    strokeWidth={2.4}
-                  />
-                </div>
+                <LogoIcon size={collapsed ? "sm" : "md"} />
               </div>
               <div
                 className={cn(

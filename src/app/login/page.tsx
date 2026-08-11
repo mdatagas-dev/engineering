@@ -2,10 +2,11 @@
 
 import { Suspense, useEffect, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Hexagon, KeyRound, User, Loader2, Lock } from "lucide-react";
+import { KeyRound, User, Loader2, Lock } from "lucide-react";
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
+import { LogoIcon } from "@/components/logo";
 
 const MANUFACTURE_QUOTES: { quote: string; author: string }[] = [
   { quote: "Kualitas bukanlah suatu tindakan, melainkan sebuah kebiasaan.", author: "Aristoteles" },
@@ -103,25 +104,7 @@ function LoginForm() {
         {/* ===== KIRI: kata mutiara ===== */}
         <div className="flex flex-1 flex-col justify-center px-8 py-12 lg:px-16">
           <div className="mb-10 flex items-center gap-3">
-            <div
-              className="flex h-12 w-12 items-center justify-center"
-              style={{
-                background: "conic-gradient(from 210deg, #f25022, #7fba00, #00a4ef, #ffb900, #f25022)",
-                clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-              }}
-            >
-              <div
-                className="flex h-9 w-9 items-center justify-center"
-                style={{
-                  background: "conic-gradient(from 210deg, #f25022, #7fba00, #00a4ef, #ffb900, #f25022)",
-                  clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
-                }}
-              >
-                <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white shadow">
-                  <Hexagon className="h-4 w-4 text-neutral-700" strokeWidth={2.4} />
-                </div>
-              </div>
-            </div>
+            <LogoIcon size="md" />
             <div className="text-left leading-tight">
               <p className="text-2xl font-semibold tracking-tight text-white">EPD</p>
               <p className="text-xs text-white/70">Engineering Performance Dashboard</p>
