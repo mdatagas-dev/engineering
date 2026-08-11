@@ -18,7 +18,7 @@ export function PanelHeader({
           <span className="icon-breathe">{icon}</span>
         </div>
         <div>
-          <h3 className="font-display text-2xl font-semibold tracking-wide text-hisense-soft text-shadow-luxe">
+          <h3 className="font-display text-3xl font-semibold tracking-wide text-hisense-soft text-shadow-luxe">
             {title}
           </h3>
           <p className="mt-1 text-base text-hisense-soft/70">{subtitle}</p>
