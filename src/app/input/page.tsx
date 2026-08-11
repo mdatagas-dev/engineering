@@ -109,16 +109,16 @@ export default function InputPage() {
 
   const numField = (label: string, key: keyof RawDataRow, hint?: string) => (
     <div>
-      <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
+      <label className="mb-1.5 block text-base font-semibold uppercase tracking-wider text-hisense-soft/80">
         {label}
       </label>
       <input
         type="number"
         value={form[key] as number}
         onChange={(e) => set(key, e.target.value)}
-        className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
+        className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-4 py-3 text-lg text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
       />
-      {hint && <p className="mt-1 text-[10px] text-hisense-soft/35">{hint}</p>}
+      {hint && <p className="mt-1 text-sm text-hisense-soft/55">{hint}</p>}
     </div>
   );
 
@@ -128,15 +128,15 @@ export default function InputPage() {
         <div>
           <p className="lux-eyebrow">{t("menu.input")}</p>
           <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("input.title")}</h1>
-          <p className="mt-1.5 text-sm text-hisense-soft/50">
+          <p className="mt-1.5 text-base text-hisense-soft/75">
             {t("input.subtitle")}
           </p>
         </div>
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl border border-hisense/20 bg-obsidian-850/60 px-4 py-2.5 text-xs text-hisense-soft/70 transition-all hover:border-hisense/40 hover:text-hisense-soft"
+          className="flex items-center gap-2 rounded-xl border border-hisense/20 bg-obsidian-850/60 px-5 py-3 text-base text-hisense-soft/85 transition-all hover:border-hisense/40 hover:text-hisense-soft"
         >
-          <RotateCcw className="h-3.5 w-3.5" /> {t("input.resetSeed")}
+          <RotateCcw className="h-4 w-4" /> {t("input.resetSeed")}
         </button>
       </header>
 
@@ -150,7 +150,7 @@ export default function InputPage() {
           <div className="space-y-5 p-5">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
+                <label className="mb-1.5 block text-base font-semibold uppercase tracking-wider text-hisense-soft/80">
                   {t("input.field.model")}
                 </label>
                 <input
@@ -158,24 +158,24 @@ export default function InputPage() {
                   value={form.model}
                   onChange={(e) => set("model", e.target.value)}
                   placeholder={t("input.field.modelPlaceholder")}
-                  className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
+                  className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-4 py-3 text-lg text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/35 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
+                <label className="mb-1.5 block text-base font-semibold uppercase tracking-wider text-hisense-soft/80">
                   {t("input.field.date")}
                 </label>
                 <input
                   type="date"
                   value={form.date}
                   onChange={(e) => set("date", e.target.value)}
-                  className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
+                  className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-4 py-3 text-lg text-hisense-soft outline-none transition-all focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
+              <label className="mb-1.5 block text-base font-semibold uppercase tracking-wider text-hisense-soft/80">
                 {t("input.field.line")}
               </label>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -185,10 +185,10 @@ export default function InputPage() {
                     type="button"
                     onClick={() => set("line", o)}
                     className={cn(
-                      "rounded-xl border px-3 py-2.5 text-xs font-semibold uppercase tracking-wide transition-all",
+                      "rounded-xl border px-3 py-3 text-sm font-semibold uppercase tracking-wide transition-all",
                       form.line === o
                         ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
-                        : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/50 hover:border-hisense/30"
+                        : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/60 hover:border-hisense/30"
                     )}
                   >
                     {o}
@@ -199,7 +199,7 @@ export default function InputPage() {
 
             <div className="lux-divider" />
 
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-300/70">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold-300/85">
               {t("input.section.prodQuality")}
             </p>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -210,7 +210,7 @@ export default function InputPage() {
 
             <div className="lux-divider" />
 
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-300/70">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gold-300/85">
               {t("input.section.timeCycle")}
             </p>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -225,16 +225,16 @@ export default function InputPage() {
             {status && (
               <div
                 className={cn(
-                  "flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm",
+                  "flex items-start gap-2.5 rounded-xl border px-4 py-3 text-base",
                   status.type === "ok"
                     ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
                     : "border-gold-400/30 bg-gold-400/10 text-gold-300"
                 )}
               >
                 {status.type === "ok" ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-hisense" />
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-hisense" />
                 ) : (
-                  <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
+                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-gold-400" />
                 )}
                 {status.msg}
               </div>
@@ -243,9 +243,9 @@ export default function InputPage() {
             <button
               onClick={simpan}
               disabled={!valid || saving}
-              className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
+              className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-4 text-lg font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              <Save className="h-4 w-4 transition-transform group-hover:scale-110" />
+              <Save className="h-5 w-5 transition-transform group-hover:scale-110" />
               {saving ? t("input.button.saving") : t("input.button.save")}
             </button>
           </div>
@@ -253,7 +253,7 @@ export default function InputPage() {
 
         <div className="anim-fade-up space-y-6 xl:col-span-2">
           <TiltPanel className="gold-hairline p-5" intensity={5}>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-hisense-soft/50">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-hisense-soft/70">
               {t("input.kpi.latest")}
             </p>
             <div className="mt-4 space-y-3">
@@ -264,19 +264,19 @@ export default function InputPage() {
                 { label: t("input.kpi.cycleTimeAchievement"), value: `${kpi.cycleTimeAchievement.toFixed(1)}%`, gold: true },
                 { label: t("input.kpi.setupAchievement"), value: `${kpi.setupAchievement.toFixed(1)}%`, gold: true },
               ].map((item) => (
-                <div key={item.label} className="flex items-center justify-between gap-3 glass-premium rounded-xl px-4 py-3">
-                  <span className="text-xs text-hisense-soft/60">{item.label}</span>
-                  <span className={cn("font-display text-lg font-bold", item.gold ? "lux-gold-text" : "text-hisense-gradient")}>{item.value}</span>
+                <div key={item.label} className="flex items-center justify-between gap-3 glass-premium rounded-xl px-4 py-3.5">
+                  <span className="text-base text-hisense-soft/75">{item.label}</span>
+                  <span className={cn("font-display text-2xl font-bold", item.gold ? "lux-gold-text" : "text-hisense-gradient")}>{item.value}</span>
                 </div>
               ))}
             </div>
           </TiltPanel>
 
           <TiltPanel className="p-5" intensity={5}>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-hisense-soft/50">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-hisense-soft/70">
               {t("input.calcFlow.title")}
             </p>
-            <ol className="mt-4 space-y-2.5 text-xs text-hisense-soft/60">
+            <ol className="mt-4 space-y-3 text-base text-hisense-soft/75">
               {[
                 "input.calcFlow.step1",
                 "input.calcFlow.step2",
@@ -286,7 +286,7 @@ export default function InputPage() {
                 "input.calcFlow.step6",
               ].map((key, i) => (
                 <li key={key} className="flex items-center gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-hisense/25 bg-hisense/10 font-mono text-[10px] text-hisense-soft">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-hisense/25 bg-hisense/10 font-mono text-sm text-hisense-soft">
                     {i + 1}
                   </span>
                   {t(key)}
