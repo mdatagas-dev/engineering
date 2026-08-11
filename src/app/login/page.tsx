@@ -2,7 +2,7 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { KeyRound, User, Loader2, Lock } from "lucide-react";
+import { Hexagon, KeyRound, User, Loader2, Lock } from "lucide-react";
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
@@ -86,11 +86,24 @@ function LoginForm() {
         <div className="rounded-2xl bg-white p-8 shadow-2xl sm:p-10">
           <div className="mb-8 flex flex-col items-center text-center">
             <div className="mb-4 flex items-center gap-3">
-              <div className="grid grid-cols-2 gap-[3px]">
-                <span className="h-5 w-5 rounded-[3px] bg-[#f25022]" />
-                <span className="h-5 w-5 rounded-[3px] bg-[#7fba00]" />
-                <span className="h-5 w-5 rounded-[3px] bg-[#00a4ef]" />
-                <span className="h-5 w-5 rounded-[3px] bg-[#ffb900]" />
+              <div
+                className="flex h-12 w-12 items-center justify-center"
+                style={{
+                  background: "conic-gradient(from 210deg, #f25022, #7fba00, #00a4ef, #ffb900, #f25022)",
+                  clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+                }}
+              >
+                <div
+                  className="flex h-9 w-9 items-center justify-center"
+                  style={{
+                    background: "conic-gradient(from 210deg, #f25022, #7fba00, #00a4ef, #ffb900, #f25022)",
+                    clipPath: "polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%)",
+                  }}
+                >
+                  <div className="flex h-6 w-6 items-center justify-center rounded-md bg-white shadow">
+                    <Hexagon className="h-4 w-4 text-neutral-700" strokeWidth={2.4} />
+                  </div>
+                </div>
               </div>
               <div className="text-left leading-tight">
                 <p className="text-2xl font-semibold tracking-tight text-neutral-900">EPD</p>
