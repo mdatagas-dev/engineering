@@ -1,11 +1,20 @@
 "use client";
 
-import { Suspense, useState, type FormEvent } from "react";
+import { Suspense, useEffect, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Hexagon, KeyRound, User, Loader2, Lock } from "lucide-react";
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
+
+const MANUFACTURE_QUOTES: { quote: string; author: string }[] = [
+  { quote: "Kualitas bukanlah suatu tindakan, melainkan sebuah kebiasaan.", author: "Aristoteles" },
+  { quote: "Kesempurnaan tidak dapat dicapai, tetapi jika kita mengejarnya, kita dapat mencapai keunggulan.", author: "Vince Lombardi" },
+  { quote: "Kualitas yang sesungguhnya berarti melakukan yang benar, ketika tidak ada yang mengawasi.", author: "Henry Ford" },
+  { quote: "Perbaikan terus-menerus lebih baik daripada kesempurnaan yang tertunda.", author: "Mark Twain" },
+  { quote: "Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.", author: "Peter Drucker" },
+  { quote: "Kesederhanaan adalah kecanggihan tertinggi.", author: "Leonardo da Vinci" },
+];
 
 const DEMO_ACCOUNTS: { username: string; password: string; role: Role }[] = [
   { username: "admin", password: "admin123", role: "admin" },
@@ -30,6 +39,14 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [quoteIdx, setQuoteIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setQuoteIdx((i) => (i + 1) % MANUFACTURE_QUOTES.length);
+    }, 5 * 60 * 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -112,31 +129,33 @@ function LoginForm() {
           </div>
 
           <blockquote className="max-w-lg">
-            <p className="font-display text-3xl font-medium leading-snug text-white lg:text-4xl">
-              “Kualitas bukanlah suatu tindakan, melainkan sebuah kebiasaan.”
-            </p>
-            <footer className="mt-5 flex items-center gap-3">
-              <span className="h-px w-10 bg-white/40" />
-              <cite className="text-sm text-white/80 not-italic">Aristoteles</cite>
-            </footer>
-          </blockquote>
-
-          <div className="mt-10 space-y-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-white/50">Kata Mutiara Manufaktur</p>
-            <div className="max-w-lg space-y-4">
-              {[
-                ["“Kesempurnaan tidak dapat dicapai, tetapi jika kita mengejarnya, kita dapat mencapai keunggulan.”", "Vince Lombardi"],
-                ["“Kualitas yang sesungguhnya berarti melakukan yang benar, ketika tidak ada yang mengawasi.”", "Henry Ford"],
-                ["“Perbaikan terus-menerus lebih baik daripada kesempurnaan yang tertunda.”", "Mark Twain"],
-                ["“Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.”", "Peter Drucker"],
-              ].map(([quote, name]) => (
-                <div key={name} className="border-l-2 border-white/25 pl-4">
-                  <p className="text-sm leading-relaxed text-white/80">{quote}</p>
-                  <p className="mt-1 text-xs text-white/50">— {name}</p>
-                </div>
-              ))}
+            <div key={quoteIdx} className="anim-fade-in">
+              <p className="font-display text-3xl font-medium leading-snug text-white lg:text-4xl">
+                “{MANUFACTURE_QUOTES[quoteIdx].quote}”
+              </p>
+              <footer className="mt-5 flex items-center gap-3">
+                <span className="h-px w-10 bg-white/40" />
+                <cite className="text-sm text-white/80 not-italic">{MANUFACTURE_QUOTES[quoteIdx].author}</cite>
+              </footer>
             </div>
-          </div>
+            <div className="mt-6 flex items-center gap-2">
+              {MANUFACTURE_QUOTES.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setQuoteIdx(i)}
+                  aria-label={`Kutipan ${i + 1}`}
+                  className={cn(
+                    "h-1.5 rounded-full transition-all duration-300",
+                    i === quoteIdx ? "w-6 bg-white" : "w-1.5 bg-white/30 hover:bg-white/50"
+                  )}
+                />
+              ))}
+              <span className="ml-2 font-mono text-[10px] text-white/40">
+                {String(quoteIdx + 1).padStart(2, "0")}/{MANUFACTURE_QUOTES.length} · auto 5 mnt
+              </span>
+            </div>
+          </blockquote>
         </div>
 
         {/* ===== KANAN: form login ===== */}
