@@ -8,17 +8,24 @@ dihitung otomatis oleh **Calculation Engine**.
 
 - **Dashboard Utama** — 5 kartu KPI (FPY, OEE, Line Balance, Setup Time, Issue Closure)
   + Engineering Trend, Defect Pareto, Setup Time vs Standar, Cycle Time vs Target,
-  Issue Status, banner alert overdue.
+  Issue Status, banner alert overdue. **Auto-refresh 5 menit**.
+- **Display Mode** (`/display`) — tampilan kiosk fullscreen **hanya dashboard utama**
+  (tanpa sidebar/menu) untuk layar monitor terpisah; tombol "Tampilkan di Display"
+  di dashboard, fullscreen toggle, **auto-refresh 60 detik**.
 - **Process Performance** — Detail OEE (A×P×Q), Takt Time, Cycle Time Achievement,
   Line Balance per lini dengan penanda bottleneck, tren Setup Time.
 - **Quality** — FPY harian, Defect Rate, Analisis Pareto, cacat per lini,
   + **Input Defect Manual** (persisten): catat defect per tanggal/lini/model.
 - **Engineering Management** — daftar isu, issue closure rate, isu terlambat,
   tool availability, improvement effectiveness; **CRUD penuh** (tambah issue/tool/
-  improvement, ubah status issue, hapus) tersimpan persisten di SQLite.
+  improvement, ubah status issue, hapus) tersimpan persisten di PostgreSQL.
 - **Input Manual** (`/input`) — form raw data → tersimpan ke Calculation Engine,
-  seluruh KPI dihitung otomatis & dashboard langsung ter-update (real-time).
+  seluruh KPI dihitung otomatis & dashboard langsung ter-update.
+  **Edit/Backfill data lama**: pilih baris tanggal yang terlewat, isi ulang, simpan
+  (upsert berdasarkan `date + model + line`, bukan duplikat).
 - **Impor Excel** (`/impor`) — upload .xlsx → pratinjau + validasi per baris → simpan.
+  **File standar**: tombol "Unduh Template Standar" (12 kolom wajib + contoh baris)
+  dan "Export Data (Excel)" (unduh seluruh raw data).
 - **Detail Setup Time** (`/setup`) — setup aktual vs standar per model/lini,
   variance, achievement, tren harian.
 - **Pengaturan** (`/settings`) — ganti password, bahasa (5 bahasa), format tanggal,
@@ -30,11 +37,13 @@ dihitung otomatis oleh **Calculation Engine**.
   menuju dashboard.
 - **i18n** — Indonesia · English · 中文 · 日本語 · 한국어 (tanpa dependency).
 - **Filter Periode** — 30 / 14 / 7 hari / harian di dashboard utama.
-- **Auth JWT + RBAC** — login (admin / engineer / viewer), halaman input hanya
-  untuk admin & engineer, viewer read-only.
+- **Auth JWT + RBAC** — login (admin / engineer / viewer / qc), halaman input hanya
+  untuk admin & engineer, viewer read-only, qc khusus defect quality.
 - **Persistence PostgreSQL + Prisma** — raw data, issues/tools/improvements, dan
   defect quality tersimpan di PostgreSQL via **Prisma Client Python** (`prisma/`
   schema + generated client). Data tetap ada setelah restart server.
+- **Versi & Log Update** — `VERSION` + `CHANGELOG.md` + git tag `vX.Y.Z`
+  (lihat bagian "Versi & Rollback").
 
 ## Desain & Animasi (Smart Factory Theme)
 
@@ -42,8 +51,8 @@ dihitung otomatis oleh **Calculation Engine**.
   teks cool-gray, amber untuk peringatan, merah untuk kritis.
 - Glassmorphism card + border cyan tipis + soft glow; font Space Grotesk & Inter.
 - Animasi pembuka sinematik ±2.5s: ambient glow → logo scale-in → judul fade →
-  LIVE pulse → KPI fade+slide + **count-up** → chart digambar kiri-ke-kanan.
-- Animasi idle: LIVE pulse 2s, icon breathing, **data-flow dot** menyusuri garis chart,
+  KPI fade+slide + **count-up** → chart digambar kiri-ke-kanan.
+- Animasi idle: icon breathing, **data-flow dot** menyusuri garis chart,
   hover card terangkat + glow, background grid drift halus, alert glow (amber/merah).
 - Filter periode: `src/lib/kalkulator.ts` + halaman dashboard.
 
@@ -51,12 +60,16 @@ dihitung otomatis oleh **Calculation Engine**.
 
 | Username | Password | Role | Akses |
 |---|---|---|---|
-| `admin` | `admin123` | Administrator | Semua fitur |
+| `admin` | `admin123` | Administrator | Semua fitur + manajemen user |
 | `engineer` | `engineer123` | Engineer | Dashboard + input + impor |
 | `viewer` | `viewer123` | Viewer | Hanya melihat |
+| `qc` | `qc123` | Quality Control | Dashboard + input defect |
 
-Session JWT (HMAC-SHA256, httpOnly cookie). Password dapat diganti dari halaman
-Pengaturan (in-memory, reset saat server restart) atau di `src/lib/auth.ts`.
+> **Ganti password default sebelum produksi!** via Settings → User Management
+> (admin). Password & role tersimpan **persisten di PostgreSQL** (bukan in-memory),
+> bertahan setelah restart.
+
+Session JWT (HMAC-SHA256, httpOnly cookie, masa berlaku 8 jam).
 
 Konsep: **Input Manual → Raw Engineering Data → Calculation Engine → Visual Dashboard**.
 Pengguna cukup input data mentah; seluruh KPI dihitung otomatis.
@@ -250,17 +263,34 @@ Perintah lain: `npm run pm2:restart` · `npm run pm2:stop` · `pm2 save` (setela
 | `GET /api/kpi` | Ringkasan seluruh KPI dari Calculation Engine |
 | `GET /api/trend` · `GET /api/pareto` · `GET /api/defect-per-line` | Data grafik |
 | `GET /api/process` · `GET /api/quality` · `GET /api/engineering` | Detail per pilar |
-| `POST /api/raw-data` | Input manual 1 baris raw data → KPI terhitung ulang |
+| `POST /api/raw-data` | Input manual 1 baris → **upsert** (date+model+line sama = update/backfill) |
 | `GET /api/raw-data` · `POST /api/raw-data/reset` | Lihat / reset seed |
+| `GET /api/raw-data/export` | Unduh seluruh raw data sebagai `.xlsx` |
+| `GET /api/impor-excel/template` | Unduh template Excel standar (12 kolom + contoh) |
 | `POST /api/impor-excel` | Upload .xlsx → pratinjau + validasi per baris |
-| `POST /api/impor-excel/commit` | Simpan hasil impor → KPI terhitung ulang |
+| `POST /api/impor-excel/commit` | Simpan hasil impor (upsert) → KPI terhitung ulang |
+| `GET/POST/PUT/DELETE /api/engineering/...` | CRUD issues, tools, improvements |
+| `GET/POST/DELETE /api/quality/defects` | CRUD defect quality |
+| `POST /api/auth/login` · `change-password` | Autentikasi + ganti password |
+| `GET/POST/PUT/DELETE /api/users` | Manajemen user (admin only) |
+
+Semua endpoint kecuali login butuh `Authorization: Bearer <JWT>`; POST umum
+dibatasi rate limit 120 req/menit/IP, login 5 percobaan/menit dengan lockout
+15 menit.
+
+## Versi & Rollback
+
+- Versi saat ini ada di `VERSION`; riwayat lengkap di `CHANGELOG.md`
+  (fitur, perbaikan, **patch keamanan**, konvensi update).
+- Setiap rilis diberi tag git: `git tag vX.Y.Z`.
+- Rollback ke checkpoint terakhir: `git checkout vX.Y.Z` (contoh: `v1.0.0`).
 
 ## Struktur
 
 ```
 src/
-  app/            # Halaman: /, /process, /quality, /engineering, /setup, /input, /impor, /settings, /login
-  components/     # Chart (ECharts + flow dot), TiltPanel 3D, KpiCard (count-up), Sidebar, Shell, PanelHeader, UserSession
+  app/            # Halaman: /, /process, /quality, /engineering, /setup, /input, /impor, /display, /settings, /login
+  components/     # Chart (ECharts + flow dot), TiltPanel 3D, KpiCard (count-up), DashboardView, Sidebar, Shell, PanelHeader, UserSession
   lib/            # data.ts (seed), kalkulator.ts (engine TS), store.ts (reaktif), api.ts, auth.ts (JWT+RBAC)
   lib/i18n/       # i18n 5 bahasa: provider + dictionary per domain
   middleware.ts   # Proteksi rute + RBAC (admin/engineer untuk input & impor)
@@ -271,3 +301,5 @@ backend/
 prisma/
   schema.prisma   # Model: RawData, Issue, Tool, Improvement, Defect
 ```
+
+`CHANGELOG.md` · `VERSION` — log update & versi (lihat "Versi & Rollback").
