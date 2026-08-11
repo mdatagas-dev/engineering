@@ -6,24 +6,40 @@ import { cn } from "@/lib/utils";
 
 const ACCENT = {
   jade: {
-    chip: "from-hisense to-hisense-bold text-obsidian-950 shadow-hisense/40",
-    dot: "bg-hisense",
-    glow: "shadow-hisense/30",
+    chip: "from-cyan-400 to-cyan-600 text-obsidian-950 shadow-cyan-500/40",
+    dot: "bg-cyan-400",
+    glow: "shadow-cyan-500/30",
+    hex: "#22d3ee",
   },
   gold: {
-    chip: "from-gold-300 to-gold-500 text-obsidian-950 shadow-gold-500/40",
-    dot: "bg-gold-300",
-    glow: "shadow-gold-500/30",
+    chip: "from-amber-300 to-amber-500 text-obsidian-950 shadow-amber-500/40",
+    dot: "bg-amber-300",
+    glow: "shadow-amber-500/30",
+    hex: "#fbbf24",
   },
   teal: {
-    chip: "from-hisense-soft to-hisense-bold text-obsidian-950 shadow-hisense/40",
-    dot: "bg-hisense-soft",
-    glow: "shadow-hisense/30",
+    chip: "from-emerald-400 to-emerald-600 text-obsidian-950 shadow-emerald-500/40",
+    dot: "bg-emerald-400",
+    glow: "shadow-emerald-500/30",
+    hex: "#34d399",
   },
   emerald: {
-    chip: "from-hisense-soft to-hisense-bold text-obsidian-950 shadow-hisense-bold/40",
-    dot: "bg-hisense-soft",
-    glow: "shadow-hisense-bold/30",
+    chip: "from-violet-400 to-violet-600 text-obsidian-950 shadow-violet-500/40",
+    dot: "bg-violet-400",
+    glow: "shadow-violet-500/30",
+    hex: "#a78bfa",
+  },
+  rose: {
+    chip: "from-rose-400 to-rose-600 text-obsidian-950 shadow-rose-500/40",
+    dot: "bg-rose-400",
+    glow: "shadow-rose-500/30",
+    hex: "#fb7185",
+  },
+  blue: {
+    chip: "from-blue-400 to-blue-600 text-obsidian-950 shadow-blue-500/40",
+    dot: "bg-blue-400",
+    glow: "shadow-blue-500/30",
+    hex: "#60a5fa",
   },
 } as const;
 
@@ -129,8 +145,8 @@ export function KpiCard({
               <svg viewBox="0 0 120 28" preserveAspectRatio="none" className="h-full w-full">
                 <defs>
                   <linearGradient id={`spark-${label}`} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00b3ac" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#00b3ac" stopOpacity="0" />
+                    <stop offset="0%" stopColor={a.hex} stopOpacity="0.5" />
+                    <stop offset="100%" stopColor={a.hex} stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 {(() => {
@@ -148,7 +164,7 @@ export function KpiCard({
                       <polyline
                         points={line}
                         fill="none"
-                        stroke="#00b3ac"
+                        stroke={a.hex}
                         strokeWidth="1.5"
                         strokeLinecap="round"
                       />
@@ -156,7 +172,7 @@ export function KpiCard({
                         cx={pts[pts.length - 1][0]}
                         cy={pts[pts.length - 1][1]}
                         r="2.2"
-                        fill="#00b3ac"
+                        fill={a.hex}
                         stroke="#06151b"
                         strokeWidth="1"
                       />

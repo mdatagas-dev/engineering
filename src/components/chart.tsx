@@ -69,7 +69,7 @@ export function Chart({
 
     let alive = true;
     let raf = 0;
-    let start = performance.now();
+    const start = performance.now();
     const CYCLE = 60000;
 
     const toXY = (idx: number, point: unknown): [number, number] => {

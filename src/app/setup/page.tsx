@@ -140,8 +140,8 @@ export default function SetupPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#a78bfa" },
+              { offset: 1, color: "#5b21b6" },
             ],
           },
         },
@@ -173,8 +173,8 @@ export default function SetupPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#34d399" },
+              { offset: 1, color: "#065f46" },
             ],
           },
         },
@@ -203,8 +203,8 @@ export default function SetupPage() {
         symbol: "circle",
         symbolSize: 4,
         data: trenSetup.map((t) => +t.std.toFixed(1)),
-        lineStyle: { width: 2, color: "#00b3ac", type: "dashed" },
-        itemStyle: { color: "#00b3ac" },
+        lineStyle: { width: 2, color: "#22d3ee", type: "dashed" },
+        itemStyle: { color: "#22d3ee" },
       },
       {
         name: t("series.aktual"),

@@ -108,15 +108,15 @@ export default function DashboardPage() {
           symbol: "circle",
           symbolSize: 5,
           data: tren.map((t) => +t.oee.toFixed(1)),
-          lineStyle: { width: 3, color: "#00b3ac" },
-          itemStyle: { color: "#00b3ac", borderColor: "#03090d", borderWidth: 1 },
+          lineStyle: { width: 3, color: "#22d3ee" },
+          itemStyle: { color: "#22d3ee", borderColor: "#03090d", borderWidth: 1 },
           areaStyle: {
             color: {
               type: "linear",
               x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: "rgba(0,179,172,0.3)" },
-              { offset: 1, color: "rgba(0,179,172,0)" },
+                { offset: 0, color: "rgba(34,211,238,0.3)" },
+              { offset: 1, color: "rgba(34,211,238,0)" },
             ],
           },
         },
@@ -136,8 +136,8 @@ export default function DashboardPage() {
         smooth: true,
         symbol: "none",
         data: tren.map((t) => +t.lineBalance.toFixed(1)),
-        lineStyle: { width: 2, color: "#8ff0ea" },
-        itemStyle: { color: "#8ff0ea" },
+        lineStyle: { width: 2, color: "#a78bfa" },
+        itemStyle: { color: "#a78bfa" },
       },
     ],
     }),
@@ -171,8 +171,8 @@ export default function DashboardPage() {
             type: "linear",
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#a78bfa" },
+              { offset: 1, color: "#5b21b6" },
             ],
           },
         },
@@ -207,7 +207,7 @@ export default function DashboardPage() {
       {
         type: "bar",
         data: [
-          { value: 33, itemStyle: { color: "#0e7490" } },
+          { value: 33, itemStyle: { color: "#34d399" } },
           { value: 42, itemStyle: { color: "#f59e0b" } },
         ],
         barWidth: 48,
@@ -240,9 +240,9 @@ export default function DashboardPage() {
       {
         type: "bar",
         data: [
-          { value: 60, itemStyle: { color: "rgba(0,179,172,0.4)" } },
-          { value: 69, itemStyle: { color: "rgba(56,189,248,0.4)" } },
-          { value: 63, itemStyle: { color: "#00b3ac" } },
+          { value: 60, itemStyle: { color: "#fbbf24" } },
+          { value: 69, itemStyle: { color: "rgba(96,165,250,0.4)" } },
+          { value: 63, itemStyle: { color: "#4ade80" } },
         ],
         barWidth: 44,
         label: { show: true, position: "top", color: "#d3faf6", fontSize: 12, formatter: "{c} sec" },
@@ -266,7 +266,7 @@ export default function DashboardPage() {
         label: { show: false },
         emphasis: { label: { show: true, color: "#d3faf6", fontSize: 14 } },
         data: [
-          { name: "Closed", value: 5, itemStyle: { color: "#0e7490" } },
+          { name: "Closed", value: 5, itemStyle: { color: "#34d399" } },
           { name: "Progress", value: 4, itemStyle: { color: "#f59e0b" } },
           { name: "Overdue", value: 1, itemStyle: { color: "#ef4444" } },
         ],
@@ -363,7 +363,7 @@ export default function DashboardPage() {
         <KpiCard label={t("kpi.oee")} value={`${kpi.oee.toFixed(1)}%`} sub={t("kpi.oeeSub")} icon={<Gauge className="h-6 w-6" />} accent="teal" spark={[88, 90, 89.5, 92, 91, 91.2]} delay={640} />
         <KpiCard label={t("kpi.lineBalance")} value={`${kpi.lineBalance.toFixed(1)}%`} sub={t("kpi.lineBalanceSub")} icon={<Scale className="h-6 w-6" />} accent="emerald" spark={[90, 92, 93, 94, 93.5, 94.3]} delay={760} />
         <KpiCard label={t("kpi.setupTime")} value={`${kpi.avgActualSetupMin.toFixed(0)} min`} sub={t("kpi.setupTimeSub", { var: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })} icon={<Timer className="h-6 w-6" />} accent="gold" spark={[48, 45, 44, 46, 41, 42]} delay={880} alert={setupWarning ? "warning" : undefined} />
-        <KpiCard label={t("kpi.issueClosure")} value={`${kpi.issueClosure.toFixed(0)}%`} sub={t("kpi.issueClosureSub")} icon={<ShieldCheck className="h-6 w-6" />} accent="jade" spark={[30, 40, 40, 45, 50, 50]} delay={1000} alert={overdueCount > 0 ? "critical" : undefined} />
+        <KpiCard label={t("kpi.issueClosure")} value={`${kpi.issueClosure.toFixed(0)}%`} sub={t("kpi.issueClosureSub")} icon={<ShieldCheck className="h-6 w-6" />} accent="rose" spark={[30, 40, 40, 45, 50, 50]} delay={1000} alert={overdueCount > 0 ? "critical" : undefined} />
       </section>
 
       <div className="lux-divider" />

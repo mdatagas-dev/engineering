@@ -38,8 +38,8 @@ export default function ProcessPage() {
         itemStyle: { borderRadius: 10, borderColor: "#03090d", borderWidth: 4 },
         label: { color: "#d3faf6", fontSize: 11, formatter: "{b}\n{c}%" },
         data: [
-          { name: t("process.pie.availability"), value: +kpi.availability.toFixed(1), itemStyle: { color: "#00b3ac" } },
-          { name: t("process.pie.performance"), value: +kpi.performance.toFixed(1), itemStyle: { color: "#8ff0ea" } },
+          { name: t("process.pie.availability"), value: +kpi.availability.toFixed(1), itemStyle: { color: "#22d3ee" } },
+          { name: t("process.pie.performance"), value: +kpi.performance.toFixed(1), itemStyle: { color: "#a78bfa" } },
           { name: t("process.pie.quality"), value: +kpi.quality.toFixed(1), itemStyle: { color: "#f59e0b" } },
         ],
       },
@@ -64,11 +64,13 @@ export default function ProcessPage() {
       {
         name: t("process.series.workContent"),
         type: "bar",
-        data: line1.map((s) => s.workContentSec),
+        data: line1.map((s, i) => ({
+          value: s.workContentSec,
+          itemStyle: { color: ["rgba(34,211,238,0.55)", "rgba(167,139,250,0.55)", "rgba(251,191,36,0.55)", "rgba(251,113,133,0.55)", "rgba(96,165,250,0.55)"][i % 5] },
+        })),
         barWidth: 26,
         itemStyle: {
           borderRadius: [6, 6, 0, 0],
-          color: "rgba(0,179,172,0.55)",
         },
       },
       {
@@ -82,8 +84,8 @@ export default function ProcessPage() {
             type: "linear",
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#a78bfa" },
+              { offset: 1, color: "#5b21b6" },
             ],
           },
         },
@@ -121,13 +123,13 @@ export default function ProcessPage() {
         smooth: true,
         symbol: "none",
         data: cycleAchievementData,
-        lineStyle: { width: 3, color: "#8ff0ea" },
+        lineStyle: { width: 3, color: "#34d399" },
         areaStyle: {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "rgba(143,240,234,0.3)" },
-              { offset: 1, color: "rgba(143,240,234,0)" },
+              { offset: 0, color: "rgba(52,211,153,0.3)" },
+              { offset: 1, color: "rgba(52,211,153,0)" },
             ],
           },
         },
@@ -171,7 +173,7 @@ export default function ProcessPage() {
         smooth: true,
         symbol: "none",
         data: setupPerDay.std,
-        lineStyle: { width: 2, color: "#0e7490", type: "dashed" },
+        lineStyle: { width: 2, color: "#22d3ee", type: "dashed" },
       },
       {
         name: t("process.series.setupAktual"),

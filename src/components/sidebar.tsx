@@ -63,8 +63,8 @@ function NavLink({
     <Link
       href={href}
       className={cn(
-        "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors duration-300",
-        collapsed && "justify-center px-0",
+        "group relative flex items-center rounded-xl px-3 py-2.5 text-sm transition-colors duration-300",
+        collapsed ? "justify-center gap-0 px-0" : "gap-3",
         active
           ? "bg-gradient-to-r from-hisense/20 to-transparent text-hisense-soft"
           : "text-hisense-soft/60 hover:bg-hisense/8 hover:text-hisense-bold"
@@ -150,7 +150,7 @@ export function Sidebar({
               <div
                 className={cn(
                   "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                  collapsed ? "max-w-0 -translate-x-3 opacity-0" : "max-w-[220px] translate-x-0 opacity-100"
+                  collapsed ? "max-w-0 -translate-x-3 opacity-0" : "max-w-[128px] translate-x-0 opacity-100"
                 )}
               >
                 <p className="font-cinzel text-sm font-bold tracking-[0.18em] text-hisense-gradient uppercase">
@@ -186,7 +186,7 @@ export function Sidebar({
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 opacity-70">{t("menu.main")}</p>
@@ -198,7 +198,7 @@ export function Sidebar({
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
@@ -210,7 +210,7 @@ export function Sidebar({
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
@@ -222,7 +222,7 @@ export function Sidebar({
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.help")}</p>

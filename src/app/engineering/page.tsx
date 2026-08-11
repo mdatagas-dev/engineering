@@ -255,7 +255,7 @@ export default function EngineeringPage() {
         itemStyle: { borderRadius: 8, borderColor: "#03090d", borderWidth: 3 },
         label: { color: "#d3faf6", fontSize: 11, formatter: "{b}\n{c}" },
         data: [
-          { name: t("engineering.status.closed"), value: counts.closed, itemStyle: { color: "#0e7490" } },
+          { name: t("engineering.status.closed"), value: counts.closed, itemStyle: { color: "#34d399" } },
           { name: t("engineering.status.progress"), value: counts.progress, itemStyle: { color: "#f59e0b" } },
           { name: t("engineering.status.open"), value: counts.open, itemStyle: { color: "#ef4444" } },
         ],
@@ -287,7 +287,7 @@ export default function EngineeringPage() {
           value: tt.actualAvailableHours,
           itemStyle: {
             borderRadius: [6, 6, 0, 0],
-            color: "#00b3ac",
+            color: "#34d399",
           },
         })),
         label: {
@@ -339,7 +339,7 @@ export default function EngineeringPage() {
         type: "bar",
         data: data.improvements.map((i) => i.baseline),
         barWidth: 14,
-        itemStyle: { borderRadius: [4, 4, 0, 0], color: "rgba(239,68,68,0.6)" },
+        itemStyle: { borderRadius: [4, 4, 0, 0], color: "#22d3ee" },
       },
       {
         name: t("engineering.chart.seriesAfter"),
@@ -351,8 +351,8 @@ export default function EngineeringPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#fbbf24" },
+              { offset: 1, color: "#b45309" },
             ],
           },
         },

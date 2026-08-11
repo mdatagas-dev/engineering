@@ -130,13 +130,13 @@ export default function QualityPage() {
         smooth: true,
         symbol: "none",
         data: fpyDaily,
-        lineStyle: { width: 3, color: "#00b3ac" },
+        lineStyle: { width: 3, color: "#22d3ee" },
         areaStyle: {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "rgba(0,179,172,0.35)" },
-              { offset: 1, color: "rgba(0,179,172,0)" },
+              { offset: 0, color: "rgba(34,211,238,0.35)" },
+              { offset: 1, color: "rgba(34,211,238,0)" },
             ],
           },
         },
@@ -192,8 +192,8 @@ export default function QualityPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00b3ac" },
-              { offset: 1, color: "#0a5b63" },
+              { offset: 0, color: "#a78bfa" },
+              { offset: 1, color: "#5b21b6" },
             ],
           },
         },
@@ -221,7 +221,7 @@ export default function QualityPage() {
         type: "bar",
         data: defectPerLine.map((d, i) => ({
           value: d.defects,
-          itemStyle: { color: ["#00b3ac", "#8ff0ea", "#f59e0b"][i] },
+          itemStyle: { color: ["#22d3ee", "#a78bfa", "#fbbf24", "#fb7185"][i] },
         })),
         barWidth: 44,
         label: { show: true, position: "top", color: "#d3faf6", fontSize: 12 },
