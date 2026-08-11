@@ -2,7 +2,7 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Hexagon, KeyRound, User, Loader2, Lock } from "lucide-react";
+import { KeyRound, User, Loader2, Lock } from "lucide-react";
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
@@ -85,8 +85,17 @@ function LoginForm() {
       <div className="anim-fade-up relative z-10 w-full max-w-md px-4">
         <div className="rounded-2xl bg-white p-8 shadow-2xl sm:p-10">
           <div className="mb-8 flex flex-col items-center text-center">
-            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-[#00b3ac] to-[#3b82f6] shadow-lg">
-              <Hexagon className="h-7 w-7 text-white" strokeWidth={2.2} />
+            <div className="mb-4 flex items-center gap-3">
+              <div className="grid grid-cols-2 gap-[3px]">
+                <span className="h-5 w-5 rounded-[3px] bg-[#f25022]" />
+                <span className="h-5 w-5 rounded-[3px] bg-[#7fba00]" />
+                <span className="h-5 w-5 rounded-[3px] bg-[#00a4ef]" />
+                <span className="h-5 w-5 rounded-[3px] bg-[#ffb900]" />
+              </div>
+              <div className="text-left leading-tight">
+                <p className="text-2xl font-semibold tracking-tight text-neutral-900">EPD</p>
+                <p className="text-xs text-neutral-500">Engineering Performance Dashboard</p>
+              </div>
             </div>
             <h1 className="text-2xl font-semibold text-neutral-900">{t("login.welcome")}</h1>
             <p className="mt-1 text-sm text-neutral-500">{t("login.subtitle")}</p>
