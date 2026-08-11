@@ -1,6 +1,21 @@
 const PG_BIN = "/usr/lib/postgresql/18/bin";
 const PG_DATA = "/home/lutvi/eng-pgdata";
 const PG_LOG = `${PG_DATA}/server.log`;
+const fs = require("fs");
+const path = require("path");
+
+// Muat .env dari root repo (PM2 daemon tidak punya env shell saat start).
+function loadDotEnv() {
+  const file = path.join(__dirname, ".env");
+  if (!fs.existsSync(file)) return {};
+  const out = {};
+  for (const line of fs.readFileSync(file, "utf8").split("\n")) {
+    const m = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
+    if (m) out[m[1]] = m[2].replace(/^["']|["']$/g, "");
+  }
+  return out;
+}
+const DOT_ENV = loadDotEnv();
 
 module.exports = {
   apps: [
@@ -24,6 +39,8 @@ module.exports = {
       args: "start -p 3011",
       env: {
         NODE_ENV: "production",
+        JWT_SECRET: DOT_ENV.JWT_SECRET ?? process.env.JWT_SECRET,
+        NEXT_PUBLIC_API_URL: DOT_ENV.NEXT_PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL,
       },
       max_memory_restart: "512M",
       instances: 1,
@@ -41,8 +58,8 @@ module.exports = {
       args: "backend.main:app --host 0.0.0.0 --port 8101 --workers 2",
       interpreter: "none",
       env: {
-        DATABASE_URL: process.env.DATABASE_URL,
-        JWT_SECRET: process.env.JWT_SECRET,
+        DATABASE_URL: DOT_ENV.DATABASE_URL ?? process.env.DATABASE_URL,
+        JWT_SECRET: DOT_ENV.JWT_SECRET ?? process.env.JWT_SECRET,
       },
       max_memory_restart: "512M",
       autorestart: true,
