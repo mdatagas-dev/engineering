@@ -2,7 +2,7 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Hexagon, KeyRound, User, Loader2, Lock, ShieldCheck } from "lucide-react";
+import { Hexagon, KeyRound, User, Loader2, Lock } from "lucide-react";
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
@@ -70,63 +70,40 @@ function LoginForm() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-10">
       <div className="aurora-bg" />
       <div className="grid-overlay" />
 
-      <div className="anim-fade-up w-full max-w-4xl">
-        <div className="glass-lux grid overflow-hidden rounded-3xl shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
-          <div className="grid md:grid-cols-2">
-            <div className="relative hidden flex-col overflow-hidden bg-gradient-to-br from-hisense-bold/25 via-obsidian-850 to-obsidian-900 md:flex">
-              <ManufactureScene />
+      {/* Scene 3D manufacturing — full screen background */}
+      <div className="pointer-events-none absolute inset-0">
+        <ManufactureScene />
+      </div>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-obsidian-950/60 via-transparent to-obsidian-950/80" />
 
-              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-between p-10">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />
-                    <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense to-obsidian-700 shadow-hisense-glow">
-                      <Hexagon className="h-6 w-6 text-obsidian-950" strokeWidth={2.4} />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-cinzel text-sm uppercase tracking-[0.18em] text-hisense-soft">{t("app.title")}</p>
-                    <p className="text-[11px] text-hisense-soft/60">{t("app.subtitle")}</p>
-                  </div>
-                </div>
+      {/* Brand overlay kiri-atas */}
+      <div className="pointer-events-none absolute left-6 top-6 z-10 flex items-center gap-3">
+        <div className="relative">
+          <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />
+          <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense to-obsidian-700 shadow-hisense-glow">
+            <Hexagon className="h-6 w-6 text-obsidian-950" strokeWidth={2.4} />
+          </div>
+        </div>
+        <div>
+          <p className="font-cinzel text-sm uppercase tracking-[0.18em] text-hisense-soft">{t("app.title")}</p>
+          <p className="text-[11px] text-hisense-soft/60">{t("app.subtitle")}</p>
+        </div>
+      </div>
 
-                <div>
-                  <p className="font-display text-hisense-gradient text-3xl font-bold leading-snug text-glow">
-                    {t("login.tagline1")}
-                    <br />
-                    {t("login.tagline2")}
-                  </p>
-                  <p className="mt-4 max-w-sm text-sm leading-relaxed text-hisense-soft/60">
-                    {t("login.taglineDesc")}
-                  </p>
-                  <div className="mt-8 space-y-3">
-                    {[t("nav.process"), t("nav.quality"), t("nav.engineering")].map((p) => (
-                      <div key={p} className="flex items-center gap-3 text-xs lux-gold-text">
-                        <ShieldCheck className="h-4 w-4 text-hisense" />
-                        {p}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+      {/* Form melayang di tengah */}
+      <div className="anim-fade-up relative z-10 w-full max-w-md">
+        <div className="glass-lux p-8 sm:p-10">
+          <div className="mb-8">
+            <p className="lux-eyebrow mb-2.5">{t("app.title")}</p>
+            <h1 className="font-display text-hisense-gradient text-4xl font-bold text-shadow-luxe lg:text-5xl">{t("login.welcome")}</h1>
+            <p className="mt-1.5 text-sm text-hisense-soft/75">{t("login.subtitle")}</p>
+          </div>
 
-                <p className="text-[11px] text-hisense-soft/30">
-                  {t("login.security")}
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 sm:p-10">
-              <div className="mb-8">
-                <p className="lux-eyebrow mb-2.5">{t("app.title")}</p>
-                <h1 className="font-display text-hisense-gradient text-4xl font-bold text-shadow-luxe lg:text-5xl">{t("login.welcome")}</h1>
-                <p className="mt-1.5 text-sm text-hisense-soft/75">{t("login.subtitle")}</p>
-              </div>
-
-              <form onSubmit={submit} className="space-y-4">
+          <form onSubmit={submit} className="space-y-4">
                 <div>
                   <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
                     {t("login.username")}
@@ -211,8 +188,6 @@ function LoginForm() {
                   ))}
                 </div>
               </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
