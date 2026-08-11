@@ -1,146 +1,151 @@
 "use client";
 
-const GEAR_PATH =
-  "M 24 6 a 18 18 0 0 1 15.6 9 l 3 -1.7 l 3.4 5.9 l -3 1.7 a 18 18 0 0 1 0 6.2 l 3 1.7 l -3.4 5.9 l -3 -1.7 a 18 18 0 0 1 -15.6 9 a 18 18 0 0 1 -15.6 -9 l -3 1.7 l -3.4 -5.9 l 3 -1.7 a 18 18 0 0 1 0 -6.2 l -3 -1.7 l 3.4 -5.9 l 3 1.7 a 18 18 0 0 1 15.6 -9 Z";
+function Stars() {
+  const stars = [
+    [6, 12], [14, 8], [22, 18], [31, 6], [40, 14], [49, 9], [57, 17], [66, 7],
+    [74, 13], [83, 5], [91, 15], [96, 9], [26, 28], [60, 26], [88, 24], [44, 22],
+  ] as const;
+  return (
+    <>
+      {stars.map(([x, y], i) => (
+        <span
+          key={i}
+          className="anime-star absolute rounded-full bg-cyan-200"
+          style={{
+            left: `${x}%`,
+            top: `${y}%`,
+            width: i % 3 === 0 ? 3 : 2,
+            height: i % 3 === 0 ? 3 : 2,
+            boxShadow: "0 0 8px rgba(165,243,252,0.9)",
+            animationDelay: `${(i * 0.41) % 3.4}s`,
+          }}
+        />
+      ))}
+    </>
+  );
+}
+
+function Skyline({ className, windows }: { className: string; windows: [number, number, number][] }) {
+  return (
+    <svg viewBox="0 0 400 160" preserveAspectRatio="none" className={`absolute inset-x-0 bottom-0 h-1/2 w-full ${className}`}>
+      <path
+        d="M0 160 V110 L18 96 V84 H34 V110 L52 102 V70 H70 V102 L88 88 V58 H102 V88 L118 96 V120 L138 84 H154 V120 L172 104 V74 H188 V104 L206 92 V48 H222 V92 L240 104 V120 L260 72 H276 V120 L294 96 V66 H312 V96 L330 110 V130 L352 84 H368 V130 L384 118 V160 Z"
+        fill="currentColor"
+      />
+      {windows.map(([x, y, d], i) => (
+        <rect
+          key={i}
+          x={x}
+          y={y}
+          width="5"
+          height="7"
+          rx="1"
+          fill="rgba(252,211,77,0.85)"
+          className="anime-window"
+          style={{ animationDelay: `${d}s` }}
+        />
+      ))}
+    </svg>
+  );
+}
 
 export function ManufactureScene() {
   return (
-    <div className="manu-stage relative h-full w-full overflow-hidden">
-      <div className="manu-scene relative h-full w-full">
-        {/* grid 3D lantai */}
-        <svg
-          className="absolute inset-0 h-full w-full opacity-60"
-          viewBox="0 0 400 300"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <defs>
-            <linearGradient id="lg-glow" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#00b3ac" stopOpacity="0.55" />
-              <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.15" />
-            </linearGradient>
-          </defs>
-          {Array.from({ length: 12 }).map((_, i) => (
-            <line
-              key={`v${i}`}
-              x1={i * 36}
-              y1={0}
-              x2={i * 36 - 120}
-              y2={300}
-              stroke="rgba(0,179,172,0.14)"
-              strokeWidth="1"
-            />
-          ))}
-          {Array.from({ length: 8 }).map((_, i) => (
-            <line
-              key={`h${i}`}
-              x1={0}
-              y1={i * 40}
-              x2={400}
-              y2={i * 40 - 120}
-              stroke="rgba(0,179,172,0.12)"
-              strokeWidth="1"
-            />
-          ))}
+    <div className="anime-stage absolute inset-0">
+      {/* langit dusk anime */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0f2c] via-[#16245a] to-[#4b2a63]" />
+      <div
+        className="anime-sun absolute right-[16%] top-[14%] h-40 w-40 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,214,150,0.95) 0%, rgba(251,146,60,0.55) 40%, rgba(236,72,153,0.28) 62%, transparent 72%)",
+          boxShadow: "0 0 90px 30px rgba(251,146,60,0.35), 0 0 40px 10px rgba(236,72,153,0.3)",
+        }}
+      />
+
+      <Stars />
+
+      {/* awan bergerak */}
+      <div className="anime-cloud absolute top-[8%] h-6 w-40 rounded-full bg-white/10 blur-md" style={{ animationDuration: "52s" }} />
+      <div className="anime-cloud absolute top-[20%] h-8 w-64 rounded-full bg-white/[0.07] blur-lg" style={{ animationDuration: "78s", animationDelay: "-30s" }} />
+      <div className="anime-cloud absolute top-[30%] h-5 w-48 rounded-full bg-fuchsia-300/[0.08] blur-md" style={{ animationDuration: "64s", animationDelay: "-12s" }} />
+
+      {/* gunung paralaks (jauh) */}
+      <svg viewBox="0 0 400 200" preserveAspectRatio="none" className="absolute inset-x-0 bottom-[24%] h-[38%] w-full text-[#1d1742]">
+        <path d="M0 200 L0 130 L60 78 L118 122 L172 60 L232 118 L300 72 L360 120 L400 96 L400 200 Z" fill="currentColor" />
+      </svg>
+      <svg viewBox="0 0 400 200" preserveAspectRatio="none" className="absolute inset-x-0 bottom-[12%] h-[42%] w-full text-[#120f30]">
+        <path d="M0 200 L0 150 L52 110 L104 148 L160 92 L226 150 L288 108 L344 152 L400 120 L400 200 Z" fill="currentColor" />
+      </svg>
+
+      {/* skyline pabrik (dekat) dengan jendela menyala */}
+      <div className="absolute inset-x-0 bottom-[4%] h-[26%] w-full text-[#0a0820]">
+        <Skyline
+          className="text-[#0a0820]"
+          windows={[
+            [20, 70, 0], [26, 70, 1.2], [60, 60, 0.6], [66, 60, 2.1],
+            [110, 74, 1.5], [116, 74, 0.3], [150, 62, 2.4], [156, 62, 0.9],
+            [198, 52, 1.8], [204, 52, 0.5], [258, 70, 2.9], [264, 70, 1.1],
+            [300, 58, 0.2], [306, 58, 1.7], [342, 78, 2.2], [348, 78, 0.8],
+          ]}
+        />
+      </div>
+
+      {/* cerobong asap */}
+      <div className="absolute bottom-[9%] left-[12%] h-16 w-3 bg-[#0a0820]" style={{ clipPath: "polygon(0 0, 100% 0, 78% 100%, 22% 100%)" }} />
+      <span className="anime-smoke absolute bottom-[19%] left-[12.4%] h-5 w-5 rounded-full bg-cyan-200/30 blur-[3px]" style={{ animationDelay: "0s" }} />
+      <span className="anime-smoke absolute bottom-[19%] left-[13%] h-4 w-4 rounded-full bg-cyan-100/25 blur-[3px]" style={{ animationDelay: "1.6s" }} />
+      <div className="absolute bottom-[8%] right-[16%] h-14 w-2.5 bg-[#0a0820]" style={{ clipPath: "polygon(0 0, 100% 0, 80% 100%, 20% 100%)" }} />
+      <span className="anime-smoke absolute bottom-[16%] right-[16.3%] h-4 w-4 rounded-full bg-fuchsia-200/25 blur-[3px]" style={{ animationDelay: "0.9s" }} />
+
+      {/* drone melintas + jejak */}
+      <div className="anime-drone absolute top-0 left-0 z-10">
+        <svg width="64" height="30" viewBox="0 0 64 30">
+          <path className="anime-trail" d="M 64 15 L -80 15" stroke="rgba(34,211,238,0.55)" strokeWidth="2" />
+          <path d="M 8 15 L 26 15 L 30 8 L 56 8 L 62 15 L 56 22 L 30 22 L 26 15 Z" fill="#0d4d50" stroke="#22d3ee" strokeWidth="1.6" />
+          <rect x="26" y="11" width="26" height="8" rx="2" fill="#071c22" stroke="#22d3ee" strokeWidth="1" />
+          <circle cx="20" cy="15" r="2.4" fill="#fde68a" />
         </svg>
+      </div>
 
-        {/* ===== KONVEYOR ===== */}
-        <div className="absolute bottom-[16%] left-1/2 w-[78%] -translate-x-1/2">
-          <div className="manu-conveyor h-3 w-full rounded-full border border-hisense/30 shadow-[0_0_20px_rgba(0,179,172,0.35)]" />
-          <div className="relative mt-1 h-6">
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="manu-product absolute top-0 h-5 w-5 rounded-md border border-hisense/60 bg-gradient-to-br from-hisense/40 to-cyan-500/20 shadow-hisense-glow"
-                style={{
-                  animation: `product-slide ${4.6 + i * 0.9}s linear ${i * 1.15}s infinite`,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* ===== ROBOT ARM (kiri) ===== */}
-        <div className="manu-arm absolute bottom-[24%] left-[8%] h-[38%] w-[34%]">
-          <svg viewBox="0 0 120 140" className="h-full w-full drop-shadow-[0_0_18px_rgba(0,179,172,0.35)]">
-            <line x1="60" y1="10" x2="60" y2="58" stroke="#22d3ee" strokeWidth="7" strokeLinecap="round" />
-            <circle cx="60" cy="58" r="9" fill="#0d4d50" stroke="#22d3ee" strokeWidth="3" />
-            <line x1="60" y1="58" x2="92" y2="96" stroke="#00b3ac" strokeWidth="6" strokeLinecap="round" />
-            <g className="manu-arm-grab">
-              <line x1="92" y1="96" x2="80" y2="128" stroke="#22d3ee" strokeWidth="5" strokeLinecap="round" />
-              <line x1="92" y1="96" x2="104" y2="128" stroke="#22d3ee" strokeWidth="5" strokeLinecap="round" />
-              <circle cx="80" cy="131" r="4" fill="#22d3ee" />
-              <circle cx="104" cy="131" r="4" fill="#22d3ee" />
-            </g>
-            <rect x="42" y="0" width="36" height="14" rx="4" fill="#071c22" stroke="#00b3ac" strokeWidth="2" />
-          </svg>
-        </div>
-
-        {/* ===== GEARS (kanan) ===== */}
-        <div className="absolute right-[6%] top-[10%] h-28 w-28">
-          <svg viewBox="0 0 48 48" className="manu-gear h-20 w-20 opacity-90">
-            <path d={GEAR_PATH} fill="rgba(0,179,172,0.22)" stroke="#00b3ac" strokeWidth="2" />
-            <circle cx="24" cy="24" r="7" fill="#0d4d50" stroke="#22d3ee" strokeWidth="2" />
-          </svg>
-        </div>
-        <div className="absolute right-[16%] top-[26%] h-20 w-20">
-          <svg viewBox="0 0 48 48" className="manu-gear-rev h-14 w-14 opacity-70">
-            <path d={GEAR_PATH} fill="rgba(34,211,238,0.15)" stroke="#22d3ee" strokeWidth="2" />
-            <circle cx="24" cy="24" r="7" fill="#0d4d50" stroke="#22d3ee" strokeWidth="2" />
-          </svg>
-        </div>
-
-        {/* ===== HOLOGRAM PLATFORM (tengah-atas) ===== */}
-        <div className="absolute left-1/2 top-[6%] h-32 w-40 -translate-x-1/2">
-          <div className="absolute inset-0 rounded-2xl border border-hisense/30 bg-hisense/5" />
-          <svg viewBox="0 0 160 64" className="absolute inset-x-2 top-2 opacity-90">
-            {[0, 1, 2, 3].map((i) => (
-              <rect
-                key={i}
-                x={12 + i * 34}
-                y={44 - (i % 2 ? 26 : 14)}
-                width="20"
-                height={i % 2 ? 26 : 14}
-                rx="3"
-                fill="rgba(0,179,172,0.5)"
-                className="manu-eq"
-                style={{ animationDelay: `${i * 0.15}s` }}
-              />
-            ))}
-            <polyline
-              points="8,52 40,52 66,30 104,38 152,14"
-              fill="none"
-              stroke="#22d3ee"
-              strokeWidth="2"
-              className="manu-dash"
-            />
-          </svg>
-          <div className="manu-scanline absolute inset-x-0 h-10 bg-gradient-to-b from-transparent via-cyan-300/20 to-transparent" />
-        </div>
-
-        {/* ===== SPARKS / partikel ===== */}
-        {[
-          { left: "12%", delay: "0s" },
-          { left: "32%", delay: "0.9s" },
-          { left: "55%", delay: "1.8s" },
-          { left: "74%", delay: "0.4s" },
-          { left: "88%", delay: "2.3s" },
-        ].map((s, i) => (
+      {/* speed lines ala anime */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 opacity-40">
+        {[12, 38, 64, 88].map((y, i) => (
           <span
             key={i}
-            className="manu-spark absolute bottom-[28%] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(34,211,238,0.9)]"
-            style={{ left: s.left, animationDelay: s.delay }}
+            className="anime-speedline absolute h-[2px] w-24 rounded-full bg-cyan-100"
+            style={{ top: `${y}%`, animationDelay: `${i * 0.4}s` }}
           />
         ))}
-
-        {/* garis status atas */}
-        <div className="absolute inset-x-0 top-0 flex items-center gap-2 px-4 py-3">
-          <span className="live-dot" />
-          <span className="font-cinzel text-[11px] uppercase tracking-[0.25em] text-hisense-soft/80">
-            SYSTEM ONLINE
-          </span>
-          <span className="ml-auto font-mono text-[10px] text-hisense-soft/60">FAB-04 · RUNNING</span>
-        </div>
       </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 opacity-40">
+        {[20, 46, 72, 94].map((y, i) => (
+          <span
+            key={i}
+            className="anime-speedline absolute h-[2px] w-24 rounded-full bg-cyan-100"
+            style={{ top: `${y}%`, animationDelay: `${i * 0.35}s` }}
+          />
+        ))}
+      </div>
+
+      {/* ember naik */}
+      {[
+        { left: "8%", delay: "0s", sway: "16px" },
+        { left: "24%", delay: "2.1s", sway: "-18px" },
+        { left: "42%", delay: "4.4s", sway: "14px" },
+        { left: "61%", delay: "1.3s", sway: "-22px" },
+        { left: "78%", delay: "3.2s", sway: "18px" },
+        { left: "92%", delay: "5.1s", sway: "-12px" },
+      ].map((e, i) => (
+        <span
+          key={i}
+          className="anime-ember absolute bottom-[4%] h-1.5 w-1.5 rounded-full bg-orange-300 shadow-[0_0_12px_rgba(251,146,60,0.95)]"
+          style={{ left: e.left, animationDelay: e.delay, ["--sway" as string]: e.sway }}
+        />
+      ))}
+
+      {/* ground scan bawah */}
+      <div className="anime-ground absolute inset-x-0 bottom-0 h-[4%] opacity-40" />
     </div>
   );
 }

@@ -605,3 +605,94 @@ body {
   stroke-dasharray: 14 10;
   animation: dash-flow 1.4s linear infinite;
 }
+
+/* ===== Anime 2D login scene ===== */
+@keyframes anime-twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes anime-cloud {
+  from { transform: translateX(-15%); }
+  to { transform: translateX(115%); }
+}
+@keyframes anime-smoke {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.75; }
+  100% { transform: translateY(-90px) scale(1.9); opacity: 0; }
+}
+@keyframes anime-drone {
+  0% { transform: translate(-12vw, 6vh) rotate(-4deg); opacity: 0; }
+  6% { opacity: 1; }
+  46% { transform: translate(52vw, -8vh) rotate(2deg); opacity: 1; }
+  54% { opacity: 1; }
+  100% { transform: translate(112vw, 2vh) rotate(-6deg); opacity: 0; }
+}
+@keyframes anime-trail {
+  from { stroke-dashoffset: 260; }
+  to { stroke-dashoffset: -260; }
+}
+@keyframes anime-speedline {
+  from { transform: translateX(60px); opacity: 0; }
+  20% { opacity: 0.85; }
+  80% { opacity: 0.6; }
+  to { transform: translateX(-60px); opacity: 0; }
+}
+@keyframes anime-ember {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  10% { opacity: 0.95; }
+  100% { transform: translateY(-46vh) translateX(var(--sway, 20px)) scale(0.15); opacity: 0; }
+}
+@keyframes anime-window {
+  0%, 100% { opacity: 0.9; }
+  35% { opacity: 0.25; }
+  55% { opacity: 0.95; }
+}
+@keyframes anime-sun {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+@keyframes anime-groundscan {
+  from { background-position: 0 0; }
+  to { background-position: 72px 0; }
+}
+.anime-stage {
+  position: relative;
+  overflow: hidden;
+}
+.anime-star {
+  animation: anime-twinkle 3.4s ease-in-out infinite;
+}
+.anime-cloud {
+  animation: anime-cloud linear infinite;
+}
+.anime-smoke {
+  animation: anime-smoke 3.6s ease-out infinite;
+  transform-origin: bottom center;
+}
+.anime-drone {
+  animation: anime-drone 14s linear infinite;
+}
+.anime-trail {
+  stroke-dasharray: 12 22;
+  animation: anime-trail 2.2s linear infinite;
+}
+.anime-speedline {
+  animation: anime-speedline 1.6s linear infinite;
+}
+.anime-ember {
+  animation: anime-ember 7s linear infinite;
+}
+.anime-window {
+  animation: anime-window 5.5s ease-in-out infinite;
+}
+.anime-sun {
+  animation: anime-sun 5s ease-in-out infinite;
+}
+.anime-ground {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 179, 172, 0.45) 0 6px,
+    transparent 6px 18px
+  );
+  background-size: 72px 100%;
+  animation: anime-groundscan 1.4s linear infinite;
+}
