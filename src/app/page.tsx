@@ -304,12 +304,6 @@ export default function DashboardPage() {
             </div>
           </div>
           <div>
-            <p
-              className="lux-eyebrow anim-fade-up"
-              style={{ animationDelay: "80ms" }}
-            >
-              {t("dash.pillar")}
-            </p>
             <h1
               className="anim-fade-up font-display text-hisense-gradient mt-2 text-4xl font-semibold tracking-wide text-shadow-luxe lg:text-5xl"
               style={{ animationDelay: "160ms" }}
