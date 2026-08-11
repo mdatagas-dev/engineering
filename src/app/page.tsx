@@ -401,12 +401,12 @@ export default function DashboardPage() {
 function PanelHeader({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3 px-5 pt-5">
-      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-hisense/20 bg-hisense/10 text-hisense-soft">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-hisense/25 bg-hisense/10 text-hisense-soft">
         {icon}
       </div>
       <div>
-        <h3 className="font-display text-sm font-semibold text-hisense-soft">{title}</h3>
-        <p className="text-[11px] text-hisense-soft/45">{subtitle}</p>
+        <h3 className="font-display text-3xl font-semibold tracking-wide text-hisense-soft text-shadow-luxe">{title}</h3>
+        <p className="mt-1 text-base text-hisense-soft/70">{subtitle}</p>
       </div>
     </div>
   );
