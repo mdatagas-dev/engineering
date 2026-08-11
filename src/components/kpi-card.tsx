@@ -2,12 +2,29 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { TiltPanel } from "@/components/tilt-panel";
+import { cn } from "@/lib/utils";
 
 const ACCENT = {
-  jade: "from-hisense to-hisense-bold text-hisense-soft shadow-hisense/40",
-  gold: "from-gold-300 to-gold-500 text-gold-300 shadow-gold-500/30",
-  teal: "from-hisense-soft to-hisense-bold text-hisense-soft shadow-hisense/40",
-  emerald: "from-hisense-soft to-hisense-bold text-hisense-soft shadow-hisense-bold/40",
+  jade: {
+    chip: "from-hisense to-hisense-bold text-obsidian-950 shadow-hisense/40",
+    dot: "bg-hisense",
+    glow: "shadow-hisense/30",
+  },
+  gold: {
+    chip: "from-gold-300 to-gold-500 text-obsidian-950 shadow-gold-500/40",
+    dot: "bg-gold-300",
+    glow: "shadow-gold-500/30",
+  },
+  teal: {
+    chip: "from-hisense-soft to-hisense-bold text-obsidian-950 shadow-hisense/40",
+    dot: "bg-hisense-soft",
+    glow: "shadow-hisense/30",
+  },
+  emerald: {
+    chip: "from-hisense-soft to-hisense-bold text-obsidian-950 shadow-hisense-bold/40",
+    dot: "bg-hisense-soft",
+    glow: "shadow-hisense-bold/30",
+  },
 } as const;
 
 export type AccentKey = keyof typeof ACCENT;
@@ -50,7 +67,7 @@ export function KpiCard({
     if (numeric === null) return;
     const from = lastNumeric.current;
     const start = performance.now();
-    const DURATION = 1000;
+    const DURATION = 1100;
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min((now - start) / DURATION, 1);
@@ -75,22 +92,26 @@ export function KpiCard({
           animationDelay: `${delay}ms`,
         }}
       >
-        <div className="p-5">
+        <div className="gold-hairline relative p-5">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-hisense-soft/60">
-                {label}
-              </p>
+              <p className="lux-eyebrow">{label}</p>
               <p
-                className={`text-hisense-gradient font-display mt-3 text-4xl font-bold tracking-tight text-glow ${
-                  alert === "warning" ? "gold-grad-text" : ""
-                }`}
+                className={cn(
+                  "font-display mt-2.5 text-[2.4rem] font-bold leading-none tracking-tight",
+                  alert === "warning" ? "lux-gold-text" : "text-hisense-gradient",
+                  "text-shadow-luxe"
+                )}
               >
                 {display}
               </p>
             </div>
             <div
-              className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${a} shadow-lg transition-transform duration-500 group-hover:scale-105`}
+              className={cn(
+                "shine-sweep flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg transition-transform duration-500 group-hover:scale-110",
+                a.chip,
+                a.glow
+              )}
             >
               <span className="icon-breathe">{icon}</span>
             </div>
@@ -99,7 +120,7 @@ export function KpiCard({
             {alert === "critical" ? (
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-red-400" />
             ) : (
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-hisense" />
+              <span className={cn("inline-block h-1.5 w-1.5 rounded-full", a.dot)} />
             )}
             {sub}
           </div>
@@ -108,7 +129,7 @@ export function KpiCard({
               <svg viewBox="0 0 120 28" preserveAspectRatio="none" className="h-full w-full">
                 <defs>
                   <linearGradient id={`spark-${label}`} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00b3ac" stopOpacity="0.45" />
+                    <stop offset="0%" stopColor="#00b3ac" stopOpacity="0.5" />
                     <stop offset="100%" stopColor="#00b3ac" stopOpacity="0" />
                   </linearGradient>
                 </defs>
@@ -130,6 +151,14 @@ export function KpiCard({
                         stroke="#00b3ac"
                         strokeWidth="1.5"
                         strokeLinecap="round"
+                      />
+                      <circle
+                        cx={pts[pts.length - 1][0]}
+                        cy={pts[pts.length - 1][1]}
+                        r="2.2"
+                        fill="#00b3ac"
+                        stroke="#06151b"
+                        strokeWidth="1"
                       />
                     </>
                   );

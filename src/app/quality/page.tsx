@@ -233,13 +233,13 @@ export default function QualityPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("quality.pilar")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("quality.title")}</h1>
+        <p className="lux-eyebrow">{t("quality.pilar")}</p>
+        <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("quality.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("quality.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        <TiltPanel className="anim-fade-up p-5" intensity={6}>
+        <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <ShieldCheck className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
@@ -252,7 +252,7 @@ export default function QualityPage() {
             <TrendingDown className="h-4 w-4 text-red-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.defectRate.toFixed(2)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{kpi.defectRate.toFixed(2)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.defectFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -260,7 +260,7 @@ export default function QualityPage() {
             <BarChart3 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{pareto[0]?.model}</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{pareto[0]?.model}</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
         </TiltPanel>
       </div>
@@ -315,7 +315,7 @@ export default function QualityPage() {
             <button
               onClick={simpan}
               disabled={saving}
-              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
+              className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Plus className="h-4 w-4 transition-transform group-hover:scale-110" />
               {saving ? t("quality.input.saving") : t("quality.input.save")}

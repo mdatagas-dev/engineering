@@ -24,7 +24,7 @@ type Item = { icon: LucideIcon; label: string; desc: string };
 
 function ItemRow({ item }: { item: Item }) {
   return (
-    <div className="glass-premium flex items-start gap-3 rounded-xl p-4">
+    <div className="glass-premium gold-hairline flex items-start gap-3 rounded-xl p-4">
       <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-hisense/20 bg-hisense/10">
         <item.icon className="h-4 w-4 text-hisense-soft" />
       </div>
@@ -68,8 +68,8 @@ export default function BantuanPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("menu.bantuan")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("bantuan.title")}</h1>
+        <p className="lux-eyebrow mb-2">{t("menu.bantuan")}</p>
+        <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("bantuan.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("bantuan.subtitle")}</p>
       </header>
 

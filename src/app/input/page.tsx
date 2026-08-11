@@ -126,8 +126,8 @@ export default function InputPage() {
     <div className="space-y-6">
       <header className="anim-fade-up flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("menu.input")}</p>
-          <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("input.title")}</h1>
+          <p className="lux-eyebrow">{t("menu.input")}</p>
+          <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("input.title")}</h1>
           <p className="mt-1.5 text-sm text-hisense-soft/50">
             {t("input.subtitle")}
           </p>
@@ -197,7 +197,7 @@ export default function InputPage() {
               </div>
             </div>
 
-            <div className="divider-glow" />
+            <div className="lux-divider" />
 
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-300/70">
               {t("input.section.prodQuality")}
@@ -208,7 +208,7 @@ export default function InputPage() {
               {numField(t("input.field.defectQty"), "defect_qty")}
             </div>
 
-            <div className="divider-glow" />
+            <div className="lux-divider" />
 
             <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-gold-300/70">
               {t("input.section.timeCycle")}
@@ -243,7 +243,7 @@ export default function InputPage() {
             <button
               onClick={simpan}
               disabled={!valid || saving}
-              className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
+              className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Save className="h-4 w-4 transition-transform group-hover:scale-110" />
               {saving ? t("input.button.saving") : t("input.button.save")}
@@ -252,21 +252,21 @@ export default function InputPage() {
         </TiltPanel>
 
         <div className="anim-fade-up space-y-6 xl:col-span-2">
-          <TiltPanel className="p-5" intensity={5}>
+          <TiltPanel className="gold-hairline p-5" intensity={5}>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-hisense-soft/50">
               {t("input.kpi.latest")}
             </p>
             <div className="mt-4 space-y-3">
               {[
-                { label: t("kpi.fpy"), value: `${kpi.fpy.toFixed(1)}%` },
-                { label: t("kpi.oee"), value: `${kpi.oee.toFixed(1)}%` },
-                { label: t("kpi.lineBalance"), value: `${kpi.lineBalance.toFixed(1)}%` },
-                { label: t("input.kpi.cycleTimeAchievement"), value: `${kpi.cycleTimeAchievement.toFixed(1)}%` },
-                { label: t("input.kpi.setupAchievement"), value: `${kpi.setupAchievement.toFixed(1)}%` },
+                { label: t("kpi.fpy"), value: `${kpi.fpy.toFixed(1)}%`, gold: false },
+                { label: t("kpi.oee"), value: `${kpi.oee.toFixed(1)}%`, gold: false },
+                { label: t("kpi.lineBalance"), value: `${kpi.lineBalance.toFixed(1)}%`, gold: false },
+                { label: t("input.kpi.cycleTimeAchievement"), value: `${kpi.cycleTimeAchievement.toFixed(1)}%`, gold: true },
+                { label: t("input.kpi.setupAchievement"), value: `${kpi.setupAchievement.toFixed(1)}%`, gold: true },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between gap-3 glass-premium rounded-xl px-4 py-3">
                   <span className="text-xs text-hisense-soft/60">{item.label}</span>
-                  <span className="text-hisense-gradient font-display text-lg font-bold">{item.value}</span>
+                  <span className={cn("font-display text-lg font-bold", item.gold ? "lux-gold-text" : "text-hisense-gradient")}>{item.value}</span>
                 </div>
               ))}
             </div>

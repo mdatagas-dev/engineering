@@ -18,7 +18,7 @@ type Item = { icon: LucideIcon; label: string; desc: string };
 
 function ItemRow({ item }: { item: Item }) {
   return (
-    <div className="glass-premium flex items-start gap-3 rounded-xl p-4">
+    <div className="glass-premium gold-hairline flex items-start gap-3 rounded-xl p-4">
       <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-hisense/20 bg-hisense/10">
         <item.icon className="h-4 w-4 text-hisense-soft" />
       </div>
@@ -56,8 +56,8 @@ export default function PrivacyPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("menu.privacy")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("privacy.title")}</h1>
+        <p className="lux-eyebrow mb-2">{t("menu.privacy")}</p>
+        <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("privacy.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("privacy.subtitle")}</p>
       </header>
 
@@ -96,7 +96,7 @@ export default function PrivacyPage() {
                 const label = sep > -1 ? line.slice(0, sep) : line;
                 const desc = sep > -1 ? line.slice(sep + 3) : "";
                 return (
-                  <div key={label} className="glass-premium flex items-start gap-2.5 rounded-xl px-4 py-2.5 text-xs">
+                  <div key={label} className="glass-premium gold-hairline flex items-start gap-2.5 rounded-xl px-4 py-2.5 text-xs">
                     <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-hisense" />
                     <p className="text-hisense-soft/70">
                       <span className="font-semibold text-hisense-soft">{label}</span>

@@ -86,14 +86,16 @@ body {
 .glass-premium {
   position: relative;
   border-radius: 1rem;
-  background: linear-gradient(165deg, rgba(13, 44, 54, 0.42), rgba(6, 21, 27, 0.86));
-  border: 1px solid rgba(0, 179, 172, 0.14);
+  background:
+    linear-gradient(165deg, rgba(13, 44, 54, 0.5), rgba(6, 21, 27, 0.92)),
+    radial-gradient(140% 90% at 20% 0%, rgba(0, 179, 172, 0.08), transparent 55%);
+  border: 1px solid rgba(0, 179, 172, 0.16);
   box-shadow:
     0 0 0 1px rgba(0, 179, 172, 0.04),
-    0 24px 60px -24px rgba(0, 0, 0, 0.75),
+    0 24px 60px -24px rgba(0, 0, 0, 0.8),
     0 8px 24px -14px rgba(0, 179, 172, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
   transition:
     transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.4s ease,
@@ -106,21 +108,72 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(135deg, rgba(0, 179, 172, 0.35), transparent 30%, transparent 65%, rgba(0, 126, 120, 0.22));
+  background: linear-gradient(135deg, rgba(0, 179, 172, 0.45), transparent 25%, transparent 68%, rgba(252, 211, 77, 0.28));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0.55;
+  opacity: 0.6;
   pointer-events: none;
 }
 
 .glass-premium:hover {
-  border-color: rgba(0, 179, 172, 0.45);
+  border-color: rgba(0, 179, 172, 0.5);
   box-shadow:
     0 0 0 1px rgba(0, 179, 172, 0.08),
     0 30px 80px -24px rgba(0, 0, 0, 0.85),
     0 14px 44px -12px rgba(0, 179, 172, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.glass-lux {
+  position: relative;
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(165deg, rgba(13, 44, 54, 0.55), rgba(5, 14, 18, 0.94)),
+    radial-gradient(120% 80% at 15% 0%, rgba(0, 179, 172, 0.12), transparent 50%),
+    radial-gradient(120% 90% at 95% 100%, rgba(252, 211, 77, 0.05), transparent 45%);
+  border: 1px solid rgba(0, 179, 172, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(0, 179, 172, 0.05),
+    0 40px 90px -30px rgba(0, 0, 0, 0.9),
+    0 12px 32px -12px rgba(0, 179, 172, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s ease,
+    border-color 0.5s ease;
+}
+
+.glass-lux::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    rgba(0, 179, 172, 0.55) 0%,
+    rgba(252, 211, 77, 0.35) 18%,
+    transparent 38%,
+    transparent 62%,
+    rgba(0, 179, 172, 0.4) 88%,
+    rgba(252, 211, 77, 0.3) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.glass-lux:hover {
+  border-color: rgba(0, 179, 172, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(0, 179, 172, 0.09),
+    0 50px 110px -30px rgba(0, 0, 0, 0.95),
+    0 18px 50px -14px rgba(0, 179, 172, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .panel-3d {
@@ -193,6 +246,80 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* ===== Obsidian Regal — luxury utilities ===== */
+.lux-eyebrow {
+  font-family: var(--font-cinzel);
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--color-gold-300) 78%, transparent);
+  text-shadow: 0 0 18px rgba(252, 211, 77, 0.25);
+}
+
+.lux-gold-text {
+  background: linear-gradient(120deg, #fef3c7 0%, #fcd34d 40%, #b45309 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lux-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(252, 211, 77, 0.7);
+}
+.lux-divider::before,
+.lux-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 211, 77, 0.45), transparent);
+}
+
+/* shine sweep pada tombol utama */
+.shine-sweep {
+  position: relative;
+  overflow: hidden;
+}
+.shine-sweep::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  bottom: -40%;
+  left: -30%;
+  width: 34%;
+  transform: rotate(18deg) translateX(-120%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.shine-sweep:hover::after {
+  transform: rotate(18deg) translateX(460%);
+}
+
+/* garis emas tipis atas kartu */
+.gold-hairline {
+  position: relative;
+}
+.gold-hairline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(252, 211, 77, 0.55), transparent);
+}
+
+/* bayangan teks elegan */
+.text-shadow-luxe {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 28px rgba(0, 179, 172, 0.35),
+    0 0 70px rgba(0, 179, 172, 0.12);
 }
 
 /* ===== Typography ===== */

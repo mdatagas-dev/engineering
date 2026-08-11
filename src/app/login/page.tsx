@@ -74,7 +74,7 @@ function LoginForm() {
       <div className="grid-overlay" />
 
       <div className="anim-fade-up w-full max-w-4xl">
-        <div className="glass-premium grid overflow-hidden rounded-3xl shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
+        <div className="glass-lux grid overflow-hidden rounded-3xl shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
           <div className="grid md:grid-cols-2">
             <div className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-hisense-bold/20 via-obsidian-850 to-obsidian-900 p-10 md:flex">
               <div className="relative z-10">
@@ -86,10 +86,11 @@ function LoginForm() {
                     </div>
                   </div>
                   <div>
-                    <p className="font-display text-sm font-bold tracking-wide text-hisense-soft">{t("app.title")}</p>
+                    <p className="font-cinzel text-sm uppercase tracking-[0.18em] text-hisense-soft">{t("app.title")}</p>
                     <p className="text-[11px] text-hisense-soft/60">{t("app.subtitle")}</p>
                   </div>
                 </div>
+                <div className="lux-divider mt-6 w-28" />
               </div>
 
               <div className="relative z-10">
@@ -103,7 +104,7 @@ function LoginForm() {
                 </p>
                 <div className="mt-8 space-y-3">
                   {[t("nav.process"), t("nav.quality"), t("nav.engineering")].map((p) => (
-                    <div key={p} className="flex items-center gap-3 text-xs text-hisense-soft/70">
+                    <div key={p} className="flex items-center gap-3 text-xs lux-gold-text">
                       <ShieldCheck className="h-4 w-4 text-hisense" />
                       {p}
                     </div>
@@ -118,7 +119,8 @@ function LoginForm() {
 
             <div className="p-6 sm:p-10">
               <div className="mb-8">
-                <h1 className="font-display text-hisense-gradient text-2xl font-bold text-glow">{t("login.welcome")}</h1>
+                <p className="lux-eyebrow mb-2.5">{t("app.title")}</p>
+                <h1 className="font-display text-hisense-gradient text-4xl font-bold text-shadow-luxe lg:text-5xl">{t("login.welcome")}</h1>
                 <p className="mt-1.5 text-sm text-hisense-soft/50">{t("login.subtitle")}</p>
               </div>
 
@@ -162,7 +164,7 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={loading || !username || !password}
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:cursor-not-allowed disabled:opacity-40"
+                  className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {loading ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -183,8 +185,10 @@ function LoginForm() {
                       key={acc.username}
                       onClick={() => fill(acc.username, acc.password)}
                       className={cn(
-                        "flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-2.5 text-left transition-all",
-                        "border-hisense/10 bg-obsidian-900/50 hover:border-hisense/35 hover:bg-hisense/5"
+                        "gold-hairline flex w-full items-center justify-between gap-3 rounded-xl border px-4 py-2.5 text-left transition-all",
+                        acc.role === "admin"
+                          ? "border-hisense/10 bg-obsidian-900/50 hover:border-gold-400/40 hover:bg-gold-400/5"
+                          : "border-hisense/10 bg-obsidian-900/50 hover:border-hisense/40 hover:bg-hisense/5"
                       )}
                     >
                       <div>

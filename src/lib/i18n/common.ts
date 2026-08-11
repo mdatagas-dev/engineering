@@ -36,6 +36,13 @@ export const commonDict: DomainDict = {
     ja: "設定",
     ko: "설정",
   },
+  "menu.help": {
+    id: "Bantuan",
+    en: "Help",
+    zh: "帮助",
+    ja: "ヘルプ",
+    ko: "도움말",
+  },
   "nav.dashboard": {
     id: "Dashboard Utama",
     en: "Main Dashboard",

@@ -13,12 +13,14 @@ export function PanelHeader({
 }) {
   return (
     <div className="flex items-center justify-between gap-3 px-5 pt-5">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-hisense/20 bg-hisense/10 text-hisense-soft">
-          {icon}
+      <div className="flex items-center gap-3.5">
+        <div className="relative flex h-10 w-10 items-center justify-center rounded-xl border border-hisense/25 bg-gradient-to-br from-hisense/15 to-obsidian-800 text-hisense-soft shadow-hisense/20">
+          <span className="icon-breathe">{icon}</span>
         </div>
         <div>
-          <h3 className="font-display text-sm font-semibold text-hisense-bold">{title}</h3>
+          <h3 className="font-display text-base font-semibold tracking-wide text-hisense-soft text-shadow-luxe">
+            {title}
+          </h3>
           <p className="text-[11px] text-hisense-soft/45">{subtitle}</p>
         </div>
       </div>

@@ -33,14 +33,16 @@ export function UserSession() {
   };
 
   return (
-    <div className="mt-4 flex items-center justify-between gap-2 rounded-2xl border border-hisense/15 bg-obsidian-850/70 px-4 py-3">
+    <div className="gold-hairline mt-4 flex items-center justify-between gap-2 rounded-2xl border border-hisense/15 bg-obsidian-850/70 px-4 py-3">
       <div className="flex items-center gap-2.5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-hisense/30 to-obsidian-700 text-hisense-soft">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-hisense/25 bg-gradient-to-br from-hisense/25 to-obsidian-700 text-hisense-soft shadow-hisense/20">
           <UserCircle className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-xs font-medium text-hisense-bold">{user.username}</p>
-          <p className={`text-[10px] capitalize ${ROLE_COLOR[user.role]}`}>{user.role}</p>
+          <p className="font-cinzel text-xs font-bold uppercase tracking-wider text-hisense-soft">
+            {user.username}
+          </p>
+          <p className={`text-[10px] capitalize italic ${ROLE_COLOR[user.role]}`}>{user.role}</p>
         </div>
       </div>
       <button

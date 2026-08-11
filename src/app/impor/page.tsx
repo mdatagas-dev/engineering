@@ -66,8 +66,8 @@ export default function ImporPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("menu.input")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("impor.title")}</h1>
+        <p className="lux-eyebrow mb-2">{t("menu.input")}</p>
+        <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("impor.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">
           {t("impor.subtitle")}
         </p>
@@ -156,7 +156,7 @@ export default function ImporPage() {
               <button
                 onClick={simpan}
                 disabled={loading}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-4 py-2 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:opacity-40"
+                className="shine-sweep relative flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-4 py-2 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:opacity-40"
               >
                 <Save className="h-3.5 w-3.5" /> {t("impor.preview.saveRows", { n: preview.total })}
               </button>

@@ -198,8 +198,8 @@ export default function ProcessPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("process.pilar")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("process.title")}</h1>
+        <p className="lux-eyebrow">{t("process.pilar")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-4xl font-semibold text-shadow-luxe lg:text-5xl">{t("process.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("process.subtitle")}</p>
       </header>
 
@@ -209,7 +209,7 @@ export default function ProcessPage() {
             <Gauge className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.oee.toFixed(1)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">{kpi.oee.toFixed(1)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -217,7 +217,7 @@ export default function ProcessPage() {
             <Clock className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{formatSec(kpi.taktTimeSec)}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-shadow-luxe">{formatSec(kpi.taktTimeSec)}</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.taktBenchmark")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -225,7 +225,7 @@ export default function ProcessPage() {
             <Timer className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.cycleTimeAchievement.toFixed(1)}%</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-shadow-luxe">{kpi.cycleTimeAchievement.toFixed(1)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -233,10 +233,12 @@ export default function ProcessPage() {
             <Scale className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.setupAchievement.toFixed(1)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">{kpi.setupAchievement.toFixed(1)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
         </TiltPanel>
       </div>
+
+      <div className="lux-divider" />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <TiltPanel className="anim-fade-up" intensity={3}>

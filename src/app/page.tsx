@@ -305,13 +305,13 @@ export default function DashboardPage() {
           </div>
           <div>
             <p
-              className="anim-fade-up text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50"
+              className="lux-eyebrow anim-fade-up"
               style={{ animationDelay: "80ms" }}
             >
               {t("dash.pillar")}
             </p>
             <h1
-              className="anim-fade-up font-display text-hisense-gradient mt-2 text-3xl font-bold tracking-wide text-glow"
+              className="anim-fade-up font-display text-hisense-gradient mt-2 text-4xl font-semibold tracking-wide text-shadow-luxe lg:text-5xl"
               style={{ animationDelay: "160ms" }}
             >
               {t("dash.title")}
@@ -331,7 +331,7 @@ export default function DashboardPage() {
                 key={n}
                 onClick={() => setPeriode(n)}
                 className={cn(
-                  "rounded-full border px-4 py-1.5 text-xs font-medium transition-colors",
+                  "font-cinzel rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-colors",
                   periode === n
                     ? "border-hisense/60 bg-hisense/15 text-hisense-soft"
                     : "border-hisense/10 text-hisense-soft/50 hover:text-hisense-soft"
@@ -341,7 +341,7 @@ export default function DashboardPage() {
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-2.5 rounded-full border border-hisense/20 bg-obsidian-850/60 px-4 py-2 text-xs text-hisense-soft/70">
+          <div className="flex items-center gap-2.5 rounded-full border border-hisense/20 bg-obsidian-850/60 px-4 py-2 font-cinzel text-xs tracking-wide text-hisense-soft/70">
             <span className="live-dot" />
             {t("dash.live")}
           </div>
@@ -350,7 +350,7 @@ export default function DashboardPage() {
 
       {overdueCount > 0 && (
         <div
-          className="anim-fade-up flex items-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/[0.06] px-5 py-3 text-sm text-red-200"
+          className="anim-fade-up flex items-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/[0.06] px-5 py-3 text-sm text-red-200 shadow-[0_0_28px_-10px_rgba(239,68,68,0.35)]"
           style={{ animationDelay: "420ms" }}
         >
           <BellRing className="h-4 w-4 shrink-0 animate-pulse text-red-400" />
@@ -365,6 +365,8 @@ export default function DashboardPage() {
         <KpiCard label={t("kpi.setupTime")} value={`${kpi.avgActualSetupMin.toFixed(0)} min`} sub={t("kpi.setupTimeSub", { var: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })} icon={<Timer className="h-6 w-6" />} accent="gold" spark={[48, 45, 44, 46, 41, 42]} delay={880} alert={setupWarning ? "warning" : undefined} />
         <KpiCard label={t("kpi.issueClosure")} value={`${kpi.issueClosure.toFixed(0)}%`} sub={t("kpi.issueClosureSub")} icon={<ShieldCheck className="h-6 w-6" />} accent="jade" spark={[30, 40, 40, 45, 50, 50]} delay={1000} alert={overdueCount > 0 ? "critical" : undefined} />
       </section>
+
+      <div className="lux-divider" />
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
         <TiltPanel className={cn("anim-fade-up xl:col-span-3", overdueCount > 0 && "alert-glow-red")} intensity={3} glow={false}>

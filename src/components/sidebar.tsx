@@ -121,7 +121,7 @@ export function Sidebar({
                 {!collapsed && <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />}
                 <div
                   className={cn(
-                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-hisense to-obsidian-700 shadow-lg shadow-hisense/30 transition-all duration-300",
+                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-hisense via-hisense-bold to-obsidian-700 shadow-hisense-glow transition-all duration-300",
                     collapsed ? "h-9 w-9" : "h-11 w-11"
                   )}
                 >
@@ -133,10 +133,10 @@ export function Sidebar({
               </div>
               {!collapsed && (
                 <div>
-                  <p className="font-display text-sm font-bold tracking-wide text-hisense-gradient">
+                  <p className="font-cinzel text-sm font-bold tracking-[0.18em] text-hisense-gradient uppercase">
                     {t("app.title")}
                   </p>
-                  <p className="text-[11px] text-hisense-soft/60">{t("app.subtitle")}</p>
+                  <p className="text-[11px] italic text-hisense-soft/60">{t("app.subtitle")}</p>
                 </div>
               )}
             </Link>
@@ -161,36 +161,33 @@ export function Sidebar({
           )}
         </div>
 
-        <div className="divider-glow mx-6 mt-6" />
+        <div className="lux-divider mx-6 mt-6" />
 
         <nav className="mt-6 flex-1 space-y-1.5 overflow-y-auto px-4">
           {!collapsed && (
-            <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-hisense-soft/40">
-              {t("menu.main")}
-            </p>
+            <p className="lux-eyebrow px-3 pb-2 opacity-70">{t("menu.main")}</p>
           )}
           {NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
           {!collapsed && (
-            <p className="px-3 pb-2 pt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-hisense-soft/40">
-              {t("menu.input")}
-            </p>
+            <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
           )}
           {INPUT_NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
           {!collapsed && (
-            <p className="px-3 pb-2 pt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-hisense-soft/40">
-              {t("menu.settings")}
-            </p>
+            <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
           )}
           {SETTINGS_NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
+          {!collapsed && (
+            <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.help")}</p>
+          )}
           {HELP_NAV.map(({ href, key, icon }) => (
             <NavLink
               key={href}
@@ -206,10 +203,12 @@ export function Sidebar({
         {!collapsed && (
           <div className="p-4">
             <UserSession />
-            <div className="mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
+            <div className="gold-hairline mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
               <div className="flex items-center gap-2">
                 <span className="live-dot" />
-                <p className="text-xs font-medium text-hisense-bold">{t("system.online")}</p>
+                <p className="font-cinzel text-xs font-semibold tracking-wider text-hisense-bold uppercase">
+                  {t("system.online")}
+                </p>
               </div>
               <div className="mt-3 flex items-center gap-2 text-[11px] text-hisense-soft/50">
                 <Activity className="h-3.5 w-3.5" />

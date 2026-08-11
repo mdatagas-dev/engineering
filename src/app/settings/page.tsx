@@ -53,10 +53,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">
-          {t("menu.settings")}
-        </p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("settings.title")}</h1>
+        <p className="lux-eyebrow mb-2">{t("menu.settings")}</p>
+        <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("settings.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("settings.subtitle")}</p>
       </header>
 
@@ -122,7 +120,7 @@ function AccountPanel({
     <TiltPanel className="anim-fade-up" intensity={3}>
       <PanelHeader icon={<UserCog className="h-4 w-4" />} title={t("settings.account")} subtitle={t("settings.accountSub")} />
       <div className="space-y-5 p-5">
-        <div className="glass-premium flex items-center gap-4 rounded-xl p-4">
+        <div className="glass-premium gold-hairline flex items-center gap-4 rounded-xl p-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense/40 to-obsidian-700 font-display text-lg font-bold text-hisense-soft">
             {(user?.username ?? "?").charAt(0).toUpperCase()}
           </div>
@@ -189,7 +187,7 @@ function AccountPanel({
         <button
           onClick={changePassword}
           disabled={saving || !oldPw || !newPw}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:cursor-not-allowed disabled:opacity-40"
+          className="shine-sweep relative flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Save className="h-3.5 w-3.5" /> {t("settings.save")}
         </button>
@@ -341,7 +339,7 @@ function DataPanel({
     <TiltPanel className="anim-fade-up" intensity={3}>
       <PanelHeader icon={<Database className="h-4 w-4" />} title={t("settings.data")} subtitle={t("settings.dataSub")} />
       <div className="space-y-3 p-5">
-        <div className="glass-premium rounded-xl px-4 py-3">
+        <div className="glass-premium gold-hairline rounded-xl px-4 py-3">
           <p className="text-[11px] text-hisense-soft/50">{t("settings.totalRows")}</p>
           <p className="font-display text-hisense-gradient mt-1 text-2xl font-bold">
             {rows.length.toLocaleString()} <span className="text-xs font-normal text-hisense-soft/50">{t("settings.rows")}</span>
@@ -411,11 +409,11 @@ function SystemPanel({
       <PanelHeader icon={<Server className="h-4 w-4" />} title={t("settings.system")} subtitle={t("settings.systemSub")} />
       <div className="space-y-3 p-5">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="glass-premium rounded-xl px-4 py-3">
+          <div className="glass-premium gold-hairline rounded-xl px-4 py-3">
             <p className="text-[11px] text-hisense-soft/50">{t("settings.version")}</p>
             <p className="font-display mt-1 text-lg font-bold text-hisense-soft">v1.0.0</p>
           </div>
-          <div className="glass-premium rounded-xl px-4 py-3">
+          <div className="glass-premium gold-hairline rounded-xl px-4 py-3">
             <p className="text-[11px] text-hisense-soft/50">{t("settings.backendStatus")}</p>
             <p className="mt-1 flex items-center gap-2 text-sm font-semibold">
               <span className={cn("h-2 w-2 rounded-full", backendOnline ? "bg-hisense" : "bg-red-400")} />
@@ -425,7 +423,7 @@ function SystemPanel({
             </p>
           </div>
         </div>
-        <div className="glass-premium rounded-xl px-4 py-3">
+        <div className="glass-premium gold-hairline rounded-xl px-4 py-3">
           <p className="flex items-center gap-2 text-[11px] text-hisense-soft/50">
             <Wrench className="h-3.5 w-3.5" /> {t("app.subtitle")} — Next.js 16 · FastAPI · ECharts
           </p>
@@ -486,7 +484,7 @@ function ToggleRow({ label, storageKey, defaultOn = false }: { label: string; st
   }, [on, storageKey]);
 
   return (
-    <div className="glass-premium flex items-center justify-between rounded-xl px-4 py-3">
+    <div className="glass-premium gold-hairline flex items-center justify-between rounded-xl px-4 py-3">
       <p className="text-xs text-hisense-soft/70">{label}</p>
       <button
         onClick={() => setOn((s) => !s)}

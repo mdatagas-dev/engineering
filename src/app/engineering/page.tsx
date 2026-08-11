@@ -370,7 +370,7 @@ export default function EngineeringPage() {
     <button
       onClick={onClick}
       disabled={!valid || saving}
-      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
+      className="group shine-sweep relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
     >
       <Save className="h-4 w-4 transition-transform group-hover:scale-110" />
       {saving ? t("engineering.form.saving") : t("engineering.form.save")}
@@ -391,18 +391,18 @@ export default function EngineeringPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("engineering.pillar")}</p>
-        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("engineering.title")}</h1>
+        <p className="lux-eyebrow">{t("engineering.pillar")}</p>
+        <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("engineering.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("engineering.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-        <TiltPanel className="anim-fade-up p-5" intensity={6}>
+        <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <CheckCircle2 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.issueClosure.toFixed(0)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{kpi.issueClosure.toFixed(0)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -426,7 +426,7 @@ export default function EngineeringPage() {
             <TrendingUp className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.improvementEffectivenessSub")}</p>
         </TiltPanel>
       </div>
