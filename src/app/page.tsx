@@ -370,7 +370,7 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
         <TiltPanel className={cn("anim-fade-up xl:col-span-3", overdueCount > 0 && "alert-glow-red")} intensity={3} glow={false}>
-          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("chart.engineeringTrend")} subtitle={t("chart.engineeringTrendSub")} />
+          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("chart.engineeringTrend")} subtitle={t("chart.engineeringTrendSub", { p: periode === 1 ? t("dash.periodeHariIni") : t("dash.periodeTerakhir", { n: periode }) })} />
           <DelayedChart delay={1250} option={trenOption} height={300} className="px-2 pb-2" />
         </TiltPanel>
 
