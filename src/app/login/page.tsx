@@ -194,8 +194,8 @@ function LoginForm() {
                 </button>
               </form>
 
-              <p className="mt-8 text-center text-xs font-medium tracking-wide text-neutral-400">
-                ENGINEERING · Role-Based Access Control · JWT Secure Session
+              <p className="mt-8 text-center text-xs font-medium tracking-wide text-black/70">
+                Engineering Performance Dashboard · v1.0.0
               </p>
             </div>
           </div>
