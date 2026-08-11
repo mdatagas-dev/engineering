@@ -250,7 +250,10 @@ export default function SetupPage() {
             <Target className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-shadow-luxe">
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-shadow-luxe"
+            style={{ color: "#fbbf24", textShadow: "0 0 24px #fbbf2455, 0 0 64px #fbbf2422" }}
+          >
             {summary.avgStd.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgStandardSub")}</p>

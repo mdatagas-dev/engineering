@@ -244,7 +244,12 @@ export default function QualityPage() {
             <ShieldCheck className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.fpy.toFixed(1)}%</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#22d3ee", textShadow: "0 0 24px #22d3ee55, 0 0 64px #22d3ee22" }}
+          >
+            {kpi.fpy.toFixed(1)}%
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.fpyFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -252,7 +257,12 @@ export default function QualityPage() {
             <TrendingDown className="h-4 w-4 text-red-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{kpi.defectRate.toFixed(2)}%</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#fb7185", textShadow: "0 0 24px #fb718555, 0 0 64px #fb718522" }}
+          >
+            {kpi.defectRate.toFixed(2)}%
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.defectFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -260,7 +270,12 @@ export default function QualityPage() {
             <BarChart3 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{pareto[0]?.model}</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#a78bfa", textShadow: "0 0 24px #a78bfa55, 0 0 64px #a78bfa22" }}
+          >
+            {pareto[0]?.model}
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
         </TiltPanel>
       </div>

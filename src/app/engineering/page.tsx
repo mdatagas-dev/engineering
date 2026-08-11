@@ -402,7 +402,12 @@ export default function EngineeringPage() {
             <CheckCircle2 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">{kpi.issueClosure.toFixed(0)}%</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#fb7185", textShadow: "0 0 24px #fb718555, 0 0 64px #fb718522" }}
+          >
+            {kpi.issueClosure.toFixed(0)}%
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -410,7 +415,12 @@ export default function EngineeringPage() {
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.overdueRate.toFixed(0)}%</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#f87171", textShadow: "0 0 24px #f8717155, 0 0 64px #f8717122" }}
+          >
+            {kpi.overdueRate.toFixed(0)}%
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -418,7 +428,12 @@ export default function EngineeringPage() {
             <Wrench className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
           </div>
-          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.toolAvailability.toFixed(0)}%</p>
+          <p
+            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            style={{ color: "#34d399", textShadow: "0 0 24px #34d39955, 0 0 64px #34d39922" }}
+          >
+            {kpi.toolAvailability.toFixed(0)}%
+          </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.toolAvailabilitySub")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
