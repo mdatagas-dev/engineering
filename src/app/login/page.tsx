@@ -2,8 +2,7 @@
 
 import { Suspense, useEffect, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { KeyRound, User, Loader2, Lock } from "lucide-react";
-import { type Role } from "@/lib/auth";
+import { KeyRound, User, Loader2, Lock, Eye, EyeOff } from "lucide-react";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 import { LogoIcon } from "@/components/logo";
@@ -15,13 +14,6 @@ const MANUFACTURE_QUOTES: { quote: string; author: string }[] = [
   { quote: "Perbaikan terus-menerus lebih baik daripada kesempurnaan yang tertunda.", author: "Mark Twain" },
   { quote: "Cara terbaik untuk memprediksi masa depan adalah dengan menciptakannya.", author: "Peter Drucker" },
   { quote: "Kesederhanaan adalah kecanggihan tertinggi.", author: "Leonardo da Vinci" },
-];
-
-const DEMO_ACCOUNTS: { username: string; password: string; role: Role }[] = [
-  { username: "admin", password: "admin123", role: "admin" },
-  { username: "engineer", password: "engineer123", role: "engineer" },
-  { username: "qc", password: "qc123", role: "qc" },
-  { username: "viewer", password: "viewer123", role: "viewer" },
 ];
 
 export default function LoginPage() {
@@ -39,6 +31,7 @@ function LoginForm() {
   const { t } = useI18n();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [quoteIdx, setQuoteIdx] = useState(0);
@@ -81,12 +74,6 @@ function LoginForm() {
     }
   };
 
-  const fill = (u: string, p: string) => {
-    setUsername(u);
-    setPassword(p);
-    setError("");
-  };
-
   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Gradasi bergerak pelan */}
@@ -101,28 +88,28 @@ function LoginForm() {
       />
       <div className="absolute inset-0 bg-obsidian-950/45" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col lg:flex-row">
-        {/* ===== KIRI: kata mutiara ===== */}
-        <div className="flex flex-1 flex-col justify-center px-8 py-12 lg:px-16">
-          <div className="mb-10 flex items-center gap-3">
-            <LogoIcon size="md" />
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col lg:flex-row">
+        {/* ===== KIRI: kata mutiara (lebih besar) ===== */}
+        <div className="flex flex-[1.3] flex-col justify-center px-8 py-12 lg:px-16 xl:px-24">
+          <div className="mb-12 flex items-center gap-4">
+            <LogoIcon size="lg" />
             <div className="text-left leading-tight">
-              <p className="text-2xl font-semibold tracking-tight text-white">EPD</p>
-              <p className="text-xs text-white/70">Engineering Performance Dashboard</p>
+              <p className="text-3xl font-semibold tracking-tight text-white">EPD</p>
+              <p className="text-sm text-white/70">Engineering Performance Dashboard</p>
             </div>
           </div>
 
-          <blockquote className="max-w-lg">
+          <blockquote className="max-w-2xl">
             <div key={quoteIdx} className="anim-fade-in">
-              <p className="font-display text-3xl font-medium leading-snug text-white lg:text-4xl">
+              <p className="font-display text-4xl font-medium leading-snug text-white lg:text-5xl xl:text-[3.4rem]">
                 “{MANUFACTURE_QUOTES[quoteIdx].quote}”
               </p>
-              <footer className="mt-5 flex items-center gap-3">
-                <span className="h-px w-10 bg-white/40" />
-                <cite className="text-sm text-white/80 not-italic">{MANUFACTURE_QUOTES[quoteIdx].author}</cite>
+              <footer className="mt-6 flex items-center gap-3">
+                <span className="h-px w-12 bg-white/40" />
+                <cite className="text-base text-white/80 not-italic">{MANUFACTURE_QUOTES[quoteIdx].author}</cite>
               </footer>
             </div>
-            <div className="mt-6 flex items-center gap-2">
+            <div className="mt-8 flex items-center gap-2">
               {MANUFACTURE_QUOTES.map((_, i) => (
                 <button
                   key={i}
@@ -130,21 +117,21 @@ function LoginForm() {
                   onClick={() => setQuoteIdx(i)}
                   aria-label={`Kutipan ${i + 1}`}
                   className={cn(
-                    "h-1.5 rounded-full transition-all duration-300",
-                    i === quoteIdx ? "w-6 bg-white" : "w-1.5 bg-white/30 hover:bg-white/50"
+                    "h-2 rounded-full transition-all duration-300",
+                    i === quoteIdx ? "w-8 bg-white" : "w-2 bg-white/30 hover:bg-white/50"
                   )}
                 />
               ))}
-              <span className="ml-2 font-mono text-[10px] text-white/40">
+              <span className="ml-2 font-mono text-xs text-white/40">
                 {String(quoteIdx + 1).padStart(2, "0")}/{MANUFACTURE_QUOTES.length}
               </span>
             </div>
           </blockquote>
         </div>
 
-        {/* ===== KANAN: form login ===== */}
-        <div className="flex w-full items-center justify-center px-4 pb-12 lg:w-[440px] lg:pr-8">
-          <div className="anim-fade-up w-full">
+        {/* ===== KANAN: form login (lebih ke kanan) ===== */}
+        <div className="flex w-full items-center justify-end px-4 pb-12 lg:w-[500px] lg:pr-16 xl:pr-24">
+          <div className="anim-fade-up w-full max-w-md">
             <div className="rounded-2xl bg-white p-8 shadow-2xl sm:p-10">
               <div className="mb-8">
                 <h1 className="text-2xl font-semibold text-neutral-900">{t("login.welcome")}</h1>
@@ -167,13 +154,24 @@ function LoginForm() {
                   <label className="mb-1.5 block text-sm font-medium text-neutral-700">
                     {t("login.password")}
                   </label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full rounded-lg border border-neutral-300 bg-white px-3.5 py-2.5 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#00b3ac] focus:ring-2 focus:ring-[#00b3ac]/30"
-                  />
+                  <div className="relative">
+                    <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••"
+                      className="w-full rounded-lg border border-neutral-300 bg-white py-2.5 pl-10 pr-11 text-sm text-neutral-900 outline-none transition-colors placeholder:text-neutral-400 focus:border-[#00b3ac] focus:ring-2 focus:ring-[#00b3ac]/30"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword((s) => !s)}
+                      title={showPassword ? "Sembunyikan password" : "Lihat password"}
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-md p-1.5 text-neutral-400 transition-colors hover:bg-neutral-100 hover:text-neutral-600"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
 
                 {error && (
@@ -196,38 +194,8 @@ function LoginForm() {
                 </button>
               </form>
 
-              <div className="mt-8">
-                <p className="mb-3 text-xs font-medium uppercase tracking-wide text-neutral-400">
-                  {t("login.demo")}
-                </p>
-                <div className="space-y-2">
-                  {DEMO_ACCOUNTS.map((acc) => (
-                    <button
-                      key={acc.username}
-                      onClick={() => fill(acc.username, acc.password)}
-                      className="flex w-full items-center justify-between gap-3 rounded-lg border border-neutral-200 px-4 py-2.5 text-left transition-colors hover:border-[#00b3ac]/50 hover:bg-[#00b3ac]/5"
-                    >
-                      <div>
-                        <p className="font-mono text-sm text-neutral-800">{acc.username}</p>
-                        <p className="text-xs text-neutral-400">{t(`role.${acc.role}`)} · {t(`role.desc.${acc.role}`)}</p>
-                      </div>
-                      <span
-                        className={cn(
-                          "rounded-full border px-2.5 py-0.5 text-[11px] capitalize",
-                          acc.role === "admin" && "border-amber-400/50 bg-amber-50 text-amber-600",
-                          acc.role === "engineer" && "border-[#00b3ac]/40 bg-[#00b3ac]/5 text-[#00857f]",
-                          acc.role === "viewer" && "border-neutral-300 bg-neutral-50 text-neutral-500"
-                        )}
-                      >
-                        {acc.role}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <p className="mt-8 text-center text-xs text-neutral-400">
-                {t("app.title")} · {t("login.security")}
+              <p className="mt-8 text-center text-xs font-medium tracking-wide text-neutral-400">
+                ENGINEERING · Role-Based Access Control · JWT Secure Session
               </p>
             </div>
           </div>
