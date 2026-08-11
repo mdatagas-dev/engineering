@@ -9,37 +9,37 @@ const ACCENT = {
     chip: "from-cyan-400 to-cyan-600 text-obsidian-950 shadow-cyan-500/40",
     dot: "bg-cyan-400",
     glow: "shadow-cyan-500/30",
-    hex: "#22d3ee",
+    hex: "#67e8f9",
   },
   gold: {
     chip: "from-amber-300 to-amber-500 text-obsidian-950 shadow-amber-500/40",
     dot: "bg-amber-300",
     glow: "shadow-amber-500/30",
-    hex: "#fbbf24",
+    hex: "#fde68a",
   },
   teal: {
     chip: "from-emerald-400 to-emerald-600 text-obsidian-950 shadow-emerald-500/40",
     dot: "bg-emerald-400",
     glow: "shadow-emerald-500/30",
-    hex: "#34d399",
+    hex: "#86efac",
   },
   emerald: {
     chip: "from-violet-400 to-violet-600 text-obsidian-950 shadow-violet-500/40",
     dot: "bg-violet-400",
     glow: "shadow-violet-500/30",
-    hex: "#a78bfa",
+    hex: "#c4b5fd",
   },
   rose: {
     chip: "from-rose-400 to-rose-600 text-obsidian-950 shadow-rose-500/40",
     dot: "bg-rose-400",
     glow: "shadow-rose-500/30",
-    hex: "#fb7185",
+    hex: "#fda4af",
   },
   blue: {
     chip: "from-blue-400 to-blue-600 text-obsidian-950 shadow-blue-500/40",
     dot: "bg-blue-400",
     glow: "shadow-blue-500/30",
-    hex: "#60a5fa",
+    hex: "#93c5fd",
   },
 } as const;
 
@@ -114,7 +114,7 @@ export function KpiCard({
               <p className="lux-eyebrow">{label}</p>
               <p
                 className={cn(
-                  "font-display mt-2.5 text-[2.6rem] font-semibold leading-none tracking-tight",
+                  "font-display mt-3 text-[3.25rem] font-semibold leading-none tracking-tight lg:text-[3.75rem]",
                   alert === "warning" && "lux-gold-text"
                 )}
                 style={
@@ -122,7 +122,7 @@ export function KpiCard({
                     ? undefined
                     : {
                         color: a.hex,
-                        textShadow: `0 0 24px ${a.hex}55, 0 0 64px ${a.hex}22`,
+                        textShadow: `0 0 28px ${a.hex}66, 0 0 72px ${a.hex}33`,
                       }
                 }
               >
