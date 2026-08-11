@@ -1,5 +1,22 @@
+const PG_BIN = "/usr/lib/postgresql/18/bin";
+const PG_DATA = "/home/lutvi/eng-pgdata";
+const PG_LOG = `${PG_DATA}/server.log`;
+
 module.exports = {
   apps: [
+    {
+      name: "eng-postgres",
+      cwd: __dirname,
+      script: `${PG_BIN}/postgres`,
+      args: `-D ${PG_DATA} -p 5433 -k /tmp`,
+      interpreter: "none",
+      autorestart: true,
+      watch: false,
+      time: true,
+      log_file: "/tmp/opencode/eng-postgres.log",
+      out_file: "/tmp/opencode/eng-postgres.out.log",
+      error_file: "/tmp/opencode/eng-postgres.err.log",
+    },
     {
       name: "eng-frontend",
       cwd: __dirname,
@@ -39,3 +56,4 @@ module.exports = {
     },
   ],
 };
+

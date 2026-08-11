@@ -86,32 +86,60 @@ Urutan perhitungan: **Demand → Takt Time → Cycle Time → Line Balance → S
 | Frontend | Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 |
 | Visualisasi | Apache ECharts + echarts-gl (grafik 3D, gradient, glow) |
 | Backend | Python FastAPI (Calculation Engine) |
-| Database | PostgreSQL 16 (docker) + Prisma Client Python |
+| Database | PostgreSQL 18 native (dikelola PM2) + Prisma Client Python |
 | Data | Pandas + Openpyxl (impor Excel) |
 
 ## Database (PostgreSQL + Prisma)
 
-1. Jalankan PostgreSQL (docker):
+Postgres berjalan **native** (bukan docker) sebagai cluster di
+`/home/lutvi/eng-pgdata` (PostgreSQL 18, port `5433`, user `engineering`,
+DB `engineering` + `engineering_test`), dikelola **PM2** sebagai app
+`eng-postgres`. Tidak pakai systemd (butuh sudo).
 
-   ```bash
-   docker run -d --name eng-postgres --restart unless-stopped \
-     -e POSTGRES_USER=engineering -e POSTGRES_PASSWORD=engineering123 \
-     -e POSTGRES_DB=engineering -p 5433:5432 \
-     -v eng-pg-data:/var/lib/postgresql/data postgres:16-alpine
-   ```
+```bash
+pm2 status eng-postgres    # cek status
+pm2 restart eng-postgres   # restart
+pm2 logs eng-postgres      # cek log app postgres
+```
 
-   (database test `engineering_test` dibuat otomatis oleh `backend/tests/conftest.py`.)
+Start/stop manual (tanpa PM2):
 
-2. Schema (`prisma/schema.prisma`) → database:
+```bash
+/usr/lib/postgresql/18/bin/pg_ctl -D /home/lutvi/eng-pgdata start -o "-p 5433" -k /tmp
+/usr/lib/postgresql/18/bin/pg_ctl -D /home/lutvi/eng-pgdata stop -m fast
+```
 
-   ```bash
-   export DATABASE_URL="postgresql://engineering:engineering123@localhost:5433/engineering"
-   PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma generate   # regenerate client Python
-   PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma db push     # sinkronisasi tabel
-   ```
+### Inisialisasi cluster dari nol
 
-3. `DATABASE_URL` dibaca saat backend jalan; `npm run backend` sudah otomatis
-   memakainya (bisa di-override via env `DATABASE_URL`).
+```bash
+/usr/lib/postgresql/18/bin/initdb -D /home/lutvi/eng-pgdata
+/usr/lib/postgresql/18/bin/pg_ctl -D /home/lutvi/eng-pgdata start -o "-p 5433" -k /tmp
+psql -h /tmp -p 5433 -d postgres -c "CREATE USER engineering WITH PASSWORD 'engineering123';"
+psql -h /tmp -p 5433 -d postgres -c "CREATE DATABASE engineering OWNER engineering;"
+psql -h /tmp -p 5433 -d postgres -c "CREATE DATABASE engineering_test OWNER engineering;"
+```
+
+Restore dump (bila ada):
+
+```bash
+psql -h /tmp -p 5433 -U engineering -d engineering -f backup.sql
+psql -h /tmp -p 5433 -U engineering -d engineering_test -f backup_test.sql
+```
+
+> Data postgres ada di `/home/lutvi/eng-pgdata` — backup:
+> `pg_dump -h /tmp -p 5433 -U engineering engineering > backup.sql`.
+> (DB test `engineering_test` juga dibuat otomatis oleh `backend/tests/conftest.py`.)
+
+Schema (`prisma/schema.prisma`) → database:
+
+```bash
+export DATABASE_URL="postgresql://engineering:engineering123@localhost:5433/engineering"
+PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma generate   # regenerate client Python
+PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma db push     # sinkronisasi tabel
+```
+
+`DATABASE_URL` dibaca saat backend jalan; `npm run backend` sudah otomatis
+memakainya (bisa di-override via env `DATABASE_URL`).
 
 ## Menjalankan
 
@@ -127,29 +155,36 @@ npm run backend
 ```
 
 > Port 3011 dipilih agar tidak bentrok (3000, 3005, 3008, 3010, 3007 dipakai aplikasi lain).
+> Postgres harus jalan — pastikan app PM2 `eng-postgres` aktif (lihat bagian Database).
 
 ## Deployment (PM2 — production)
 
-Frontend & backend dikelola **PM2** (`ecosystem.config.js`): frontend `next start -p 3011`,
-backend `uvicorn 2 workers` di `127.0.0.1:8101`, Postgres tetap via docker.
+Tiga app dikelola **PM2** (`ecosystem.config.js`):
+
+| App PM2 | Proses | Port |
+|---|---|---|
+| `eng-postgres` | `postgres -D /home/lutvi/eng-pgdata -p 5433 -k /tmp` | 5433 |
+| `eng-frontend` | `next start -p 3011` | 3011 |
+| `eng-backend` | `uvicorn 0.0.0.0:8101` | 8101 |
 
 ```bash
-# 1. Pastikan Postgres jalan (lihat bagian Database di atas)
-
-# 2. Build production frontend
+# 1. Build production frontend
 npm run build
 
-# 3. Start via PM2 (auto-restart + save ke dump)
+# 2. Start via PM2 (auto-restart + save ke dump)
 npm run pm2:start        # atau: pm2 start ecosystem.config.js && pm2 save
 
-# 4. (Sekali saja) auto-start saat server reboot — butuh sudo, isi password:
-#    sudo env PATH=$PATH:/home/lutvi/.nvm/versions/node/v24.16.0/bin \
+# 3. (Sekali saja) auto-start saat server reboot — jalankan dengan sudo, isi password:
+#    sudo bash deploy/pm2-startup.sh
+#    (setara dengan: sudo env PATH=$PATH:/home/lutvi/.nvm/versions/node/v24.16.0/bin \
 #      /home/lutvi/.nvm/versions/node/v24.16.0/lib/node_modules/pm2/bin/pm2 \
-#      startup systemd -u lutvi --hp /home/lutvi
+#      startup systemd -u lutvi --hp /home/lutvi)
+#    Lalu verifikasi: sudo systemctl status pm2-lutvi
 
 # Monitoring
 npm run pm2:logs         # pm2 logs (gabungan)
-pm2 status               # status kedua app
+pm2 status               # status ketiga app
+pm2 restart eng-postgres eng-frontend eng-backend   # restart ketiganya
 ```
 
 Kredensial dibaca dari `ecosystem.config.js`: `DATABASE_URL` & `JWT_SECRET` bisa
