@@ -400,7 +400,7 @@ export default function EngineeringPage() {
         <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <CheckCircle2 className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -408,12 +408,12 @@ export default function EngineeringPage() {
           >
             {kpi.issueClosure.toFixed(0)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <AlertTriangle className="h-4 w-4 text-red-400" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -421,12 +421,12 @@ export default function EngineeringPage() {
           >
             {kpi.overdueRate.toFixed(0)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Wrench className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -434,15 +434,15 @@ export default function EngineeringPage() {
           >
             {kpi.toolAvailability.toFixed(0)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.toolAvailabilitySub")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.toolAvailabilitySub")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <TrendingUp className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
           </div>
           <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.improvementEffectivenessSub")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.improvementEffectivenessSub")}</p>
         </TiltPanel>
       </div>
 

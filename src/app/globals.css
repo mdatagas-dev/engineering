@@ -252,11 +252,11 @@ body {
 /* ===== Obsidian Regal — luxury utilities ===== */
 .lux-eyebrow {
   font-family: var(--font-cinzel);
-  font-size: 0.62rem;
-  letter-spacing: 0.32em;
+  font-size: 0.78rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--color-gold-300) 78%, transparent);
-  text-shadow: 0 0 18px rgba(252, 211, 77, 0.25);
+  color: color-mix(in oklab, var(--color-gold-300) 88%, transparent);
+  text-shadow: 0 0 18px rgba(252, 211, 77, 0.3);
 }
 
 .lux-gold-text {

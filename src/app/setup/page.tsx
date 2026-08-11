@@ -237,18 +237,18 @@ export default function SetupPage() {
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Timer className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgActual")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgActual")}</p>
           </div>
           <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">
             {summary.avgAct.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgActualSub", { n: rows.length })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("setup.kpi.avgActualSub", { n: rows.length })}</p>
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Target className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
@@ -256,19 +256,19 @@ export default function SetupPage() {
           >
             {summary.avgStd.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgStandardSub")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("setup.kpi.avgStandardSub")}</p>
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className={cn("flex items-center gap-2", summary.variance > 0 ? "text-red-400/70" : "text-hisense-soft/60")}>
             <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-hisense")} />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.totalVariance")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.totalVariance")}</p>
           </div>
           <p className={cn("font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe", summary.variance > 0 ? "text-red-400" : "text-hisense")}>
             {summary.variance > 0 ? "+" : ""}{summary.variance.toFixed(0)}
             <span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">
+          <p className="mt-1.5 text-sm text-hisense-soft/65">
             {summary.variance > 0 ? t("setup.kpi.varianceSlower") : t("setup.kpi.varianceFaster")}
           </p>
         </TiltPanel>
@@ -276,12 +276,12 @@ export default function SetupPage() {
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Activity className="h-4 w-4 text-gold-400" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.achievement")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.achievement")}</p>
           </div>
           <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">
             {summary.achievement.toFixed(1)}<span className="text-lg">%</span>
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.achievementSub")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("setup.kpi.achievementSub")}</p>
         </TiltPanel>
       </section>
 

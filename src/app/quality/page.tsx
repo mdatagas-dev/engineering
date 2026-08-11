@@ -242,7 +242,7 @@ export default function QualityPage() {
         <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <ShieldCheck className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -250,12 +250,12 @@ export default function QualityPage() {
           >
             {kpi.fpy.toFixed(1)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.fpyFormula")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("quality.kpi.fpyFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <TrendingDown className="h-4 w-4 text-red-400" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -263,12 +263,12 @@ export default function QualityPage() {
           >
             {kpi.defectRate.toFixed(2)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.defectFormula")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("quality.kpi.defectFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <BarChart3 className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
@@ -276,7 +276,7 @@ export default function QualityPage() {
           >
             {pareto[0]?.model}
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
         </TiltPanel>
       </div>
 

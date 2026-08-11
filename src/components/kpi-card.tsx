@@ -131,7 +131,7 @@ export function KpiCard({
             </div>
             <div
               className={cn(
-                "shine-sweep flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg transition-transform duration-500 group-hover:scale-110",
+                "shine-sweep flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg transition-transform duration-500 group-hover:scale-110",
                 a.chip,
                 a.glow
               )}
@@ -139,11 +139,11 @@ export function KpiCard({
               <span className="icon-breathe">{icon}</span>
             </div>
           </div>
-          <div className="mt-4 flex items-center gap-2 text-xs text-hisense-soft/55">
+          <div className="mt-4 flex items-center gap-2.5 text-sm font-medium text-hisense-soft/70">
             {alert === "critical" ? (
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-red-400" />
+              <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-red-400" />
             ) : (
-              <span className={cn("inline-block h-1.5 w-1.5 rounded-full", a.dot)} />
+              <span className={cn("inline-block h-2 w-2 rounded-full", a.dot)} />
             )}
             {sub}
           </div>

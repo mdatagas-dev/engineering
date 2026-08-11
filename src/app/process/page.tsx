@@ -209,15 +209,15 @@ export default function ProcessPage() {
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Gauge className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
           </div>
           <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">{kpi.oee.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Clock className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
@@ -225,12 +225,12 @@ export default function ProcessPage() {
           >
             {formatSec(kpi.taktTimeSec)}
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.taktBenchmark")}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.taktBenchmark")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Timer className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
@@ -238,15 +238,15 @@ export default function ProcessPage() {
           >
             {kpi.cycleTimeAchievement.toFixed(1)}%
           </p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/60">
             <Scale className="h-4 w-4 text-hisense" />
-            <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
           </div>
           <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">{kpi.setupAchievement.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
         </TiltPanel>
       </div>
 
