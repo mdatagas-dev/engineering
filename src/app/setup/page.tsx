@@ -228,14 +228,14 @@ export default function SetupPage() {
         <h1 className="font-display text-hisense-gradient mt-2 text-4xl font-semibold text-shadow-luxe lg:text-5xl">
           {t("setup.title")}
         </h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">
+        <p className="mt-1.5 text-sm text-hisense-soft/75">
           {t("setup.subtitle")}
         </p>
       </header>
 
       <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Timer className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgActual")}</p>
           </div>
@@ -246,7 +246,7 @@ export default function SetupPage() {
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Target className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
           </div>
@@ -260,11 +260,11 @@ export default function SetupPage() {
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className={cn("flex items-center gap-2", summary.variance > 0 ? "text-red-400/70" : "text-hisense-soft/60")}>
-            <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-hisense")} />
+          <div className={cn("flex items-center gap-2", summary.variance > 0 ? "text-red-400/70" : "text-hisense-soft/80")}>
+            <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-cyan-300")} />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.totalVariance")}</p>
           </div>
-          <p className={cn("font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe", summary.variance > 0 ? "text-red-400" : "text-hisense")}>
+          <p className={cn("font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe", summary.variance > 0 ? "text-red-400" : "text-cyan-300")}>
             {summary.variance > 0 ? "+" : ""}{summary.variance.toFixed(0)}
             <span className="text-lg"> {t("common.unit.min")}</span>
           </p>
@@ -274,7 +274,7 @@ export default function SetupPage() {
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Activity className="h-4 w-4 text-gold-400" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.achievement")}</p>
           </div>
@@ -311,7 +311,7 @@ export default function SetupPage() {
         <div className="overflow-x-auto px-5 pb-5 pt-4">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead>
-              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
+              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/75">
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.model")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.line")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.setupStandard")}</th>
@@ -328,7 +328,7 @@ export default function SetupPage() {
                   <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{m.std.toFixed(1)} {t("common.unit.min")}</td>
                   <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{m.act.toFixed(1)} {t("common.unit.min")}</td>
                   <td className="py-3 pr-4 font-mono text-xs">
-                    <span className={m.variance > 0 ? "text-red-400" : "text-hisense"}>
+                    <span className={m.variance > 0 ? "text-red-400" : "text-cyan-300"}>
                       {m.variance > 0 ? "+" : ""}{m.variance.toFixed(1)} {t("common.unit.min")}
                     </span>
                   </td>

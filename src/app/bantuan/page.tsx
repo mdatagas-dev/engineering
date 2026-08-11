@@ -70,7 +70,7 @@ export default function BantuanPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow mb-2">{t("menu.bantuan")}</p>
         <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("bantuan.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("bantuan.subtitle")}</p>
+        <p className="mt-1.5 text-sm text-hisense-soft/75">{t("bantuan.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">

@@ -317,7 +317,7 @@ export default function DashboardPage() {
               {t("dash.title")}
             </h1>
             <p
-              className="anim-fade-up mt-1.5 text-sm text-hisense-soft/50"
+              className="anim-fade-up mt-1.5 text-sm text-hisense-soft/75"
               style={{ animationDelay: "240ms" }}
             >
               {t("dash.subtitle", { date: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) })}
@@ -334,7 +334,7 @@ export default function DashboardPage() {
                   "font-cinzel rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-colors",
                   periode === n
                     ? "border-hisense/60 bg-hisense/15 text-hisense-soft"
-                    : "border-hisense/10 text-hisense-soft/50 hover:text-hisense-soft"
+                    : "border-hisense/10 text-hisense-soft/75 hover:text-hisense-soft"
                 )}
               >
                 {n === 1 ? t("periode.harian") : t("periode.hari", { n })}

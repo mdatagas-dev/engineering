@@ -93,7 +93,7 @@ function StatusBox({ status }: { status: { type: "ok" | "err"; msg: string } | n
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
+      <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">
         {label}
       </label>
       {children}
@@ -382,7 +382,7 @@ export default function EngineeringPage() {
       type="button"
       onClick={onClick}
       title={title}
-      className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/60 transition-colors hover:border-red-500/40 hover:text-red-300"
+      className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/80 transition-colors hover:border-red-500/40 hover:text-red-300"
     >
       <Trash2 className="h-3.5 w-3.5" />
     </button>
@@ -393,12 +393,12 @@ export default function EngineeringPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow">{t("engineering.pillar")}</p>
         <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("engineering.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("engineering.subtitle")}</p>
+        <p className="mt-1.5 text-sm text-hisense-soft/75">{t("engineering.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <CheckCircle2 className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
@@ -411,7 +411,7 @@ export default function EngineeringPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
           </div>
@@ -424,7 +424,7 @@ export default function EngineeringPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Wrench className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
           </div>
@@ -437,7 +437,7 @@ export default function EngineeringPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("engineering.kpi.toolAvailabilitySub")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <TrendingUp className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
           </div>
@@ -458,7 +458,7 @@ export default function EngineeringPage() {
                 "flex items-center gap-2 rounded-xl border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-all",
                 tab === tb.key
                   ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
-                  : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/50 hover:border-hisense/30"
+                  : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/75 hover:border-hisense/30"
               )}
             >
               {tb.icon}
@@ -638,7 +638,7 @@ export default function EngineeringPage() {
         <div className="overflow-x-auto px-5 pb-5 pt-4">
           <table className="w-full min-w-[760px] text-left text-sm">
             <thead>
-              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
+              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/75">
                 <th className="pb-3 pr-4 font-semibold">ID</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.desc")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.line")}</th>
@@ -680,7 +680,7 @@ export default function EngineeringPage() {
                         {t(PRIORITY_KEY[issue.priority])}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/60">{issue.dueDate}</td>
+                    <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{issue.dueDate}</td>
                     <td className="py-3 pr-4">
                       <span className={cn("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px]", st.cls)}>
                         <span className={cn("h-1.5 w-1.5 rounded-full", st.dot)} />
@@ -693,7 +693,7 @@ export default function EngineeringPage() {
                           type="button"
                           onClick={() => siklusStatus(issue)}
                           title={t("engineering.action.cycleStatus")}
-                          className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/60 transition-colors hover:border-hisense/40 hover:text-hisense-soft"
+                          className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/80 transition-colors hover:border-hisense/40 hover:text-hisense-soft"
                         >
                           <RefreshCw className="h-3.5 w-3.5" />
                         </button>
@@ -722,7 +722,7 @@ export default function EngineeringPage() {
               <li key={tool.id} className="flex items-center justify-between gap-3 border-b border-hisense/8 py-3 last:border-0">
                 <span className="text-sm text-hisense-soft">{tool.name}</span>
                 <span className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-hisense-soft/60">
+                  <span className="font-mono text-xs text-hisense-soft/80">
                     {tool.plannedHours} → {tool.actualAvailableHours} {t("common.unit.hr")}
                   </span>
                   {delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
@@ -745,7 +745,7 @@ export default function EngineeringPage() {
               <li key={imp.id} className="flex items-center justify-between gap-3 border-b border-hisense/8 py-3 last:border-0">
                 <span className="text-sm text-hisense-soft">{imp.title}</span>
                 <span className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-hisense-soft/60">
+                  <span className="font-mono text-xs text-hisense-soft/80">
                     {imp.baseline} → {imp.after} {imp.unit}
                   </span>
                   {delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}

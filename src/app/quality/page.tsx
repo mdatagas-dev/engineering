@@ -235,12 +235,12 @@ export default function QualityPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow">{t("quality.pilar")}</p>
         <h1 className="font-display text-hisense-gradient text-shadow-luxe mt-2 text-4xl font-bold lg:text-5xl">{t("quality.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("quality.subtitle")}</p>
+        <p className="mt-1.5 text-sm text-hisense-soft/75">{t("quality.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         <TiltPanel className="gold-hairline anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <ShieldCheck className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
           </div>
@@ -253,7 +253,7 @@ export default function QualityPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("quality.kpi.fpyFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <TrendingDown className="h-4 w-4 text-red-400" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
@@ -266,7 +266,7 @@ export default function QualityPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("quality.kpi.defectFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <BarChart3 className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
@@ -286,11 +286,11 @@ export default function QualityPage() {
           <div className="space-y-4 p-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.date")}</label>
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">{t("quality.input.date")}</label>
                 <input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} className={inputCls} />
               </div>
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.line")}</label>
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">{t("quality.input.line")}</label>
                 <select value={form.line} onChange={(e) => set("line", e.target.value)} className={cn(inputCls, "appearance-none")}>
                   {LINES.map((o) => (
                     <option key={o} value={o}>{o}</option>
@@ -299,15 +299,15 @@ export default function QualityPage() {
               </div>
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.model")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">{t("quality.input.model")}</label>
               <input type="text" value={form.model} onChange={(e) => set("model", e.target.value)} placeholder={t("quality.input.modelPlaceholder")} className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.defectType")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">{t("quality.input.defectType")}</label>
               <input type="text" value={form.defect_type} onChange={(e) => set("defect_type", e.target.value)} placeholder={t("quality.input.defectTypePlaceholder")} className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.qty")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/80">{t("quality.input.qty")}</label>
               <input type="number" min={1} value={form.qty} onChange={(e) => set("qty", e.target.value)} className={inputCls} />
             </div>
             {status && (
@@ -343,12 +343,12 @@ export default function QualityPage() {
             icon={<ClipboardList className="h-4 w-4" />}
             title={t("quality.table.title")}
             subtitle={t("quality.table.subtitle")}
-            right={<span className="text-xs text-hisense-soft/60">{t("quality.table.total", { n: totalQty })}</span>}
+            right={<span className="text-xs text-hisense-soft/80">{t("quality.table.total", { n: totalQty })}</span>}
           />
           <div className="overflow-x-auto px-5 pb-5 pt-4">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
-                <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
+                <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/75">
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.date")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.line")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.model")}</th>
@@ -365,7 +365,7 @@ export default function QualityPage() {
                 ) : (
                   sorted.map((d) => (
                     <tr key={d.id} className="border-b border-hisense/8 transition-colors hover:bg-hisense/5">
-                      <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/60">{d.date}</td>
+                      <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{d.date}</td>
                       <td className="py-3 pr-4 text-hisense-soft/70">{d.line}</td>
                       <td className="py-3 pr-4 text-hisense-soft">{d.model}</td>
                       <td className="py-3 pr-4 text-hisense-soft/70">{d.defect_type}</td>

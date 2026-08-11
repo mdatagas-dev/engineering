@@ -202,12 +202,12 @@ export default function ProcessPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow">{t("process.pilar")}</p>
         <h1 className="font-display text-hisense-gradient mt-2 text-4xl font-semibold text-shadow-luxe lg:text-5xl">{t("process.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("process.subtitle")}</p>
+        <p className="mt-1.5 text-sm text-hisense-soft/75">{t("process.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Gauge className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
           </div>
@@ -215,7 +215,7 @@ export default function ProcessPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Clock className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
           </div>
@@ -228,7 +228,7 @@ export default function ProcessPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.taktBenchmark")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Timer className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
           </div>
@@ -241,7 +241,7 @@ export default function ProcessPage() {
           <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-hisense-soft/60">
+          <div className="flex items-center gap-2 text-hisense-soft/80">
             <Scale className="h-4 w-4 text-hisense" />
             <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
           </div>

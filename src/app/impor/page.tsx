@@ -68,7 +68,7 @@ export default function ImporPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow mb-2">{t("menu.input")}</p>
         <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("impor.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">
+        <p className="mt-1.5 text-sm text-hisense-soft/75">
           {t("impor.subtitle")}
         </p>
       </header>
@@ -172,7 +172,7 @@ export default function ImporPage() {
             )}
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-hisense/15 text-[10px] uppercase tracking-wider text-hisense-soft/50">
+                <tr className="border-b border-hisense/15 text-[10px] uppercase tracking-wider text-hisense-soft/75">
                   {PREVIEW_COLS.map((c) => (
                     <th key={c} className="pb-2.5 pr-4 font-semibold">{c}</th>
                   ))}

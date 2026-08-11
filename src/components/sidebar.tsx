@@ -250,7 +250,7 @@ export function Sidebar({
             <div className="gold-hairline mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
               <div className="flex items-center gap-2">
                 <span className="live-dot" />
-                <p className="font-cinzel text-xs font-semibold tracking-wider text-hisense-bold uppercase">
+                <p className="font-cinzel text-xs font-semibold tracking-wider text-cyan-200 uppercase">
                   {t("system.online")}
                 </p>
               </div>

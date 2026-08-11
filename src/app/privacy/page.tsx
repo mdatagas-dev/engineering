@@ -58,7 +58,7 @@ export default function PrivacyPage() {
       <header className="anim-fade-up">
         <p className="lux-eyebrow mb-2">{t("menu.privacy")}</p>
         <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("privacy.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("privacy.subtitle")}</p>
+        <p className="mt-1.5 text-sm text-hisense-soft/75">{t("privacy.subtitle")}</p>
       </header>
 
       <TiltPanel className="anim-fade-up" intensity={2}>

@@ -121,7 +121,7 @@ function LoginForm() {
               <div className="mb-8">
                 <p className="lux-eyebrow mb-2.5">{t("app.title")}</p>
                 <h1 className="font-display text-hisense-gradient text-4xl font-bold text-shadow-luxe lg:text-5xl">{t("login.welcome")}</h1>
-                <p className="mt-1.5 text-sm text-hisense-soft/50">{t("login.subtitle")}</p>
+                <p className="mt-1.5 text-sm text-hisense-soft/75">{t("login.subtitle")}</p>
               </div>
 
               <form onSubmit={submit} className="space-y-4">
