@@ -8,7 +8,20 @@ from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
-from .security import get_current_user, get_editor, get_quality_editor, load_env
+from .security import (
+    get_current_user,
+    get_editor,
+    get_quality_editor,
+    get_admin,
+    load_env,
+)
+from .users import (
+    seed_default_users,
+    hash_password,
+    verify_password,
+    public_user,
+    VALID_ROLES as USER_ROLES,
+)
 
 load_env()
 
@@ -64,6 +77,8 @@ async def lifespan(_: FastAPI):
             await db.replace_all_in("tools", TOOLS)
         if await db.count_rows_in("improvements") == 0:
             await db.replace_all_in("improvements", IMPROVEMENTS)
+
+        await seed_default_users()
 
         sync_issues(await db.list_rows("issues"))
         sync_tools(await db.list_rows("tools"))
@@ -374,6 +389,104 @@ async def hapus_defect(defect_id: int) -> dict:
     if not await db.delete_row_in("defects", defect_id):
         raise HTTPException(status_code=404, detail=f"Defect {defect_id} tidak ditemukan")
     return {"deleted": True, "id": defect_id}
+
+
+class LoginIn(BaseModel):
+    username: str = Field(min_length=1)
+    password: str = Field(min_length=1)
+
+
+@app.post("/api/auth/login")
+async def api_login(payload: LoginIn) -> dict:
+    """Verifikasi kredensial terhadap akun di DB (PBKDF2). Dipanggil route handler frontend."""
+    username = payload.username.strip()
+    rows = await db.list_rows("users")
+    user = next((r for r in rows if r["username"] == username), None)
+    if user is None or not verify_password(payload.password, user["salt"], user["hash"]):
+        raise HTTPException(status_code=401, detail="Username atau password salah")
+    return {"ok": True, "username": username, "role": user["role"]}
+
+
+class UserCreate(BaseModel):
+    username: str = Field(min_length=3, max_length=32)
+    password: str = Field(min_length=4)
+    role: Literal["admin", "engineer", "viewer", "qc"]
+
+
+class UserRoleUpdate(BaseModel):
+    role: Literal["admin", "engineer", "viewer", "qc"]
+
+
+class PasswordChange(BaseModel):
+    old_password: str = Field(min_length=1)
+    new_password: str = Field(min_length=6)
+
+
+@app.post("/api/auth/change-password", dependencies=[Depends(get_current_user)])
+async def ubah_password_sendiri(payload: PasswordChange, user: dict = Depends(get_current_user)) -> dict:
+    rows = await db.list_rows("users")
+    target = next((r for r in rows if r["username"] == user["sub"]), None)
+    if target is None:
+        raise HTTPException(status_code=404, detail="Akun tidak ditemukan")
+    if not verify_password(payload.old_password, target["salt"], target["hash"]):
+        raise HTTPException(status_code=400, detail="Password lama salah")
+    salt, pw_hash = hash_password(payload.new_password)
+    await db.update_row_in("users", target["id"], {"salt": salt, "hash": pw_hash})
+    return {"ok": True}
+
+
+@app.get("/api/users", dependencies=[Depends(get_admin)])
+async def daftar_users() -> dict:
+    rows = await db.list_rows("users")
+    return {"users": [public_user(r) for r in rows]}
+
+
+@app.post("/api/users", dependencies=[Depends(get_admin)])
+async def tambah_user(payload: UserCreate) -> dict:
+    username = payload.username.strip().lower()
+    if not username:
+        raise HTTPException(status_code=422, detail="Username tidak boleh kosong")
+    existing = await db.list_rows("users")
+    if any(r["username"] == username for r in existing):
+        raise HTTPException(status_code=409, detail=f"Username '{username}' sudah dipakai")
+    salt, pw_hash = hash_password(payload.password)
+    row = await db.insert_row_in(
+        "users", {"username": username, "salt": salt, "hash": pw_hash, "role": payload.role}
+    )
+    return public_user(row)
+
+
+@app.put("/api/users/{username}/role", dependencies=[Depends(get_admin)])
+async def ubah_role_user(username: str, payload: UserRoleUpdate) -> dict:
+    rows = await db.list_rows("users")
+    target = next((r for r in rows if r["username"] == username), None)
+    if target is None:
+        raise HTTPException(status_code=404, detail=f"User '{username}' tidak ditemukan")
+    await db.update_row_in("users", target["id"], {"role": payload.role})
+    return {"ok": True, "username": username, "role": payload.role}
+
+
+@app.post("/api/users/{username}/password", dependencies=[Depends(get_admin)])
+async def reset_password_user(username: str, payload: LoginIn) -> dict:
+    rows = await db.list_rows("users")
+    target = next((r for r in rows if r["username"] == username), None)
+    if target is None:
+        raise HTTPException(status_code=404, detail=f"User '{username}' tidak ditemukan")
+    salt, pw_hash = hash_password(payload.password)
+    await db.update_row_in("users", target["id"], {"salt": salt, "hash": pw_hash})
+    return {"ok": True}
+
+
+@app.delete("/api/users/{username}", dependencies=[Depends(get_admin)])
+async def hapus_user(username: str, user: dict = Depends(get_admin)) -> dict:
+    rows = await db.list_rows("users")
+    target = next((r for r in rows if r["username"] == username), None)
+    if target is None:
+        raise HTTPException(status_code=404, detail=f"User '{username}' tidak ditemukan")
+    if username == user["sub"]:
+        raise HTTPException(status_code=400, detail="Tidak bisa menghapus akun sendiri")
+    await db.delete_row_in("users", target["id"])
+    return {"deleted": True, "username": username}
 
 
 @app.get("/api/raw-data", dependencies=[Depends(get_current_user)])

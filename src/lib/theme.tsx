@@ -11,6 +11,15 @@ const ThemeContext = createContext<{ theme: Theme; setTheme: (t: Theme) => void 
   setTheme: () => {},
 });
 
+function readInitial(): Theme {
+  if (typeof window === "undefined") return "dark";
+  try {
+    return window.localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
+  } catch {
+    return "dark";
+  }
+}
+
 function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.classList.remove("dark", "light");
@@ -18,19 +27,19 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>(readInitial);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem(THEME_KEY);
-    const initial: Theme = saved === "light" ? "light" : "dark";
-    setThemeState(initial);
-    applyTheme(initial);
-  }, []);
+    applyTheme(theme);
+  }, [theme]);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
-    applyTheme(t);
-    window.localStorage.setItem(THEME_KEY, t);
+    try {
+      window.localStorage.setItem(THEME_KEY, t);
+    } catch {
+      /* abaikan */
+    }
   }, []);
 
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;

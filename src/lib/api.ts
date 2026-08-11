@@ -215,3 +215,43 @@ export async function hapusDefect(id: number) {
     method: "DELETE",
   });
 }
+
+export interface UserAccount {
+  username: string;
+  role: string;
+}
+
+export type UserRole = "admin" | "engineer" | "viewer" | "qc";
+
+export async function fetchUsers(): Promise<UserAccount[]> {
+  const res = await json<{ users: UserAccount[] }>(`${API_BASE}/api/users`);
+  return res.users;
+}
+
+export async function tambahUser(data: { username: string; password: string; role: UserRole }) {
+  return json<UserAccount>(`${API_BASE}/api/users`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function ubahRoleUser(username: string, role: UserRole) {
+  return json<{ ok: boolean; username: string; role: string }>(
+    `${API_BASE}/api/users/${encodeURIComponent(username)}/role`,
+    { method: "PUT", body: JSON.stringify({ role }) }
+  );
+}
+
+export async function resetPasswordUser(username: string, password: string) {
+  return json<{ ok: boolean }>(`${API_BASE}/api/users/${encodeURIComponent(username)}/password`, {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+export async function hapusUser(username: string) {
+  return json<{ deleted: boolean; username: string }>(
+    `${API_BASE}/api/users/${encodeURIComponent(username)}`,
+    { method: "DELETE" }
+  );
+}

@@ -22,10 +22,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
     void muatDariBackend();
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
   const onToggle = () => {
     setCollapsed((c) => {
       localStorage.setItem(SIDEBAR_KEY, c ? "0" : "1");

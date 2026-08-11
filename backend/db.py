@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from prisma import Prisma
-from prisma.models import RawData, Issue, Tool, Improvement, Defect
+from prisma.models import RawData, Issue, Tool, Improvement, Defect, User
 
 client: Prisma | None = None
 
@@ -14,6 +14,7 @@ _MODELS = {
     "tools": Tool,
     "improvements": Improvement,
     "defects": Defect,
+    "users": User,
 }
 
 
@@ -70,6 +71,7 @@ def _delegate(table: str):
         "tools": _db().tool,
         "improvements": _db().improvement,
         "defects": _db().defect,
+        "users": _db().user,
     }[table]
 
 

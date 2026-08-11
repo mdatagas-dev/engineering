@@ -55,16 +55,19 @@ function NavLink({
   icon: Icon,
   active,
   collapsed,
+  onNavigate,
 }: {
   href: string;
   label: string;
   icon: LucideIcon;
   active: boolean;
   collapsed: boolean;
+  onNavigate?: () => void;
 }) {
   return (
     <Link
       href={href}
+      onClick={onNavigate}
       className={cn(
         "group relative flex items-center rounded-xl px-3.5 py-3 text-base font-medium transition-all duration-300",
         collapsed ? "justify-center gap-0 px-0" : "gap-3",
@@ -219,7 +222,7 @@ export function Sidebar({
             <p className="lux-eyebrow px-3 pb-2 opacity-70">{t("menu.main")}</p>
           </div>
           {NAV.map(({ href, key, icon }) => (
-            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
+            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} onNavigate={onCloseMobile} />
           ))}
 
           {showInput && (
@@ -234,7 +237,7 @@ export function Sidebar({
           )}
           {showInput &&
             INPUT_NAV.map(({ href, key, icon }) => (
-              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} onNavigate={onCloseMobile} />
             ))}
 
           {showSettings && (
@@ -249,7 +252,7 @@ export function Sidebar({
           )}
           {showSettings &&
             SETTINGS_NAV.map(({ href, key, icon }) => (
-              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} onNavigate={onCloseMobile} />
             ))}
 
           <div
@@ -268,6 +271,7 @@ export function Sidebar({
               icon={icon}
               active={pathname === href}
               collapsed={effectiveCollapsed}
+              onNavigate={onCloseMobile}
             />
           ))}
         </nav>

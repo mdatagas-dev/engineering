@@ -22,6 +22,20 @@ export const settingsDict: DomainDict = {
     ja: "アカウント設定",
     ko: "계정 설정",
   },
+  "settings.users": {
+    id: "Manajemen Akun",
+    en: "User Management",
+    zh: "账户管理",
+    ja: "ユーザー管理",
+    ko: "사용자 관리",
+  },
+  "settings.usersSub": {
+    id: "Tambah, ubah role, reset password, dan hapus akun (khusus admin)",
+    en: "Add, change role, reset password, and delete accounts (admin only)",
+    zh: "添加、修改角色、重置密码和删除账户（仅限管理员）",
+    ja: "アカウントの追加・ロール変更・パスワードリセット・削除（管理者のみ）",
+    ko: "계정 추가, 역할 변경, 비밀번호 재설정, 삭제 (관리자 전용)",
+  },
   "settings.accountSub": {
     id: "Informasi pengguna yang sedang login",
     en: "Currently logged-in user information",

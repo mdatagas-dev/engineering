@@ -68,3 +68,13 @@ model Defect {
 
   @@map("defects")
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  salt     String
+  hash     String
+  role     String
+
+  @@map("users")
+}

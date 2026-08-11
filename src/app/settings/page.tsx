@@ -34,6 +34,7 @@ import { useRawRows, gantiBaris } from "@/lib/store";
 import { DAILY_RAW, type DailyRaw } from "@/lib/data";
 import { resetRawData } from "@/lib/api";
 import { cn } from "@/lib/utils";
+import { UserManagementPanel } from "@/components/user-management";
 
 export default function SettingsPage() {
   const { t, lang, setLang, dateFormat, setDateFormat } = useI18n();
@@ -60,6 +61,8 @@ export default function SettingsPage() {
         <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("settings.title")}</h1>
         <p className="mt-1.5 text-sm text-hisense-soft/50">{t("settings.subtitle")}</p>
       </header>
+
+      {user?.role === "admin" && <UserManagementPanel />}
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <AccountPanel user={user} t={t} />

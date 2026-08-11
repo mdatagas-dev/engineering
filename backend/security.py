@@ -59,3 +59,11 @@ def get_quality_editor(authorization: str | None = Header(None)) -> dict:
     if user["role"] not in ("admin", "engineer", "qc"):
         raise HTTPException(status_code=403, detail="Role viewer hanya bisa membaca data")
     return user
+
+
+def get_admin(authorization: str | None = Header(None)) -> dict:
+    """Dependency FastAPI: hanya role admin."""
+    user = get_current_user(authorization)
+    if user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Hanya admin yang dapat mengelola akun")
+    return user
