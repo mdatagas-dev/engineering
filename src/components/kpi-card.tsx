@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 
 const ACCENT = {
   jade: {
-    chip: "from-cyan-400 to-cyan-600 text-obsidian-950 shadow-cyan-500/40",
-    dot: "bg-cyan-400",
-    glow: "shadow-cyan-500/30",
-    hex: "#67e8f9",
+    chip: "from-amber-300 to-amber-500 text-obsidian-950 shadow-amber-500/40",
+    dot: "bg-amber-300",
+    glow: "shadow-amber-500/30",
+    hex: "#f59e0b",
   },
   gold: {
     chip: "from-amber-300 to-amber-500 text-obsidian-950 shadow-amber-500/40",
@@ -18,28 +18,28 @@ const ACCENT = {
     hex: "#fde68a",
   },
   teal: {
-    chip: "from-emerald-400 to-emerald-600 text-obsidian-950 shadow-emerald-500/40",
-    dot: "bg-emerald-400",
-    glow: "shadow-emerald-500/30",
-    hex: "#86efac",
+    chip: "from-cyan-400 to-cyan-600 text-obsidian-950 shadow-cyan-500/40",
+    dot: "bg-cyan-400",
+    glow: "shadow-cyan-500/30",
+    hex: "#22d3ee",
   },
   emerald: {
     chip: "from-violet-400 to-violet-600 text-obsidian-950 shadow-violet-500/40",
     dot: "bg-violet-400",
     glow: "shadow-violet-500/30",
-    hex: "#c4b5fd",
+    hex: "#a78bfa",
   },
   rose: {
     chip: "from-rose-400 to-rose-600 text-obsidian-950 shadow-rose-500/40",
     dot: "bg-rose-400",
     glow: "shadow-rose-500/30",
-    hex: "#fda4af",
+    hex: "#fb7185",
   },
   blue: {
     chip: "from-blue-400 to-blue-600 text-obsidian-950 shadow-blue-500/40",
     dot: "bg-blue-400",
     glow: "shadow-blue-500/30",
-    hex: "#93c5fd",
+    hex: "#60a5fa",
   },
 } as const;
 
