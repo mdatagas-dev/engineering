@@ -106,9 +106,13 @@ function NavLink({
 export function Sidebar({
   collapsed,
   onToggle,
+  mobileOpen = false,
+  onCloseMobile,
 }: {
   collapsed: boolean;
   onToggle: () => void;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }) {
   const pathname = usePathname();
   const { t } = useI18n();
@@ -134,16 +138,28 @@ export function Sidebar({
   const showInput = !isViewer;
   const showSettings = !isViewer;
 
+  // Di mobile (drawer) sidebar selalu expanded; collapsed hanya berlaku di lg+.
+  const effectiveCollapsed = collapsed && !mobileOpen;
+
   return (
-    <aside
-      className={cn(
-        "fixed inset-y-0 left-0 z-40 border-r border-hisense/10 bg-obsidian-900/80 backdrop-blur-xl transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-        collapsed ? "w-16" : "w-64"
+    <>
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-obsidian-950/60 backdrop-blur-sm lg:hidden"
+          onClick={onCloseMobile}
+        />
       )}
-    >
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 border-r border-hisense/10 bg-obsidian-900/90 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "lg:z-40 lg:transition-[width]",
+          mobileOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0 lg:shadow-none",
+          effectiveCollapsed ? "lg:w-16" : "w-64"
+        )}
+      >
       <div className="flex h-full flex-col">
-        <div className={cn("pt-7", collapsed ? "flex flex-col items-center gap-4" : "px-6")}>
-          <div className={cn("flex items-center", collapsed ? "justify-center" : "justify-between gap-3")}>
+        <div className={cn("pt-7", effectiveCollapsed ? "flex flex-col items-center gap-4" : "px-6")}>
+          <div className={cn("flex items-center", effectiveCollapsed ? "justify-center" : "justify-between gap-3")}>
             <Link
               href="/"
               className="anim-scale-in flex items-center gap-3 transition-opacity hover:opacity-90"
@@ -153,15 +169,15 @@ export function Sidebar({
                 <div
                   className={cn(
                     "glow-ring absolute -inset-2 animate-pulse-glow transition-opacity duration-500",
-                    collapsed ? "opacity-0" : "opacity-60"
+                    effectiveCollapsed ? "opacity-0" : "opacity-60"
                   )}
                 />
-                <LogoIcon size={collapsed ? "sm" : "md"} />
+                <LogoIcon size={effectiveCollapsed ? "sm" : "md"} />
               </div>
               <div
                 className={cn(
                   "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                  collapsed ? "max-w-0 -translate-x-3 opacity-0" : "max-w-[128px] translate-x-0 opacity-100"
+                  effectiveCollapsed ? "max-w-0 -translate-x-3 opacity-0" : "max-w-[128px] translate-x-0 opacity-100"
                 )}
               >
                 <p className="font-cinzel text-sm font-bold tracking-[0.18em] text-hisense-gradient uppercase">
@@ -170,7 +186,7 @@ export function Sidebar({
                 <p className="text-[11px] italic text-hisense-soft/60">{t("app.subtitle")}</p>
               </div>
             </Link>
-            {!collapsed && (
+            {!effectiveCollapsed && (
               <button
                 onClick={onToggle}
                 title={t("nav.collapse")}
@@ -180,7 +196,7 @@ export function Sidebar({
               </button>
             )}
           </div>
-          {collapsed && (
+          {effectiveCollapsed && (
             <button
               onClick={onToggle}
               title={t("nav.expand")}
@@ -197,20 +213,20 @@ export function Sidebar({
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+              effectiveCollapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 opacity-70">{t("menu.main")}</p>
           </div>
           {NAV.map(({ href, key, icon }) => (
-            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
           ))}
 
           {showInput && (
             <div
               className={cn(
                 "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+                effectiveCollapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
               )}
             >
               <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
@@ -218,14 +234,14 @@ export function Sidebar({
           )}
           {showInput &&
             INPUT_NAV.map(({ href, key, icon }) => (
-              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
             ))}
 
           {showSettings && (
             <div
               className={cn(
                 "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-                collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+                effectiveCollapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
               )}
             >
               <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
@@ -233,13 +249,13 @@ export function Sidebar({
           )}
           {showSettings &&
             SETTINGS_NAV.map(({ href, key, icon }) => (
-              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={effectiveCollapsed} />
             ))}
 
           <div
             className={cn(
               "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+              effectiveCollapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
             )}
           >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.help")}</p>
@@ -251,7 +267,7 @@ export function Sidebar({
               label={t(key)}
               icon={icon}
               active={pathname === href}
-              collapsed={collapsed}
+              collapsed={effectiveCollapsed}
             />
           ))}
         </nav>
@@ -259,7 +275,7 @@ export function Sidebar({
         <div
           className={cn(
             "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-            collapsed ? "max-h-0 opacity-0" : "max-h-56 opacity-100"
+            effectiveCollapsed ? "max-h-0 opacity-0" : "max-h-56 opacity-100"
           )}
         >
           <div className="p-4">
@@ -290,5 +306,6 @@ export function Sidebar({
         </div>
       </div>
     </aside>
+    </>
   );
 }
