@@ -8,7 +8,7 @@
     "start": "next start -p 3011",
     "lint": "eslint",
     "test": "vitest run",
-    "backend": "DATABASE_URL=${DATABASE_URL:-postgresql://engineering:engineering123@localhost:5433/engineering} .venv/bin/uvicorn backend.main:app --reload --port 8101"
+    "backend": ".venv/bin/uvicorn backend.main:app --reload --port 8101"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

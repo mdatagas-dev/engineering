@@ -24,7 +24,7 @@ const map: Record<string, keyof DailyRaw> = {
 
 const fixture: DailyRaw[] = rows.map((r) =>
   Object.fromEntries(Object.entries(map).map(([snake, camel]) => [camel, r[snake]]))
-) as DailyRaw[];
+) as unknown as DailyRaw[];
 
 const k = kalkulasiKpi(fixture);
 console.log(JSON.stringify(k, null, 2));

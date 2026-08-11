@@ -24,7 +24,7 @@ const fixture: DailyRaw[] = (parityRows as SnakeRow[]).map((r) =>
   Object.fromEntries(
     Object.entries(MAP).map(([snake, camel]) => [camel, r[snake]])
   )
-) as DailyRaw[];
+) as unknown as DailyRaw[];
 
 describe("kalkulasiKpi — dataset mini (hitung manual)", () => {
   const mini: DailyRaw[] = [
