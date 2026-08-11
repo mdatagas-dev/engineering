@@ -6,8 +6,6 @@ import "echarts-gl";
 
 export type ChartOption = echarts.EChartsCoreOption;
 
-const FLOW_INTERVAL = 2600;
-
 function firstLineData(option: ChartOption): { data: unknown[]; yAxisIndex: number } | null {
   const series = (option as { series?: unknown[] | unknown }).series;
   if (!Array.isArray(series)) return null;
@@ -49,24 +47,48 @@ export function Chart({
     const chart = chartRef.current;
     if (!chart) return;
 
+    const series = ((option as { series?: unknown[] }).series ?? []) as {
+      type?: string;
+    }[];
+    const hasBar = series.some((s) => s.type === "bar");
+
     const base = {
       animation: true,
-      animationDuration: 1500,
-      animationDurationUpdate: 600,
+      animationDuration: hasBar ? 1100 : 1400,
+      animationDurationUpdate: 700,
       animationEasing: "cubicOut",
+      animationEasingUpdate: "cubicInOut",
+      animationDelay: hasBar ? (idx: number) => idx * 60 : undefined,
+      animationDelayUpdate: hasBar ? (idx: number) => idx * 45 : undefined,
     } as ChartOption;
 
     chart.setOption({ ...base, ...option }, { notMerge: true, lazyUpdate: false });
 
     const line = firstLineData(option);
-    if (!line) return;
+    if (!line || line.data.length < 2) return;
 
-    let idx = 0;
     let alive = true;
-    const tick = () => {
+    let raf = 0;
+    let start = performance.now();
+    const CYCLE = 3200;
+
+    const toXY = (idx: number, point: unknown): [number, number] => {
+      if (Array.isArray(point)) return [Number(point[0]), Number(point[1])];
+      return [idx, Number(point)];
+    };
+
+    const step = (now: number) => {
       if (!alive || document.hidden) return;
-      const point = line.data[idx % line.data.length];
-      const [x, y] = Array.isArray(point) ? point : [idx % line.data.length, point];
+      const t = ((now - start) % CYCLE) / CYCLE;
+      const n = line.data.length;
+      const pos = t * (n - 1);
+      const i0 = Math.floor(pos);
+      const frac = pos - i0;
+      const i1 = Math.min(i0 + 1, n - 1);
+      const [x0, y0] = toXY(i0, line.data[i0]);
+      const [x1, y1] = toXY(i1, line.data[i1]);
+      const x = x0 + (x1 - x0) * frac;
+      const y = y0 + (y1 - y0) * frac;
       chart.setOption(
         {
           series: [
@@ -82,6 +104,7 @@ export function Chart({
                 shadowColor: "rgba(0,179,172,0.9)",
               },
               rippleEffect: { brushType: "stroke", scale: 3.2, period: 2.2 },
+              animation: false,
               yAxisIndex: line.yAxisIndex,
               data: [[x, y]],
             },
@@ -89,13 +112,13 @@ export function Chart({
         },
         { notMerge: false }
       );
-      idx += 1;
+      raf = requestAnimationFrame(step);
     };
-    tick();
-    const timer = setInterval(tick, FLOW_INTERVAL);
+
+    raf = requestAnimationFrame(step);
     return () => {
       alive = false;
-      clearInterval(timer);
+      cancelAnimationFrame(raf);
     };
   }, [option]);
 

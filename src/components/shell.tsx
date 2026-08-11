@@ -28,7 +28,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
   };
 
   if (isLogin) {
-    return <>{children}</>;
+    return (
+      <div key={pathname} className="page-enter min-h-screen">
+        {children}
+      </div>
+    );
   }
 
   return (
@@ -40,7 +44,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
           collapsed ? "ml-16" : "ml-64"
         )}
       >
-        {children}
+        <div key={pathname} className="page-enter">
+          {children}
+        </div>
       </main>
     </div>
   );
