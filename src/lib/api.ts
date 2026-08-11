@@ -73,6 +73,12 @@ export async function resetRawData() {
   });
 }
 
+export async function clearMockData() {
+  return json<{ cleared: boolean; [k: string]: number | boolean }>(`${API_BASE}/api/data/clear`, {
+    method: "POST",
+  });
+}
+
 export async function uploadExcel(file: File) {
   const form = new FormData();
   form.append("file", file);

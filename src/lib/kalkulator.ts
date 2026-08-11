@@ -54,7 +54,10 @@ function avg(nums: number[]) {
 const DEMAND_PER_DAY = 420;
 const PLANNED_MINUTES = 480;
 
-export function kalkulasiKpi(rows: DailyRaw[]): KpiSnapshot {
+export function kalkulasiKpi(
+  rows: DailyRaw[],
+  eng?: { issues: { status: string; dueDate: string }[]; tools: { plannedHours: number; actualAvailableHours: number }[]; improvements: { baseline: number; after: number }[] }
+): KpiSnapshot {
   const totals = rows.reduce(
     (acc, r) => {
       acc.input += r.inputQty;
@@ -71,12 +74,12 @@ export function kalkulasiKpi(rows: DailyRaw[]): KpiSnapshot {
     { input: 0, firstPass: 0, defect: 0, planned: 0, downtime: 0, targetCt: 0, actualCt: 0, stdSetup: 0, actSetup: 0 }
   );
 
-  const fpy = (totals.firstPass / totals.input) * 100;
-  const quality = (totals.input - totals.defect) / totals.input;
-  const availability = (totals.planned - totals.downtime) / totals.planned;
+  const fpy = totals.input ? (totals.firstPass / totals.input) * 100 : 0;
+  const quality = totals.input ? (totals.input - totals.defect) / totals.input : 0;
+  const availability = totals.planned ? (totals.planned - totals.downtime) / totals.planned : 0;
   const targetCtAvg = totals.targetCt / totals.input || 0;
   const actualCtAvg = totals.actualCt / totals.input || 0;
-  const performance = targetCtAvg / actualCtAvg;
+  const performance = actualCtAvg ? targetCtAvg / actualCtAvg : 0;
   const oee = availability * performance * quality * 100;
 
   const byLine = new Map<string, StationBalance[]>();
@@ -95,30 +98,34 @@ export function kalkulasiKpi(rows: DailyRaw[]): KpiSnapshot {
     lineCount++;
     if (!bottleneck || bt.cycleTimeSec > bottleneck.cycleTimeSec) bottleneck = bt;
   }
-  const lineBalance = bottleneck ? balanceSum / lineCount : 0;
+  const lineBalance = rows.length && bottleneck ? balanceSum / lineCount : 0;
 
   const stdSetup = totals.stdSetup / totals.input || 0;
   const actSetup = totals.actSetup / totals.input || 0;
-  const setupAchievement = (stdSetup / actSetup) * 100;
+  const setupAchievement = actSetup ? (stdSetup / actSetup) * 100 : 0;
   const setupVariance = actSetup - stdSetup;
 
-  const totalIssues = ISSUES.length;
-  const closed = ISSUES.filter((i) => i.status === "closed").length;
-  const overdue = ISSUES.filter((i) => i.status !== "closed" && i.dueDate < new Date().toISOString().slice(0, 10)).length;
-  const issueClosure = (closed / totalIssues) * 100;
-  const overdueRate = (overdue / totalIssues) * 100;
+  const issues = eng?.issues ?? ISSUES;
+  const tools = eng?.tools ?? TOOLS;
+  const improvements = eng?.improvements ?? IMPROVEMENTS;
 
-  const toolAvailability =
-    (TOOLS.reduce((a, t) => a + t.actualAvailableHours, 0) /
-      TOOLS.reduce((a, t) => a + t.plannedHours, 0)) *
-    100;
+  const totalIssues = issues.length;
+  const closed = issues.filter((i) => i.status === "closed").length;
+  const overdue = issues.filter((i) => i.status !== "closed" && i.dueDate < new Date().toISOString().slice(0, 10)).length;
+  const issueClosure = totalIssues ? (closed / totalIssues) * 100 : 0;
+  const overdueRate = totalIssues ? (overdue / totalIssues) * 100 : 0;
 
-  const improvementEffectiveness = avg(
-    IMPROVEMENTS.map((i) => ((i.baseline - i.after) / i.baseline) * 100)
-  );
+  const plannedTool = tools.reduce((a, t) => a + t.plannedHours, 0);
+  const toolAvailability = plannedTool
+    ? (tools.reduce((a, t) => a + t.actualAvailableHours, 0) / plannedTool) * 100
+    : 0;
+
+  const improvementEffectiveness = improvements.length
+    ? avg(improvements.map((i) => ((i.baseline - i.after) / i.baseline) * 100))
+    : 0;
 
   const taktTimeSec = (PLANNED_MINUTES * 60) / DEMAND_PER_DAY;
-  const cycleTimeAchievement = (targetCtAvg / actualCtAvg) * 100;
+  const cycleTimeAchievement = actualCtAvg ? (targetCtAvg / actualCtAvg) * 100 : 0;
 
   return {
     fpy,

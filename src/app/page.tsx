@@ -19,6 +19,7 @@ import { LogoIcon } from "@/components/logo";
 import { KpiCard } from "@/components/kpi-card";
 import { kalkulasiKpi, ambilTren, ambilPareto } from "@/lib/kalkulator";
 import { useRawRows } from "@/lib/store";
+import { useEngineering } from "@/lib/store-engineering";
 import { ISSUES } from "@/lib/data";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
@@ -61,6 +62,7 @@ function DelayedChart({
 export default function DashboardPage() {
   const { t } = useI18n();
   const rows = useRawRows();
+  const eng = useEngineering();
   const [periode, setPeriode] = useState<1 | 7 | 14 | 30>(30);
 
   const today = new Date().toISOString().slice(0, 10);
@@ -74,7 +76,7 @@ export default function DashboardPage() {
     return rows.filter((r) => keep.has(r.date));
   }, [rows, periode]);
 
-  const kpi = useMemo(() => kalkulasiKpi(filteredRows), [filteredRows]);
+  const kpi = useMemo(() => kalkulasiKpi(filteredRows, eng), [filteredRows, eng]);
   const tren = useMemo(() => ambilTren(filteredRows), [filteredRows]);
   const pareto = useMemo(() => ambilPareto(filteredRows), [filteredRows]);
 

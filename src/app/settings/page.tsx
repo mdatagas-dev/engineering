@@ -20,6 +20,7 @@ import {
   Wrench,
   HelpCircle,
   ShieldCheck,
+  Trash2,
   ChevronRight,
   Sun,
   Moon,
@@ -32,7 +33,9 @@ import { LANGS, LANG_LABEL } from "@/lib/i18n/types";
 import { useTheme } from "@/lib/theme";
 import { useRawRows, gantiBaris } from "@/lib/store";
 import { DAILY_RAW, type DailyRaw } from "@/lib/data";
-import { resetRawData } from "@/lib/api";
+import { resetRawData, clearMockData } from "@/lib/api";
+import { muatEngineering } from "@/lib/store-engineering";
+import { muatDefects } from "@/lib/store-quality";
 import { cn } from "@/lib/utils";
 import { UserManagementPanel } from "@/components/user-management";
 
@@ -342,6 +345,20 @@ function DataPanel({
     setTimeout(() => setStatus(null), 2500);
   };
 
+  const clearMock = async () => {
+    if (!window.confirm(t("settings.clearMockConfirm"))) return;
+    gantiBaris([]);
+    try {
+      await clearMockData();
+      void muatEngineering();
+      void muatDefects();
+      setStatus({ type: "ok", msg: t("settings.clearMockOk") });
+    } catch (e) {
+      setStatus({ type: "err", msg: (e as Error).message });
+    }
+    setTimeout(() => setStatus(null), 3000);
+  };
+
   return (
     <TiltPanel className="anim-fade-up" intensity={3}>
       <PanelHeader icon={<Database className="h-4 w-4" />} title={t("settings.data")} subtitle={t("settings.dataSub")} />
@@ -375,6 +392,19 @@ function DataPanel({
             <div>
               <p className="text-xs font-medium text-red-200">{t("settings.resetData")}</p>
               <p className="text-[10px] text-red-300/40">{t("settings.resetDataSub")}</p>
+            </div>
+          </div>
+        </button>
+
+        <button
+          onClick={clearMock}
+          className="flex w-full items-center justify-between rounded-xl border border-red-500/30 bg-red-500/[0.07] px-4 py-3 text-left transition-all hover:border-red-500/60 hover:bg-red-500/10"
+        >
+          <div className="flex items-center gap-3">
+            <Trash2 className="h-4 w-4 text-red-300" />
+            <div>
+              <p className="text-xs font-bold text-red-200">{t("settings.clearMock")}</p>
+              <p className="text-[10px] text-red-300/50">{t("settings.clearMockSub")}</p>
             </div>
           </div>
         </button>

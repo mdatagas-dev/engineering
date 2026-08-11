@@ -84,11 +84,21 @@ describe("kalkulasiKpi — dataset mini (hitung manual)", () => {
 });
 
 describe("kalkulasiKpi — edge cases", () => {
-  it("dataset kosong tidak throw dan KPI statis tetap terdefinisi", () => {
+  it("dataset kosong → KPI produksi 0 (mock data dihapus)", () => {
     const k = kalkulasiKpi([]);
-    expect(k.lineBalance).toBeCloseTo(92.02, 1);
-    expect(k.issueClosure).toBe(40);
+    expect(k.fpy).toBe(0);
+    expect(k.oee).toBe(0);
+    expect(k.lineBalance).toBe(0);
+    expect(k.setupAchievement).toBe(0);
+    expect(k.cycleTimeAchievement).toBe(0);
     expect(k.taktTimeSec).toBeCloseTo(68.57, 1);
+  });
+
+  it("kalkulasiKpi menerima data engineering opsional (kosong → 0)", () => {
+    const k = kalkulasiKpi([], { issues: [], tools: [], improvements: [] });
+    expect(k.issueClosure).toBe(0);
+    expect(k.toolAvailability).toBe(0);
+    expect(k.improvementEffectiveness).toBe(0);
   });
 
   it("defect > input tetap menghasilkan angka terdefinisi (tidak NaN)", () => {

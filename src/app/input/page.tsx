@@ -5,6 +5,7 @@ import { Database, Save, CheckCircle2, AlertTriangle, RotateCcw } from "lucide-r
 import { TiltPanel } from "@/components/tilt-panel";
 import { PanelHeader } from "@/components/panel-header";
 import { useRawRows, tambahBaris, muatDariBackend } from "@/lib/store";
+import { useEngineering } from "@/lib/store-engineering";
 import { kalkulasiKpi } from "@/lib/kalkulator";
 import { postRawData, resetRawData, type RawDataRow } from "@/lib/api";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,8 @@ const initial = (): RawDataRow => ({
 export default function InputPage() {
   const { t } = useI18n();
   const rows = useRawRows();
-  const kpi = useMemo(() => kalkulasiKpi(rows), [rows]);
+  const eng = useEngineering();
+  const kpi = useMemo(() => kalkulasiKpi(rows, eng), [rows, eng]);
   const [form, setForm] = useState<RawDataRow>(initial);
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
   const [saving, setSaving] = useState(false);

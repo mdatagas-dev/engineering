@@ -161,7 +161,7 @@ def kalkulasi_kpi(rows: list[dict[str, Any]]) -> dict[str, Any]:
         wc = sum(s["work_content_sec"] for s in stations)
         bn = max(s["cycle_time_sec"] for s in stations)
         balances.append(wc / (bn * len(stations)) * 100)
-    line_balance = sum(balances) / len(balances)
+    line_balance = sum(balances) / len(balances) if rows and balances else 0
 
     std_setup = total["std_setup"] / total["input"] if total["input"] else 0
     act_setup = total["act_setup"] / total["input"] if total["input"] else 0

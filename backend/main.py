@@ -72,13 +72,13 @@ async def lifespan(_: FastAPI):
                     "status": i["status"],
                     "due_date": i["due_date"],
                 }
-                for i in ISSUES
+                for i in _SEED_ISSUES
             ]
             await db.replace_all_in("issues", seed_issues)
         if await db.count_rows_in("tools") == 0:
-            await db.replace_all_in("tools", TOOLS)
+            await db.replace_all_in("tools", _SEED_TOOLS)
         if await db.count_rows_in("improvements") == 0:
-            await db.replace_all_in("improvements", IMPROVEMENTS)
+            await db.replace_all_in("improvements", _SEED_IMPROVEMENTS)
 
         await seed_default_users()
 
@@ -106,6 +106,12 @@ app.add_middleware(
 )
 
 LINES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"]
+
+# Snapshot seed engineering asli (sebelum sync/clear memutasi ISSUES/TOOLS/IMPROVEMENTS)
+# — dipakai reset untuk memulihkan demo.
+_SEED_ISSUES = [dict(i) for i in ISSUES]
+_SEED_TOOLS = [dict(t) for t in TOOLS]
+_SEED_IMPROVEMENTS = [dict(i) for i in IMPROVEMENTS]
 
 NUMERIC_COLUMNS = [
     "input_qty",
@@ -275,29 +281,42 @@ def health() -> dict:
     return {"status": "ok", "engine": "calculation-engine-v1"}
 
 
+async def _sync_runtime() -> None:
+    """Reload RAW + data engineering dari DB — memastikan konsistensi antar worker."""
+    RAW[:] = await db.load_rows()
+    sync_issues(await db.list_rows("issues"))
+    sync_tools(await db.list_rows("tools"))
+    sync_improvements(await db.list_rows("improvements"))
+
+
 @app.get("/api/kpi", dependencies=[Depends(get_current_user)])
-def api_kpi() -> dict:
+async def api_kpi() -> dict:
     """Ringkasan seluruh KPI inti engineering + setup time."""
+    await _sync_runtime()
     return kalkulasi_kpi(RAW)
 
 
 @app.get("/api/trend", dependencies=[Depends(get_current_user)])
-def api_trend() -> list[dict]:
+async def api_trend() -> list[dict]:
+    await _sync_runtime()
     return ambil_tren()
 
 
 @app.get("/api/pareto", dependencies=[Depends(get_current_user)])
-def api_pareto() -> list[dict]:
+async def api_pareto() -> list[dict]:
+    await _sync_runtime()
     return ambil_pareto()
 
 
 @app.get("/api/defect-per-line", dependencies=[Depends(get_current_user)])
-def api_defect_per_line() -> list[dict]:
+async def api_defect_per_line() -> list[dict]:
+    await _sync_runtime()
     return ambil_defect_per_line()
 
 
 @app.get("/api/process", dependencies=[Depends(get_current_user)])
-def api_process() -> dict:
+async def api_process() -> dict:
+    await _sync_runtime()
     return {
         "station_balance": STATION_BALANCE,
         "setup_trend": setup_per_day(),
@@ -306,7 +325,8 @@ def api_process() -> dict:
 
 
 @app.get("/api/quality", dependencies=[Depends(get_current_user)])
-def api_quality() -> dict:
+async def api_quality() -> dict:
+    await _sync_runtime()
     return fpy_defect_daily()
 
 
@@ -552,10 +572,48 @@ async def tambah_raw_data(row: RawDataRow) -> dict:
 
 @app.post("/api/raw-data/reset", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def reset_raw_data() -> dict:
-    """Kembalikan RAW ke kondisi seed awal (DB ikut di-sync)."""
+    """Kembalikan RAW + data engineering ke kondisi seed awal (DB ikut di-sync)."""
     n = reset_raw()
     await db.replace_all(RAW)
+
+    seed_issues = [
+        {
+            "eng_id": i["id"],
+            "title": i["title"],
+            "line": i["line"],
+            "owner": i["owner"],
+            "priority": i["priority"],
+            "status": i["status"],
+            "due_date": i["due_date"],
+        }
+        for i in _SEED_ISSUES
+    ]
+    await db.replace_all_in("issues", seed_issues)
+    await db.replace_all_in("tools", _SEED_TOOLS)
+    await db.replace_all_in("improvements", _SEED_IMPROVEMENTS)
+    sync_issues(await db.list_rows("issues"))
+    sync_tools(await db.list_rows("tools"))
+    sync_improvements(await db.list_rows("improvements"))
     return {"reset": True, "total_rows": n}
+
+
+@app.post("/api/data/clear", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
+async def clear_mock_data() -> dict:
+    """Hapus SEMUA data mock/demo: raw_data, issues, tools, improvements, defects.
+
+    Akun user TIDAK dihapus. Setelah ini dashboard tampil 0/0% sampai data
+    baru diinput (atau seed dipulihkan via /api/raw-data/reset).
+    """
+    RAW.clear()
+    await db.replace_all(RAW)
+    await db.replace_all_in("issues", [])
+    await db.replace_all_in("tools", [])
+    await db.replace_all_in("improvements", [])
+    await db.replace_all_in("defects", [])
+    sync_issues([])
+    sync_tools([])
+    sync_improvements([])
+    return {"cleared": True, "raw_data": 0, "issues": 0, "tools": 0, "improvements": 0, "defects": 0}
 
 
 @app.post("/api/impor-excel", dependencies=[Depends(get_editor), Depends(rate_limit_general)])

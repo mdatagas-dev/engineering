@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const PG_BIN = "/usr/lib/postgresql/18/bin";
 const PG_DATA = "/home/lutvi/eng-pgdata";
 const PG_LOG = `${PG_DATA}/server.log`;
