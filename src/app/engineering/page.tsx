@@ -110,10 +110,17 @@ export default function EngineeringPage() {
   const data = useEngineering();
   const kpi = useMemo(() => kalkulasiKpi(rows), [rows]);
   const today = new Date().toISOString().slice(0, 10);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     void muatEngineering();
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((d) => setRole(d.user?.role ?? null))
+      .catch(() => setRole(null));
   }, []);
+
+  const isViewer = role === "viewer";
 
   const [tab, setTab] = useState<Tab>("issue");
   const [issueForm, setIssueForm] = useState({
@@ -446,6 +453,7 @@ export default function EngineeringPage() {
         </TiltPanel>
       </div>
 
+      {!isViewer && (
       <TiltPanel className="anim-fade-up" intensity={3}>
         <PanelHeader icon={<Plus className="h-4 w-4" />} title={t("engineering.form.title")} subtitle={t("engineering.form.subtitle")} />
         <div className="flex gap-2 p-5 pb-0">
@@ -611,6 +619,7 @@ export default function EngineeringPage() {
           </div>
         )}
       </TiltPanel>
+      )}
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
         <TiltPanel className="anim-fade-up xl:col-span-1" intensity={3}>
@@ -646,7 +655,7 @@ export default function EngineeringPage() {
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.priority")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.dueDate")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.status")}</th>
-                <th className="pb-3 font-semibold">{t("engineering.table.actions")}</th>
+                {!isViewer && <th className="pb-3 font-semibold">{t("engineering.table.actions")}</th>}
               </tr>
             </thead>
             <tbody>
@@ -687,6 +696,7 @@ export default function EngineeringPage() {
                         {overdue && issue.status !== "closed" ? t("engineering.status.overdue") : t(st.labelKey)}
                       </span>
                     </td>
+                    {!isViewer && (
                     <td className="py-3">
                       <div className="flex items-center gap-1.5">
                         <button
@@ -700,6 +710,7 @@ export default function EngineeringPage() {
                         {delBtn(t("engineering.action.delete"), () => hapusItem(issue.id))}
                       </div>
                     </td>
+                    )}
                   </tr>
                 );
               })}
@@ -725,7 +736,7 @@ export default function EngineeringPage() {
                   <span className="font-mono text-xs text-hisense-soft/80">
                     {tool.plannedHours} → {tool.actualAvailableHours} {t("common.unit.hr")}
                   </span>
-                  {delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
+                  {!isViewer && delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
                 </span>
               </li>
             ))}
@@ -748,7 +759,7 @@ export default function EngineeringPage() {
                   <span className="font-mono text-xs text-hisense-soft/80">
                     {imp.baseline} → {imp.after} {imp.unit}
                   </span>
-                  {delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}
+                  {!isViewer && delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}
                 </span>
               </li>
             ))}

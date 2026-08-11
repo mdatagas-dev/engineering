@@ -31,13 +31,20 @@ export default function QualityPage() {
   const { t } = useI18n();
   const rows = useRawRows();
   const defects = useDefects();
+  const [role, setRole] = useState<string | null>(null);
   const [form, setForm] = useState({ date: todayIso(), line: LINES[0], model: "", defect_type: "", qty: 1 });
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     muatDefects();
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((d) => setRole(d.user?.role ?? null))
+      .catch(() => setRole(null));
   }, []);
+
+  const isViewer = role === "viewer";
 
   const set = (key: keyof typeof form, value: string) => {
     setForm((f) => ({ ...f, [key]: key === "qty" ? Number(value) : value }));
@@ -280,7 +287,8 @@ export default function QualityPage() {
         </TiltPanel>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+      <div className={cn("grid grid-cols-1 gap-6", isViewer ? "xl:grid-cols-1" : "xl:grid-cols-3")}>
+        {!isViewer && (
         <TiltPanel className="anim-fade-up" intensity={3}>
           <PanelHeader icon={<Plus className="h-4 w-4" />} title={t("quality.input.title")} subtitle={t("quality.input.subtitle")} />
           <div className="space-y-4 p-5">
@@ -337,8 +345,9 @@ export default function QualityPage() {
             </button>
           </div>
         </TiltPanel>
+        )}
 
-        <TiltPanel className="anim-fade-up xl:col-span-2" intensity={3}>
+        <TiltPanel className={cn("anim-fade-up", isViewer ? "" : "xl:col-span-2")} intensity={3}>
           <PanelHeader
             icon={<ClipboardList className="h-4 w-4" />}
             title={t("quality.table.title")}
@@ -354,13 +363,13 @@ export default function QualityPage() {
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.model")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.defectType")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.qty")}</th>
-                  <th className="pb-3 font-semibold">{t("quality.table.action")}</th>
+                  {!isViewer && <th className="pb-3 font-semibold">{t("quality.table.action")}</th>}
                 </tr>
               </thead>
               <tbody>
                 {sorted.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-10 text-center text-sm text-hisense-soft/40">{t("quality.table.empty")}</td>
+                    <td colSpan={isViewer ? 5 : 6} className="py-10 text-center text-sm text-hisense-soft/40">{t("quality.table.empty")}</td>
                   </tr>
                 ) : (
                   sorted.map((d) => (
@@ -370,15 +379,17 @@ export default function QualityPage() {
                       <td className="py-3 pr-4 text-hisense-soft">{d.model}</td>
                       <td className="py-3 pr-4 text-hisense-soft/70">{d.defect_type}</td>
                       <td className="py-3 pr-4 font-mono text-xs text-hisense-soft">{d.qty}</td>
-                      <td className="py-3">
-                        <button
-                          onClick={() => hapus(d.id)}
-                          title={t("quality.table.action")}
-                          className="rounded-lg border border-red-500/25 bg-red-500/10 p-1.5 text-red-300 transition-all hover:border-red-500/50 hover:bg-red-500/20"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </td>
+                      {!isViewer && (
+                        <td className="py-3">
+                          <button
+                            onClick={() => hapus(d.id)}
+                            title={t("quality.table.action")}
+                            className="rounded-lg border border-red-500/25 bg-red-500/10 p-1.5 text-red-300 transition-all hover:border-red-500/50 hover:bg-red-500/20"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))
                 )}
