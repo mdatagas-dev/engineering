@@ -5,10 +5,11 @@ from io import BytesIO
 import os
 from typing import Any, Literal
 
-from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
+from .ratelimit import RateLimiter
 from .security import (
     get_current_user,
     get_editor,
@@ -140,6 +141,31 @@ COLUMN_ALIASES: dict[str, list[str]] = {
 
 # Baris hasil parse impor excel, ditahan sampai /api/impor-excel/commit.
 PENDING_ROWS: list[dict[str, Any]] = []
+
+# Rate limit anti brute-force. Per-proses: dengan uvicorn --workers 2, tiap
+# worker punya counter sendiri (acceptable untuk ketelitian sederhana).
+LOGIN_LIMIT_MAX = 5
+LOGIN_LIMIT_WINDOW = 60
+LOGIN_LIMIT_LOCKOUT = 900  # 15 menit
+login_limiter = RateLimiter(LOGIN_LIMIT_MAX, LOGIN_LIMIT_WINDOW, LOGIN_LIMIT_LOCKOUT)
+
+# Limiter ringan untuk semua POST non-login; threshold tinggi agar tidak
+# menolak impor excel besar.
+general_limiter = RateLimiter(max_attempts=120, window_seconds=60, lockout_seconds=60)
+
+
+def _client_key(request: Request) -> str:
+    return request.client.host if request.client else "unknown"
+
+
+def rate_limit_general(request: Request) -> None:
+    """Dependency: batasi POST umum 120 req/menit per IP."""
+    allowed, retry_after = general_limiter.hit(_client_key(request))
+    if not allowed:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Terlalu banyak permintaan, coba lagi dalam {retry_after} detik",
+        )
 
 
 class RawDataRow(BaseModel):
@@ -294,7 +320,7 @@ async def api_engineering() -> dict:
     }
 
 
-@app.post("/api/engineering/issues", dependencies=[Depends(get_editor)])
+@app.post("/api/engineering/issues", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def tambah_issue(payload: IssueIn) -> dict:
     row = await db.insert_row_in(
         "issues",
@@ -335,7 +361,7 @@ async def hapus_issue(issue_id: int) -> dict:
     return {"deleted": True, "id": issue_id}
 
 
-@app.post("/api/engineering/tools", dependencies=[Depends(get_editor)])
+@app.post("/api/engineering/tools", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def tambah_tool(payload: ToolIn) -> dict:
     row = await db.insert_row_in("tools", payload.model_dump())
     sync_tools(await db.list_rows("tools"))
@@ -364,7 +390,7 @@ async def hapus_tool(tool_id: int) -> dict:
     return {"deleted": True, "id": tool_id}
 
 
-@app.post("/api/engineering/improvements", dependencies=[Depends(get_editor)])
+@app.post("/api/engineering/improvements", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def tambah_improvement(payload: ImprovementIn) -> dict:
     row = await db.insert_row_in("improvements", payload.model_dump())
     sync_improvements(await db.list_rows("improvements"))
@@ -385,7 +411,7 @@ async def daftar_defects() -> dict:
     return {"total": len(rows), "rows": rows}
 
 
-@app.post("/api/quality/defects", dependencies=[Depends(get_quality_editor)])
+@app.post("/api/quality/defects", dependencies=[Depends(get_quality_editor), Depends(rate_limit_general)])
 async def tambah_defect(payload: DefectIn) -> dict:
     return await db.insert_row_in("defects", payload.model_dump())
 
@@ -403,13 +429,27 @@ class LoginIn(BaseModel):
 
 
 @app.post("/api/auth/login")
-async def api_login(payload: LoginIn) -> dict:
+async def api_login(payload: LoginIn, request: Request) -> dict:
     """Verifikasi kredensial terhadap akun di DB (PBKDF2). Dipanggil route handler frontend."""
+    key = _client_key(request)
+    allowed, retry_after = login_limiter.check(key)
+    if not allowed:
+        raise HTTPException(
+            status_code=429,
+            detail=f"Terlalu banyak percobaan, coba lagi dalam {retry_after} detik",
+        )
     username = payload.username.strip()
     rows = await db.list_rows("users")
     user = next((r for r in rows if r["username"] == username), None)
     if user is None or not verify_password(payload.password, user["salt"], user["hash"]):
+        allowed, retry_after = login_limiter.record_failure(key)
+        if not allowed:
+            raise HTTPException(
+                status_code=429,
+                detail=f"Terlalu banyak percobaan, coba lagi dalam {retry_after} detik",
+            )
         raise HTTPException(status_code=401, detail="Username atau password salah")
+    login_limiter.reset(key)
     return {"ok": True, "username": username, "role": user["role"]}
 
 
@@ -428,7 +468,7 @@ class PasswordChange(BaseModel):
     new_password: str = Field(min_length=6)
 
 
-@app.post("/api/auth/change-password", dependencies=[Depends(get_current_user)])
+@app.post("/api/auth/change-password", dependencies=[Depends(get_current_user), Depends(rate_limit_general)])
 async def ubah_password_sendiri(payload: PasswordChange, user: dict = Depends(get_current_user)) -> dict:
     rows = await db.list_rows("users")
     target = next((r for r in rows if r["username"] == user["sub"]), None)
@@ -447,7 +487,7 @@ async def daftar_users() -> dict:
     return {"users": [public_user(r) for r in rows]}
 
 
-@app.post("/api/users", dependencies=[Depends(get_admin)])
+@app.post("/api/users", dependencies=[Depends(get_admin), Depends(rate_limit_general)])
 async def tambah_user(payload: UserCreate) -> dict:
     username = payload.username.strip().lower()
     if not username:
@@ -472,7 +512,7 @@ async def ubah_role_user(username: str, payload: UserRoleUpdate) -> dict:
     return {"ok": True, "username": username, "role": payload.role}
 
 
-@app.post("/api/users/{username}/password", dependencies=[Depends(get_admin)])
+@app.post("/api/users/{username}/password", dependencies=[Depends(get_admin), Depends(rate_limit_general)])
 async def reset_password_user(username: str, payload: LoginIn) -> dict:
     rows = await db.list_rows("users")
     target = next((r for r in rows if r["username"] == username), None)
@@ -501,7 +541,7 @@ def daftar_raw_data() -> dict:
     return {"total_rows": len(RAW), "rows": RAW}
 
 
-@app.post("/api/raw-data", dependencies=[Depends(get_editor)])
+@app.post("/api/raw-data", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def tambah_raw_data(row: RawDataRow) -> dict:
     """Input manual satu baris raw data, langsung masuk ke RAW + DB."""
     data = row.model_dump()
@@ -510,7 +550,7 @@ async def tambah_raw_data(row: RawDataRow) -> dict:
     return {"saved": True, "total_rows": len(RAW), "kpi": kalkulasi_kpi(RAW)}
 
 
-@app.post("/api/raw-data/reset", dependencies=[Depends(get_editor)])
+@app.post("/api/raw-data/reset", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def reset_raw_data() -> dict:
     """Kembalikan RAW ke kondisi seed awal (DB ikut di-sync)."""
     n = reset_raw()
@@ -518,7 +558,7 @@ async def reset_raw_data() -> dict:
     return {"reset": True, "total_rows": n}
 
 
-@app.post("/api/impor-excel", dependencies=[Depends(get_editor)])
+@app.post("/api/impor-excel", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def impor_excel(file: UploadFile = File(...)) -> dict:
     """Upload xlsx → parse & validasi → tampung di PENDING_ROWS (belum di-commit)."""
     try:
@@ -605,7 +645,7 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
     }
 
 
-@app.post("/api/impor-excel/commit", dependencies=[Depends(get_editor)])
+@app.post("/api/impor-excel/commit", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def commit_impor_excel() -> dict:
     """Pindahkan PENDING_ROWS ke RAW lalu hitung ulang KPI."""
     global PENDING_ROWS

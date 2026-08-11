@@ -129,6 +129,28 @@ psql -h /tmp -p 5433 -U engineering -d engineering_test -f backup_test.sql
 
 > Data postgres ada di `/home/lutvi/eng-pgdata` — backup:
 > `pg_dump -h /tmp -p 5433 -U engineering engineering > backup.sql`.
+
+### Backup database (otomatis)
+
+Script `deploy/backup.sh` membuat dump DB `engineering` format custom
+(`-Fc`) ke `/home/lutvi/eng-pgdata/backups/` dengan nama
+`engineering-YYYYMMDD-HHMM.dump`, retensi **14 hari** (dump lebih tua
+dihapus otomatis). Kredensial dibaca dari `.env` (`DATABASE_URL`), tidak
+hardcode. Log ada di `backups/backup.log`.
+
+Cron user (berjalan tiap hari **02:30**, via `crontab` user, tanpa sudo):
+
+```bash
+30 2 * * * /bin/bash /home/lutvi/Engineering-Performance/deploy/backup.sh >> /home/lutvi/eng-pgdata/backups/cron.log 2>&1
+```
+
+Jalankan manual: `bash deploy/backup.sh`
+
+Restore dump custom:
+
+```bash
+pg_restore -h localhost -p 5433 -U engineering -d engineering --clean --if-exists /home/lutvi/eng-pgdata/backups/engineering-YYYYMMDD-HHMM.dump
+```
 > (DB test `engineering_test` juga dibuat otomatis oleh `backend/tests/conftest.py`.)
 
 Schema (`prisma/schema.prisma`) → database:
@@ -205,6 +227,19 @@ ALLOWED_ORIGINS="http://localhost:3011,http://127.0.0.1:3011,http://192.168.1.50
 ```
 
 Nilai `*` = izinkan semua origin (tidak disarankan di production).
+
+### Keamanan (hardening)
+
+- **Rate limiting login** — 5 percobaan/menit per IP, lockout 15 menit
+  (`backend/ratelimit.py`). Semua endpoint POST juga dibatasi 120 req/menit.
+- **Firewall** — aktifkan sekali dengan sudo:
+  `sudo bash deploy/secure-network.sh` (izinkan SSH 22, frontend 3011,
+  backend 8101; default deny incoming; postgres 5433 tetap lokal).
+- **Auto-start saat reboot** — `sudo bash deploy/pm2-startup.sh`.
+- **CORS allowlist** — lihat bagian di atas; non-allowlist ditolak.
+- **HTTPS** — untuk akses internet, pasang reverse proxy (Caddy/nginx +
+  Let's Encrypt) di depan port 3011/8101.
+- **Audit dependency** — `.venv/bin/pip-audit` (Python) · `npm audit` (JS).
 
 Perintah lain: `npm run pm2:restart` · `npm run pm2:stop` · `pm2 save` (setelah stop/delete).
 

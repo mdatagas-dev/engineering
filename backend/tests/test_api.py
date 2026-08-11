@@ -232,3 +232,28 @@ def test_token_palsu_401():
         r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header(fake=True))
         assert r.status_code == 401
         assert "detail" in r.json()
+
+
+# ---------------------------------------------------------------------------
+# Rate limiting login (anti brute-force).
+# ---------------------------------------------------------------------------
+
+def test_login_rate_limit_429():
+    from backend.main import login_limiter
+
+    with TestClient(app) as client:
+        login_limiter.reset("testclient")
+        try:
+            kode = [
+                client.post("/api/auth/login", json={"username": "admin", "password": "salah"}).status_code
+                for _ in range(6)
+            ]
+            # 4 gagal -> 401, gagal ke-5 -> lockout 429, ke-6 -> 429.
+            assert kode.count(401) >= 4
+            assert kode[-1] == 429
+            assert 429 in kode
+            r = client.post("/api/auth/login", json={"username": "admin", "password": "salah"})
+            assert r.status_code == 429
+            assert "detik" in r.json()["detail"]
+        finally:
+            login_limiter.reset("testclient")
