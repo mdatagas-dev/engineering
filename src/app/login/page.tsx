@@ -93,12 +93,12 @@ function LoginForm() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(120deg, #00b3ac 0%, #3b82f6 25%, #8b5cf6 50%, #ec4899 75%, #00b3ac 100%)",
+            "linear-gradient(120deg, #0a2f33 0%, #123b49 20%, #1e2a5e 45%, #3b1e4e 70%, #4b2a63 85%, #0a2f33 100%)",
           backgroundSize: "300% 300%",
           animation: "gradient-shift 18s ease-in-out infinite",
         }}
       />
-      <div className="absolute inset-0 bg-obsidian-950/75" />
+      <div className="absolute inset-0 bg-obsidian-950/45" />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col lg:flex-row">
         {/* ===== KIRI: kata mutiara ===== */}
