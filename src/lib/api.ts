@@ -1,4 +1,15 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8101";
+function resolveApiBase(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  if (typeof window !== "undefined") {
+    const host = window.location.hostname;
+    if (host && host !== "localhost" && host !== "127.0.0.1") {
+      return `http://${host}:8101`;
+    }
+  }
+  return "http://localhost:8101";
+}
+
+const API_BASE = resolveApiBase();
 
 const TOKEN_KEY = "eng_api_token";
 

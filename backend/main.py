@@ -77,7 +77,7 @@ app = FastAPI(title="Engineering Performance API", version="1.0.0", lifespan=lif
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3011", "http://127.0.0.1:3011"],
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
     allow_credentials=False,

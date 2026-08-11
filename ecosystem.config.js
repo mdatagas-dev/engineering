@@ -21,7 +21,7 @@ module.exports = {
       name: "eng-backend",
       cwd: __dirname,
       script: ".venv/bin/uvicorn",
-      args: "backend.main:app --host 127.0.0.1 --port 8101 --workers 2",
+      args: "backend.main:app --host 0.0.0.0 --port 8101 --workers 2",
       interpreter: "none",
       env: {
         DATABASE_URL:
