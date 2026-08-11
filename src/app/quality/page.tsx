@@ -45,6 +45,7 @@ export default function QualityPage() {
   }, []);
 
   const isViewer = role === "viewer";
+  const canInput = role === "admin" || role === "engineer" || role === "qc";
 
   const set = (key: keyof typeof form, value: string) => {
     setForm((f) => ({ ...f, [key]: key === "qty" ? Number(value) : value }));
@@ -287,8 +288,8 @@ export default function QualityPage() {
         </TiltPanel>
       </div>
 
-      <div className={cn("grid grid-cols-1 gap-6", isViewer ? "xl:grid-cols-1" : "xl:grid-cols-3")}>
-        {!isViewer && (
+      <div className={cn("grid grid-cols-1 gap-6", canInput ? "xl:grid-cols-3" : "xl:grid-cols-1")}>
+        {canInput && (
         <TiltPanel className="anim-fade-up" intensity={3}>
           <PanelHeader icon={<Plus className="h-4 w-4" />} title={t("quality.input.title")} subtitle={t("quality.input.subtitle")} />
           <div className="space-y-4 p-5">
@@ -347,7 +348,7 @@ export default function QualityPage() {
         </TiltPanel>
         )}
 
-        <TiltPanel className={cn("anim-fade-up", isViewer ? "" : "xl:col-span-2")} intensity={3}>
+        <TiltPanel className={cn("anim-fade-up", canInput ? "xl:col-span-2" : "")} intensity={3}>
           <PanelHeader
             icon={<ClipboardList className="h-4 w-4" />}
             title={t("quality.table.title")}
@@ -363,13 +364,13 @@ export default function QualityPage() {
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.model")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.defectType")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.qty")}</th>
-                  {!isViewer && <th className="pb-3 font-semibold">{t("quality.table.action")}</th>}
+                  {canInput && <th className="pb-3 font-semibold">{t("quality.table.action")}</th>}
                 </tr>
               </thead>
               <tbody>
                 {sorted.length === 0 ? (
                   <tr>
-                    <td colSpan={isViewer ? 5 : 6} className="py-10 text-center text-sm text-hisense-soft/40">{t("quality.table.empty")}</td>
+                    <td colSpan={canInput ? 6 : 5} className="py-10 text-center text-sm text-hisense-soft/40">{t("quality.table.empty")}</td>
                   </tr>
                 ) : (
                   sorted.map((d) => (
@@ -379,7 +380,7 @@ export default function QualityPage() {
                       <td className="py-3 pr-4 text-hisense-soft">{d.model}</td>
                       <td className="py-3 pr-4 text-hisense-soft/70">{d.defect_type}</td>
                       <td className="py-3 pr-4 font-mono text-xs text-hisense-soft">{d.qty}</td>
-                      {!isViewer && (
+                      {canInput && (
                         <td className="py-3">
                           <button
                             onClick={() => hapus(d.id)}

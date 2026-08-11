@@ -1,4 +1,4 @@
-export type Role = "admin" | "engineer" | "viewer";
+export type Role = "admin" | "engineer" | "viewer" | "qc";
 
 export interface AuthUser {
   username: string;
@@ -15,12 +15,14 @@ export const ROLE_LABEL: Record<Role, string> = {
   admin: "Administrator",
   engineer: "Engineer",
   viewer: "Viewer",
+  qc: "Quality Control",
 };
 
 export const ROLE_DESC: Record<Role, string> = {
   admin: "Akses penuh — input, impor, dan reset data",
   engineer: "Bisa input & impor data produksi",
   viewer: "Hanya melihat dashboard",
+  qc: "Input defect quality & melihat dashboard",
 };
 
 export function getSecret(): string {
@@ -35,6 +37,7 @@ const INITIAL_ACCOUNTS: Record<string, { password: string; role: Role }> = {
   admin: { password: "admin123", role: "admin" },
   engineer: { password: "engineer123", role: "engineer" },
   viewer: { password: "viewer123", role: "viewer" },
+  qc: { password: "qc123", role: "qc" },
 };
 
 let usersCache: Record<string, UserRecord> | null = null;

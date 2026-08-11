@@ -8,7 +8,7 @@ from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
-from .security import get_current_user, get_editor, load_env
+from .security import get_current_user, get_editor, get_quality_editor, load_env
 
 load_env()
 
@@ -364,12 +364,12 @@ async def daftar_defects() -> dict:
     return {"total": len(rows), "rows": rows}
 
 
-@app.post("/api/quality/defects", dependencies=[Depends(get_editor)])
+@app.post("/api/quality/defects", dependencies=[Depends(get_quality_editor)])
 async def tambah_defect(payload: DefectIn) -> dict:
     return await db.insert_row_in("defects", payload.model_dump())
 
 
-@app.delete("/api/quality/defects/{defect_id}", dependencies=[Depends(get_editor)])
+@app.delete("/api/quality/defects/{defect_id}", dependencies=[Depends(get_quality_editor)])
 async def hapus_defect(defect_id: int) -> dict:
     if not await db.delete_row_in("defects", defect_id):
         raise HTTPException(status_code=404, detail=f"Defect {defect_id} tidak ditemukan")

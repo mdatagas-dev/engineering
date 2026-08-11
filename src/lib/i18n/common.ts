@@ -155,6 +155,13 @@ export const commonDict: DomainDict = {
     ja: "閲覧者",
     ko: "뷰어",
   },
+  "role.qc": {
+    id: "Quality Control",
+    en: "Quality Control",
+    zh: "质量控制",
+    ja: "品質管理",
+    ko: "품질 관리",
+  },
   "role.desc.admin": {
     id: "Akses penuh — input, impor, dan reset data",
     en: "Full access — input, import, and reset data",
@@ -175,6 +182,13 @@ export const commonDict: DomainDict = {
     zh: "仅查看仪表板",
     ja: "ダッシュボードの閲覧のみ",
     ko: "대시보드 보기 전용",
+  },
+  "role.desc.qc": {
+    id: "Input defect quality & melihat dashboard",
+    en: "Input quality defects & view dashboard",
+    zh: "输入质量缺陷并查看仪表板",
+    ja: "品質不良の入力とダッシュボード閲覧",
+    ko: "품질 불량 입력 및 대시보드 보기",
   },
   "common.logout": {
     id: "Keluar",

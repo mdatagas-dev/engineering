@@ -120,7 +120,7 @@ export default function EngineeringPage() {
       .catch(() => setRole(null));
   }, []);
 
-  const isViewer = role === "viewer";
+  const isLimited = role === "viewer" || role === "qc";
 
   const [tab, setTab] = useState<Tab>("issue");
   const [issueForm, setIssueForm] = useState({
@@ -453,7 +453,7 @@ export default function EngineeringPage() {
         </TiltPanel>
       </div>
 
-      {!isViewer && (
+      {!isLimited && (
       <TiltPanel className="anim-fade-up" intensity={3}>
         <PanelHeader icon={<Plus className="h-4 w-4" />} title={t("engineering.form.title")} subtitle={t("engineering.form.subtitle")} />
         <div className="flex gap-2 p-5 pb-0">
@@ -655,7 +655,7 @@ export default function EngineeringPage() {
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.priority")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.dueDate")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.status")}</th>
-                {!isViewer && <th className="pb-3 font-semibold">{t("engineering.table.actions")}</th>}
+                {!isLimited && <th className="pb-3 font-semibold">{t("engineering.table.actions")}</th>}
               </tr>
             </thead>
             <tbody>
@@ -696,7 +696,7 @@ export default function EngineeringPage() {
                         {overdue && issue.status !== "closed" ? t("engineering.status.overdue") : t(st.labelKey)}
                       </span>
                     </td>
-                    {!isViewer && (
+                    {!isLimited && (
                     <td className="py-3">
                       <div className="flex items-center gap-1.5">
                         <button
@@ -736,7 +736,7 @@ export default function EngineeringPage() {
                   <span className="font-mono text-xs text-hisense-soft/80">
                     {tool.plannedHours} → {tool.actualAvailableHours} {t("common.unit.hr")}
                   </span>
-                  {!isViewer && delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
+                  {!isLimited && delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
                 </span>
               </li>
             ))}
@@ -759,7 +759,7 @@ export default function EngineeringPage() {
                   <span className="font-mono text-xs text-hisense-soft/80">
                     {imp.baseline} → {imp.after} {imp.unit}
                   </span>
-                  {!isViewer && delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}
+                  {!isLimited && delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}
                 </span>
               </li>
             ))}

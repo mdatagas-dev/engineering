@@ -20,6 +20,7 @@ const MANUFACTURE_QUOTES: { quote: string; author: string }[] = [
 const DEMO_ACCOUNTS: { username: string; password: string; role: Role }[] = [
   { username: "admin", password: "admin123", role: "admin" },
   { username: "engineer", password: "engineer123", role: "engineer" },
+  { username: "qc", password: "qc123", role: "qc" },
   { username: "viewer", password: "viewer123", role: "viewer" },
 ];
 

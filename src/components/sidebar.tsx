@@ -134,9 +134,9 @@ export function Sidebar({
     };
   }, [pathname]);
 
-  const isViewer = role === "viewer";
-  const showInput = !isViewer;
-  const showSettings = !isViewer;
+  const isLimited = role === "viewer" || role === "qc";
+  const showInput = !isLimited;
+  const showSettings = !isLimited;
 
   // Di mobile (drawer) sidebar selalu expanded; collapsed hanya berlaku di lg+.
   const effectiveCollapsed = collapsed && !mobileOpen;

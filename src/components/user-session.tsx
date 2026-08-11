@@ -9,6 +9,7 @@ const ROLE_COLOR: Record<Role, string> = {
   admin: "text-gold-300",
   engineer: "text-hisense-soft",
   viewer: "text-hisense-soft",
+  qc: "text-hisense",
 };
 
 export function UserSession() {

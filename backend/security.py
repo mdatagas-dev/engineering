@@ -9,7 +9,7 @@ from fastapi import Header, HTTPException
 ROOT_DIR = Path(__file__).resolve().parents[1]
 
 _dev_secret = "eng-perf-dashboard-secret-2026"
-VALID_ROLES = ("admin", "engineer", "viewer")
+VALID_ROLES = ("admin", "engineer", "viewer", "qc")
 
 
 def load_env() -> None:
@@ -49,5 +49,13 @@ def get_editor(authorization: str | None = Header(None)) -> dict:
     """Dependency FastAPI: seperti get_current_user, tapi role harus admin/engineer."""
     user = get_current_user(authorization)
     if user["role"] not in ("admin", "engineer"):
+        raise HTTPException(status_code=403, detail="Role viewer hanya bisa membaca data")
+    return user
+
+
+def get_quality_editor(authorization: str | None = Header(None)) -> dict:
+    """Dependency FastAPI: role admin/engineer/qc — boleh input defect quality."""
+    user = get_current_user(authorization)
+    if user["role"] not in ("admin", "engineer", "qc"):
         raise HTTPException(status_code=403, detail="Role viewer hanya bisa membaca data")
     return user
