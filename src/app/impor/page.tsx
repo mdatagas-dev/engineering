@@ -66,9 +66,9 @@ export default function ImporPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">{t("menu.input")}</p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">{t("impor.title")}</h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("menu.input")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("impor.title")}</h1>
+        <p className="mt-1.5 text-sm text-hisense-soft/50">
           {t("impor.subtitle")}
         </p>
       </header>
@@ -103,25 +103,25 @@ export default function ImporPage() {
             className={cn(
               "flex w-full flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed px-6 py-14 transition-all duration-300",
               drag
-                ? "border-jade-400/70 bg-jade-500/10 shadow-[0_0_40px_rgba(0,214,201,0.15)]"
-                : "border-jade-400/20 bg-obsidian-900/40 hover:border-jade-400/40 hover:bg-jade-500/5"
+                ? "border-hisense/70 bg-hisense/10 shadow-[0_0_40px_rgba(0,179,172,0.15)]"
+                : "border-hisense/20 bg-obsidian-900/40 hover:border-hisense/40 hover:bg-hisense/5"
             )}
           >
             {loading ? (
               <>
-                <div className="h-12 w-12 animate-spin rounded-full border-2 border-jade-400/30 border-t-jade-400" />
-                <p className="text-sm text-jade-300/70">{t("impor.upload.processing")}</p>
+                <div className="h-12 w-12 animate-spin rounded-full border-2 border-hisense/30 border-t-hisense" />
+                <p className="text-sm text-hisense-soft/70">{t("impor.upload.processing")}</p>
               </>
             ) : (
               <>
                 <div className="relative">
                   <div className="glow-ring absolute -inset-4 opacity-50" />
-                  <UploadCloud className="relative h-12 w-12 text-jade-300" />
+                  <UploadCloud className="relative h-12 w-12 text-hisense-soft" />
                 </div>
-                <p className="text-sm font-medium text-jade-200">
+                <p className="text-sm font-medium text-hisense-soft">
                   {file ? file.name : t("impor.upload.dropzone")}
                 </p>
-                <p className="text-xs text-jade-300/40">{t("impor.upload.hint")}</p>
+                <p className="text-xs text-hisense-soft/40">{t("impor.upload.hint")}</p>
               </>
             )}
           </button>
@@ -131,12 +131,12 @@ export default function ImporPage() {
               className={cn(
                 "mt-4 flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm",
                 status.type === "ok"
-                  ? "border-jade-400/30 bg-jade-500/10 text-jade-200"
+                  ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
                   : "border-gold-400/30 bg-gold-400/10 text-gold-300"
               )}
             >
               {status.type === "ok" ? (
-                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-jade-400" />
+                <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-hisense" />
               ) : (
                 <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
               )}
@@ -156,7 +156,7 @@ export default function ImporPage() {
               <button
                 onClick={simpan}
                 disabled={loading}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-600 px-4 py-2 text-xs font-bold text-obsidian-950 shadow-lg shadow-jade-500/30 transition-all hover:shadow-jade-500/50 disabled:opacity-40"
+                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-4 py-2 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:opacity-40"
               >
                 <Save className="h-3.5 w-3.5" /> {t("impor.preview.saveRows", { n: preview.total })}
               </button>
@@ -172,7 +172,7 @@ export default function ImporPage() {
             )}
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-jade-400/15 text-[10px] uppercase tracking-wider text-jade-300/50">
+                <tr className="border-b border-hisense/15 text-[10px] uppercase tracking-wider text-hisense-soft/50">
                   {PREVIEW_COLS.map((c) => (
                     <th key={c} className="pb-2.5 pr-4 font-semibold">{c}</th>
                   ))}
@@ -180,9 +180,9 @@ export default function ImporPage() {
               </thead>
               <tbody>
                 {preview.rows.map((r, i) => (
-                  <tr key={i} className="border-b border-jade-400/8 hover:bg-jade-500/5">
+                  <tr key={i} className="border-b border-hisense/8 hover:bg-hisense/5">
                     {PREVIEW_COLS.map((c) => (
-                      <td key={c} className="py-2.5 pr-4 font-mono text-jade-300/70">{String(r[c])}</td>
+                      <td key={c} className="py-2.5 pr-4 font-mono text-hisense-soft/70">{String(r[c])}</td>
                     ))}
                   </tr>
                 ))}

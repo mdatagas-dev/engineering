@@ -46,14 +46,14 @@ const NEXT_STATUS: Record<(typeof STATUSES)[number], (typeof STATUSES)[number]> 
 
 const TOOLTIP = {
   backgroundColor: "rgba(3,9,13,0.95)",
-  borderColor: "rgba(0,214,201,0.35)",
+  borderColor: "rgba(0,179,172,0.35)",
   textStyle: { color: "#d3faf6" },
 };
 
 const STATUS_STYLE: Record<string, { labelKey: string; cls: string; dot: string }> = {
   open: { labelKey: "engineering.status.open", cls: "border-red-500/30 bg-red-500/10 text-red-300", dot: "bg-red-400" },
   progress: { labelKey: "engineering.status.progress", cls: "border-gold-400/30 bg-gold-400/10 text-gold-300", dot: "bg-gold-400" },
-  closed: { labelKey: "engineering.status.closed", cls: "border-jade-400/30 bg-jade-500/10 text-jade-300", dot: "bg-jade-400" },
+  closed: { labelKey: "engineering.status.closed", cls: "border-hisense/30 bg-hisense/10 text-hisense-soft", dot: "bg-hisense" },
 };
 
 const PRIORITY_KEY: Record<string, string> = {
@@ -63,7 +63,7 @@ const PRIORITY_KEY: Record<string, string> = {
 };
 
 const inputCls =
-  "w-full rounded-xl border border-jade-400/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-jade-100 outline-none transition-all placeholder:text-jade-300/30 focus:border-jade-400/60 focus:shadow-[0_0_20px_rgba(0,214,201,0.15)]";
+  "w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]";
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -76,12 +76,12 @@ function StatusBox({ status }: { status: { type: "ok" | "err"; msg: string } | n
       className={cn(
         "flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm",
         status.type === "ok"
-          ? "border-jade-400/30 bg-jade-500/10 text-jade-200"
+          ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
           : "border-gold-400/30 bg-gold-400/10 text-gold-300"
       )}
     >
       {status.type === "ok" ? (
-        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-jade-400" />
+        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-hisense" />
       ) : (
         <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
       )}
@@ -93,7 +93,7 @@ function StatusBox({ status }: { status: { type: "ok" | "err"; msg: string } | n
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">
+      <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
         {label}
       </label>
       {children}
@@ -270,24 +270,24 @@ export default function EngineeringPage() {
       type: "category",
       data: data.tools.map((t) => t.name),
       axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10, rotate: 22 },
-      axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
+      axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
       axisTick: { show: false },
       splitLine: { show: false },
     },
     yAxis: {
       type: "value",
       axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10, formatter: (v: { value: number }) => `${v.value} ${t("common.unit.hr")}` },
-      splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+      splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
     },
     series: [
       {
         type: "bar",
         barWidth: 22,
-        data: data.tools.map((tt, i) => ({
+        data: data.tools.map((tt) => ({
           value: tt.actualAvailableHours,
           itemStyle: {
             borderRadius: [6, 6, 0, 0],
-            color: i % 2 ? "#3ae3d7" : "#00d6c9",
+            color: "#00b3ac",
           },
         })),
         label: {
@@ -324,14 +324,14 @@ export default function EngineeringPage() {
       type: "category",
       data: data.improvements.map((i) => i.title),
       axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 9, rotate: 28 },
-      axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
+      axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
       axisTick: { show: false },
       splitLine: { show: false },
     },
     yAxis: {
       type: "value",
       axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
-      splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+      splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
     },
     series: [
       {
@@ -351,7 +351,7 @@ export default function EngineeringPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -370,7 +370,7 @@ export default function EngineeringPage() {
     <button
       onClick={onClick}
       disabled={!valid || saving}
-      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-jade-500 to-jade-600 px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-lg shadow-jade-500/30 transition-all hover:shadow-jade-500/50 disabled:cursor-not-allowed disabled:opacity-40"
+      className="group relative flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3.5 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
     >
       <Save className="h-4 w-4 transition-transform group-hover:scale-110" />
       {saving ? t("engineering.form.saving") : t("engineering.form.save")}
@@ -382,7 +382,7 @@ export default function EngineeringPage() {
       type="button"
       onClick={onClick}
       title={title}
-      className="rounded-lg border border-jade-400/15 bg-obsidian-900/60 p-1.5 text-jade-300/60 transition-colors hover:border-red-500/40 hover:text-red-300"
+      className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/60 transition-colors hover:border-red-500/40 hover:text-red-300"
     >
       <Trash2 className="h-3.5 w-3.5" />
     </button>
@@ -391,43 +391,43 @@ export default function EngineeringPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">{t("engineering.pillar")}</p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">{t("engineering.title")}</h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">{t("engineering.subtitle")}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("engineering.pillar")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("engineering.title")}</h1>
+        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("engineering.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <CheckCircle2 className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <CheckCircle2 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.issueClosure.toFixed(0)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.issueClosure.toFixed(0)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.issueClosureSub", { closed: counts.closed, total: data.issues.length })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
+          <div className="flex items-center gap-2 text-hisense-soft/60">
             <AlertTriangle className="h-4 w-4 text-red-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.overdueRate.toFixed(0)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.overdueRate.toFixed(0)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.overdueRateSub", { n: counts.overdue })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Wrench className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Wrench className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.toolAvailability.toFixed(0)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("engineering.kpi.toolAvailabilitySub")}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.toolAvailability.toFixed(0)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.toolAvailabilitySub")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <TrendingUp className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <TrendingUp className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("engineering.kpi.improvementEffectivenessSub")}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.improvementEffectivenessSub")}</p>
         </TiltPanel>
       </div>
 
@@ -442,8 +442,8 @@ export default function EngineeringPage() {
               className={cn(
                 "flex items-center gap-2 rounded-xl border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition-all",
                 tab === tb.key
-                  ? "border-jade-400/60 bg-jade-500/15 text-jade-200 shadow-[0_0_16px_rgba(0,214,201,0.15)]"
-                  : "border-jade-400/10 bg-obsidian-900/60 text-jade-300/50 hover:border-jade-400/30"
+                  ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
+                  : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/50 hover:border-hisense/30"
               )}
             >
               {tb.icon}
@@ -623,7 +623,7 @@ export default function EngineeringPage() {
         <div className="overflow-x-auto px-5 pb-5 pt-4">
           <table className="w-full min-w-[760px] text-left text-sm">
             <thead>
-              <tr className="border-b border-jade-400/15 text-[11px] uppercase tracking-wider text-jade-300/50">
+              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
                 <th className="pb-3 pr-4 font-semibold">ID</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.desc")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("engineering.table.line")}</th>
@@ -639,9 +639,9 @@ export default function EngineeringPage() {
                 const overdue = issue.status !== "closed" && issue.dueDate < today;
                 const st = STATUS_STYLE[issue.status];
                 return (
-                  <tr key={issue.id} className="border-b border-jade-400/8 transition-colors hover:bg-jade-500/5">
-                    <td className="py-3 pr-4 font-mono text-xs text-jade-300/80">{issue.engId}</td>
-                    <td className="py-3 pr-4 text-jade-200">
+                  <tr key={issue.id} className="border-b border-hisense/8 transition-colors hover:bg-hisense/5">
+                    <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{issue.engId}</td>
+                    <td className="py-3 pr-4 text-hisense-soft">
                       <span className="flex items-center gap-2">
                         {issue.title}
                         {overdue && (
@@ -651,21 +651,21 @@ export default function EngineeringPage() {
                         )}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 text-jade-300/70">{issue.line}</td>
-                    <td className="py-3 pr-4 text-jade-300/70">{issue.owner}</td>
+                    <td className="py-3 pr-4 text-hisense-soft/70">{issue.line}</td>
+                    <td className="py-3 pr-4 text-hisense-soft/70">{issue.owner}</td>
                     <td className="py-3 pr-4">
                       <span
                         className={cn(
                           "rounded-full border px-2.5 py-0.5 text-[11px] capitalize",
                           issue.priority === "high" && "border-red-500/30 bg-red-500/10 text-red-300",
                           issue.priority === "medium" && "border-gold-400/30 bg-gold-400/10 text-gold-300",
-                          issue.priority === "low" && "border-jade-400/30 bg-jade-500/10 text-jade-300"
+                          issue.priority === "low" && "border-hisense/30 bg-hisense/10 text-hisense-soft"
                         )}
                       >
                         {t(PRIORITY_KEY[issue.priority])}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 font-mono text-xs text-jade-300/60">{issue.dueDate}</td>
+                    <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/60">{issue.dueDate}</td>
                     <td className="py-3 pr-4">
                       <span className={cn("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px]", st.cls)}>
                         <span className={cn("h-1.5 w-1.5 rounded-full", st.dot)} />
@@ -678,7 +678,7 @@ export default function EngineeringPage() {
                           type="button"
                           onClick={() => siklusStatus(issue)}
                           title={t("engineering.action.cycleStatus")}
-                          className="rounded-lg border border-jade-400/15 bg-obsidian-900/60 p-1.5 text-jade-300/60 transition-colors hover:border-jade-400/40 hover:text-jade-200"
+                          className="rounded-lg border border-hisense/15 bg-obsidian-900/60 p-1.5 text-hisense-soft/60 transition-colors hover:border-hisense/40 hover:text-hisense-soft"
                         >
                           <RefreshCw className="h-3.5 w-3.5" />
                         </button>
@@ -704,10 +704,10 @@ export default function EngineeringPage() {
           )}
           <ul className="px-5 pb-5 pt-4">
             {data.tools.map((tool: ToolItem) => (
-              <li key={tool.id} className="flex items-center justify-between gap-3 border-b border-jade-400/8 py-3 last:border-0">
-                <span className="text-sm text-jade-200">{tool.name}</span>
+              <li key={tool.id} className="flex items-center justify-between gap-3 border-b border-hisense/8 py-3 last:border-0">
+                <span className="text-sm text-hisense-soft">{tool.name}</span>
                 <span className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-jade-300/60">
+                  <span className="font-mono text-xs text-hisense-soft/60">
                     {tool.plannedHours} → {tool.actualAvailableHours} {t("common.unit.hr")}
                   </span>
                   {delBtn(t("engineering.action.delete"), () => hapusToolItem(tool.id))}
@@ -727,10 +727,10 @@ export default function EngineeringPage() {
           )}
           <ul className="px-5 pb-5 pt-4">
             {data.improvements.map((imp: ImprovementItem) => (
-              <li key={imp.id} className="flex items-center justify-between gap-3 border-b border-jade-400/8 py-3 last:border-0">
-                <span className="text-sm text-jade-200">{imp.title}</span>
+              <li key={imp.id} className="flex items-center justify-between gap-3 border-b border-hisense/8 py-3 last:border-0">
+                <span className="text-sm text-hisense-soft">{imp.title}</span>
                 <span className="flex items-center gap-3">
-                  <span className="font-mono text-xs text-jade-300/60">
+                  <span className="font-mono text-xs text-hisense-soft/60">
                     {imp.baseline} → {imp.after} {imp.unit}
                   </span>
                   {delBtn(t("engineering.action.delete"), () => hapusImpItem(imp.id))}

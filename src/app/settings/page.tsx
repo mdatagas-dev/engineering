@@ -53,11 +53,11 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">
           {t("menu.settings")}
         </p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">{t("settings.title")}</h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">{t("settings.subtitle")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("settings.title")}</h1>
+        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("settings.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
@@ -122,23 +122,23 @@ function AccountPanel({
     <TiltPanel className="anim-fade-up" intensity={3}>
       <PanelHeader icon={<UserCog className="h-4 w-4" />} title={t("settings.account")} subtitle={t("settings.accountSub")} />
       <div className="space-y-5 p-5">
-        <div className="flex items-center gap-4 rounded-xl border border-jade-400/15 bg-obsidian-900/50 p-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-jade-500/40 to-obsidian-700 font-display text-lg font-bold text-jade-200">
+        <div className="glass-premium flex items-center gap-4 rounded-xl p-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense/40 to-obsidian-700 font-display text-lg font-bold text-hisense-soft">
             {(user?.username ?? "?").charAt(0).toUpperCase()}
           </div>
           <div>
-            <p className="font-display text-sm font-semibold text-jade-200">{user?.username ?? "—"}</p>
-            <span className="mt-1 inline-block rounded-full border border-jade-400/30 bg-jade-500/10 px-2.5 py-0.5 text-[10px] capitalize text-jade-300">
+            <p className="font-display text-sm font-semibold text-hisense-soft">{user?.username ?? "—"}</p>
+            <span className="mt-1 inline-block rounded-full border border-hisense/30 bg-hisense/10 px-2.5 py-0.5 text-[10px] capitalize text-hisense-soft">
               {user?.role ?? "—"}
             </span>
           </div>
         </div>
 
         <div className="divider-glow" />
-        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">
+        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
           <KeyRound className="h-3.5 w-3.5" /> {t("settings.changePassword")}
         </p>
-        <p className="text-[11px] text-jade-300/40">{t("settings.changePasswordSub")}</p>
+        <p className="text-[11px] text-hisense-soft/40">{t("settings.changePasswordSub")}</p>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <input
@@ -146,14 +146,14 @@ function AccountPanel({
             value={oldPw}
             onChange={(e) => setOldPw(e.target.value)}
             placeholder={t("settings.oldPassword")}
-            className="w-full rounded-xl border border-jade-400/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-jade-100 outline-none transition-all placeholder:text-jade-300/30 focus:border-jade-400/60"
+            className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60"
           />
           <input
             type={show ? "text" : "password"}
             value={newPw}
             onChange={(e) => setNewPw(e.target.value)}
             placeholder={t("settings.newPassword")}
-            className="w-full rounded-xl border border-jade-400/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-jade-100 outline-none transition-all placeholder:text-jade-300/30 focus:border-jade-400/60"
+            className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60"
           />
           <div className="relative">
             <input
@@ -161,11 +161,11 @@ function AccountPanel({
               value={confirm}
               onChange={(e) => setConfirm(e.target.value)}
               placeholder={t("settings.confirmPassword")}
-              className="w-full rounded-xl border border-jade-400/15 bg-obsidian-900/80 px-3.5 py-2.5 pr-10 text-sm text-jade-100 outline-none transition-all placeholder:text-jade-300/30 focus:border-jade-400/60"
+              className="w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 pr-10 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60"
             />
             <button
               onClick={() => setShow((s) => !s)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-jade-300/50 hover:text-jade-300"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-hisense-soft/50 hover:text-hisense-soft"
             >
               {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
@@ -177,11 +177,11 @@ function AccountPanel({
             className={cn(
               "flex items-start gap-2 rounded-xl border px-4 py-3 text-xs",
               status.type === "ok"
-                ? "border-jade-400/30 bg-jade-500/10 text-jade-200"
+                ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
                 : "border-red-500/30 bg-red-500/10 text-red-300"
             )}
           >
-            {status.type === "ok" ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-jade-400" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />}
+            {status.type === "ok" ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-hisense" /> : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-400" />}
             {status.msg}
           </div>
         )}
@@ -189,7 +189,7 @@ function AccountPanel({
         <button
           onClick={changePassword}
           disabled={saving || !oldPw || !newPw}
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-600 px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-lg shadow-jade-500/30 transition-all hover:shadow-jade-500/50 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-5 py-2.5 text-xs font-bold text-obsidian-950 shadow-hisense-glow transition-all hover:shadow-hisense-glow disabled:cursor-not-allowed disabled:opacity-40"
         >
           <Save className="h-3.5 w-3.5" /> {t("settings.save")}
         </button>
@@ -221,20 +221,20 @@ function LanguagePanel({
               className={cn(
                 "flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition-all",
                 active
-                  ? "border-jade-400/60 bg-jade-500/15 shadow-[0_0_20px_rgba(0,214,201,0.12)]"
-                  : "border-jade-400/10 bg-obsidian-900/50 hover:border-jade-400/30"
+                  ? "border-hisense/60 bg-hisense/15 shadow-[0_0_20px_rgba(0,179,172,0.12)]"
+                  : "border-hisense/10 bg-obsidian-900/50 hover:border-hisense/30"
               )}
             >
               <div>
-                <p className={cn("font-display text-sm font-semibold", active ? "text-jade-200" : "text-jade-300/70")}>
+                <p className={cn("font-display text-sm font-semibold", active ? "text-hisense-soft" : "text-hisense-soft/70")}>
                   {l.native}
                 </p>
-                <p className="text-[10px] text-jade-300/40">{l.label}</p>
+                <p className="text-[10px] text-hisense-soft/40">{l.label}</p>
               </div>
               <span
                 className={cn(
                   "flex h-5 w-5 items-center justify-center rounded-full border",
-                  active ? "border-jade-400 bg-jade-500" : "border-jade-400/25"
+                  active ? "border-hisense bg-hisense" : "border-hisense/25"
                 )}
               >
                 {active && <span className="h-2 w-2 rounded-full bg-obsidian-950" />}
@@ -242,7 +242,7 @@ function LanguagePanel({
             </button>
           );
         })}
-        <p className="pt-1 text-[10px] text-jade-300/35">
+        <p className="pt-1 text-[10px] text-hisense-soft/35">
           {t("settings.language")}: {LANG_LABEL[lang as keyof typeof LANG_LABEL] ?? lang}
         </p>
       </div>
@@ -278,21 +278,21 @@ function DisplayPanel({
               className={cn(
                 "rounded-xl border px-2 py-3 text-center transition-all sm:px-3",
                 dateFormat === f.value
-                  ? "border-jade-400/60 bg-jade-500/15 text-jade-200"
-                  : "border-jade-400/10 bg-obsidian-900/50 text-jade-300/50 hover:border-jade-400/30"
+                  ? "border-hisense/60 bg-hisense/15 text-hisense-soft"
+                  : "border-hisense/10 bg-obsidian-900/50 text-hisense-soft/50 hover:border-hisense/30"
               )}
             >
               <p className="font-mono text-xs sm:text-sm">{f.sample}</p>
-              <p className="mt-1 text-[10px] uppercase tracking-wider text-jade-300/40">{f.value}</p>
+              <p className="mt-1 text-[10px] uppercase tracking-wider text-hisense-soft/40">{f.value}</p>
             </button>
           ))}
         </div>
 
         <div className="divider-glow pt-2" />
-        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">
+        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">
           <LayoutGrid className="h-3.5 w-3.5" /> {t("settings.display")}
         </p>
-        <p className="text-[11px] text-jade-300/40">{t("settings.displaySub")}</p>
+        <p className="text-[11px] text-hisense-soft/40">{t("settings.displaySub")}</p>
         <ToggleRow label={t("settings.compact")} storageKey="eng_compact" />
       </div>
     </TiltPanel>
@@ -341,22 +341,22 @@ function DataPanel({
     <TiltPanel className="anim-fade-up" intensity={3}>
       <PanelHeader icon={<Database className="h-4 w-4" />} title={t("settings.data")} subtitle={t("settings.dataSub")} />
       <div className="space-y-3 p-5">
-        <div className="rounded-xl border border-jade-400/15 bg-obsidian-900/50 px-4 py-3">
-          <p className="text-[11px] text-jade-300/50">{t("settings.totalRows")}</p>
-          <p className="font-display jade-grad-text mt-1 text-2xl font-bold">
-            {rows.length.toLocaleString()} <span className="text-xs font-normal text-jade-300/50">{t("settings.rows")}</span>
+        <div className="glass-premium rounded-xl px-4 py-3">
+          <p className="text-[11px] text-hisense-soft/50">{t("settings.totalRows")}</p>
+          <p className="font-display text-hisense-gradient mt-1 text-2xl font-bold">
+            {rows.length.toLocaleString()} <span className="text-xs font-normal text-hisense-soft/50">{t("settings.rows")}</span>
           </p>
         </div>
 
         <button
           onClick={exportCsv}
-          className="flex w-full items-center justify-between rounded-xl border border-jade-400/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-jade-400/40 hover:bg-jade-500/5"
+          className="flex w-full items-center justify-between rounded-xl border border-hisense/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-hisense/40 hover:bg-hisense/5"
         >
           <div className="flex items-center gap-3">
-            <Download className="h-4 w-4 text-jade-300" />
+            <Download className="h-4 w-4 text-hisense-soft" />
             <div>
-              <p className="text-xs font-medium text-jade-200">{t("settings.exportCsv")}</p>
-              <p className="text-[10px] text-jade-300/40">{t("settings.exportCsvSub")}</p>
+              <p className="text-xs font-medium text-hisense-soft">{t("settings.exportCsv")}</p>
+              <p className="text-[10px] text-hisense-soft/40">{t("settings.exportCsvSub")}</p>
             </div>
           </div>
         </button>
@@ -375,8 +375,8 @@ function DataPanel({
         </button>
 
         {status && (
-          <div className="flex items-center gap-2 rounded-xl border border-jade-400/30 bg-jade-500/10 px-4 py-2.5 text-xs text-jade-200">
-            <CheckCircle2 className="h-4 w-4 text-jade-400" /> {status.msg}
+          <div className="flex items-center gap-2 rounded-xl border border-hisense/30 bg-hisense/10 px-4 py-2.5 text-xs text-hisense-soft">
+            <CheckCircle2 className="h-4 w-4 text-hisense" /> {status.msg}
           </div>
         )}
       </div>
@@ -411,22 +411,22 @@ function SystemPanel({
       <PanelHeader icon={<Server className="h-4 w-4" />} title={t("settings.system")} subtitle={t("settings.systemSub")} />
       <div className="space-y-3 p-5">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="rounded-xl border border-jade-400/15 bg-obsidian-900/50 px-4 py-3">
-            <p className="text-[11px] text-jade-300/50">{t("settings.version")}</p>
-            <p className="font-display mt-1 text-lg font-bold text-jade-200">v1.0.0</p>
+          <div className="glass-premium rounded-xl px-4 py-3">
+            <p className="text-[11px] text-hisense-soft/50">{t("settings.version")}</p>
+            <p className="font-display mt-1 text-lg font-bold text-hisense-soft">v1.0.0</p>
           </div>
-          <div className="rounded-xl border border-jade-400/15 bg-obsidian-900/50 px-4 py-3">
-            <p className="text-[11px] text-jade-300/50">{t("settings.backendStatus")}</p>
+          <div className="glass-premium rounded-xl px-4 py-3">
+            <p className="text-[11px] text-hisense-soft/50">{t("settings.backendStatus")}</p>
             <p className="mt-1 flex items-center gap-2 text-sm font-semibold">
-              <span className={cn("h-2 w-2 rounded-full", backendOnline ? "bg-jade-400" : "bg-red-400")} />
-              <span className={backendOnline ? "text-jade-300" : "text-red-300"}>
+              <span className={cn("h-2 w-2 rounded-full", backendOnline ? "bg-hisense" : "bg-red-400")} />
+              <span className={backendOnline ? "text-hisense-soft" : "text-red-300"}>
                 {backendOnline === null ? "…" : backendOnline ? t("settings.online") : t("settings.offline")}
               </span>
             </p>
           </div>
         </div>
-        <div className="rounded-xl border border-jade-400/15 bg-obsidian-900/50 px-4 py-3">
-          <p className="flex items-center gap-2 text-[11px] text-jade-300/50">
+        <div className="glass-premium rounded-xl px-4 py-3">
+          <p className="flex items-center gap-2 text-[11px] text-hisense-soft/50">
             <Wrench className="h-3.5 w-3.5" /> {t("app.subtitle")} — Next.js 16 · FastAPI · ECharts
           </p>
         </div>
@@ -443,30 +443,30 @@ function HelpPanel({ t }: { t: (k: string) => string }) {
       <div className="space-y-3 p-5">
         <Link
           href="/bantuan"
-          className="group flex w-full items-center justify-between rounded-xl border border-jade-400/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-jade-400/40 hover:bg-jade-500/5"
+          className="group flex w-full items-center justify-between rounded-xl border border-hisense/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-hisense/40 hover:bg-hisense/5"
         >
           <div className="flex items-center gap-3">
-            <HelpCircle className="h-4 w-4 text-jade-300" />
+            <HelpCircle className="h-4 w-4 text-hisense-soft" />
             <div>
-              <p className="text-xs font-medium text-jade-200">{t("bantuan.title")}</p>
-              <p className="text-[10px] text-jade-300/40">{t("settings.helpGuideSub")}</p>
+              <p className="text-xs font-medium text-hisense-soft">{t("bantuan.title")}</p>
+              <p className="text-[10px] text-hisense-soft/40">{t("settings.helpGuideSub")}</p>
             </div>
           </div>
-          <ChevronRight className="h-4 w-4 text-jade-300/40 transition-transform group-hover:translate-x-0.5 group-hover:text-jade-300" />
+          <ChevronRight className="h-4 w-4 text-hisense-soft/40 transition-transform group-hover:translate-x-0.5 group-hover:text-hisense-soft" />
         </Link>
 
         <Link
           href="/privacy"
-          className="group flex w-full items-center justify-between rounded-xl border border-jade-400/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-jade-400/40 hover:bg-jade-500/5"
+          className="group flex w-full items-center justify-between rounded-xl border border-hisense/20 bg-obsidian-900/60 px-4 py-3 text-left transition-all hover:border-hisense/40 hover:bg-hisense/5"
         >
           <div className="flex items-center gap-3">
-            <ShieldCheck className="h-4 w-4 text-jade-300" />
+            <ShieldCheck className="h-4 w-4 text-hisense-soft" />
             <div>
-              <p className="text-xs font-medium text-jade-200">{t("privacy.title")}</p>
-              <p className="text-[10px] text-jade-300/40">{t("settings.helpPrivacySub")}</p>
+              <p className="text-xs font-medium text-hisense-soft">{t("privacy.title")}</p>
+              <p className="text-[10px] text-hisense-soft/40">{t("settings.helpPrivacySub")}</p>
             </div>
           </div>
-          <ChevronRight className="h-4 w-4 text-jade-300/40 transition-transform group-hover:translate-x-0.5 group-hover:text-jade-300" />
+          <ChevronRight className="h-4 w-4 text-hisense-soft/40 transition-transform group-hover:translate-x-0.5 group-hover:text-hisense-soft" />
         </Link>
       </div>
     </TiltPanel>
@@ -486,13 +486,13 @@ function ToggleRow({ label, storageKey, defaultOn = false }: { label: string; st
   }, [on, storageKey]);
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-jade-400/10 bg-obsidian-900/50 px-4 py-3">
-      <p className="text-xs text-jade-300/70">{label}</p>
+    <div className="glass-premium flex items-center justify-between rounded-xl px-4 py-3">
+      <p className="text-xs text-hisense-soft/70">{label}</p>
       <button
         onClick={() => setOn((s) => !s)}
         className={cn(
           "relative h-6 w-11 rounded-full transition-colors duration-300",
-          on ? "bg-jade-500" : "bg-obsidian-700"
+          on ? "bg-hisense" : "bg-obsidian-700"
         )}
       >
         <span

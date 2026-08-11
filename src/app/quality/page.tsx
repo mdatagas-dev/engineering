@@ -17,13 +17,13 @@ function todayIso() {
   return new Date().toISOString().slice(0, 10);
 }
 const AXIS = {
-  axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
+  axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
   axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
-  splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+  splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 const TOOLTIP = {
   backgroundColor: "rgba(3,9,13,0.95)",
-  borderColor: "rgba(0,214,201,0.35)",
+  borderColor: "rgba(0,179,172,0.35)",
   textStyle: { color: "#d3faf6" },
 };
 
@@ -75,7 +75,7 @@ export default function QualityPage() {
   };
 
   const inputCls =
-    "w-full rounded-xl border border-jade-400/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-jade-100 outline-none transition-all placeholder:text-jade-300/30 focus:border-jade-400/60 focus:shadow-[0_0_20px_rgba(0,214,201,0.15)]";
+    "w-full rounded-xl border border-hisense/15 bg-obsidian-900/80 px-3.5 py-2.5 text-sm text-hisense-soft outline-none transition-all placeholder:text-hisense-soft/30 focus:border-hisense/60 focus:shadow-[0_0_20px_rgba(0,179,172,0.15)]";
 
   const sorted = useMemo(
     () => [...defects].sort((a, b) => b.date.localeCompare(a.date) || b.id - a.id),
@@ -130,13 +130,13 @@ export default function QualityPage() {
         smooth: true,
         symbol: "none",
         data: fpyDaily,
-        lineStyle: { width: 3, color: "#00d6c9" },
+        lineStyle: { width: 3, color: "#00b3ac" },
         areaStyle: {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "rgba(0,214,201,0.35)" },
-              { offset: 1, color: "rgba(0,214,201,0)" },
+              { offset: 0, color: "rgba(0,179,172,0.35)" },
+              { offset: 1, color: "rgba(0,179,172,0)" },
             ],
           },
         },
@@ -192,7 +192,7 @@ export default function QualityPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -221,7 +221,7 @@ export default function QualityPage() {
         type: "bar",
         data: defectPerLine.map((d, i) => ({
           value: d.defects,
-          itemStyle: { color: ["#00d6c9", "#93f5ee", "#f59e0b"][i] },
+          itemStyle: { color: ["#00b3ac", "#8ff0ea", "#f59e0b"][i] },
         })),
         barWidth: 44,
         label: { show: true, position: "top", color: "#d3faf6", fontSize: 12 },
@@ -233,35 +233,35 @@ export default function QualityPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">{t("quality.pilar")}</p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">{t("quality.title")}</h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">{t("quality.subtitle")}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("quality.pilar")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("quality.title")}</h1>
+        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("quality.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <ShieldCheck className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <ShieldCheck className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.fpy.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("quality.kpi.fpyFormula")}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.fpy.toFixed(1)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.fpyFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
+          <div className="flex items-center gap-2 text-hisense-soft/60">
             <TrendingDown className="h-4 w-4 text-red-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.defectRate.toFixed(2)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("quality.kpi.defectFormula")}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.defectRate.toFixed(2)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.defectFormula")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <BarChart3 className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <BarChart3 className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{pareto[0]?.model}</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{pareto[0]?.model}</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("quality.kpi.topDefectSub", { n: pareto[0]?.defects ?? 0, p: pareto[0]?.cumulativePct.toFixed(0) ?? 0 })}</p>
         </TiltPanel>
       </div>
 
@@ -271,11 +271,11 @@ export default function QualityPage() {
           <div className="space-y-4 p-5">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">{t("quality.input.date")}</label>
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.date")}</label>
                 <input type="date" value={form.date} onChange={(e) => set("date", e.target.value)} className={inputCls} />
               </div>
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">{t("quality.input.line")}</label>
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.line")}</label>
                 <select value={form.line} onChange={(e) => set("line", e.target.value)} className={cn(inputCls, "appearance-none")}>
                   {LINES.map((o) => (
                     <option key={o} value={o}>{o}</option>
@@ -284,15 +284,15 @@ export default function QualityPage() {
               </div>
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">{t("quality.input.model")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.model")}</label>
               <input type="text" value={form.model} onChange={(e) => set("model", e.target.value)} placeholder={t("quality.input.modelPlaceholder")} className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">{t("quality.input.defectType")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.defectType")}</label>
               <input type="text" value={form.defect_type} onChange={(e) => set("defect_type", e.target.value)} placeholder={t("quality.input.defectTypePlaceholder")} className={inputCls} />
             </div>
             <div>
-              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-jade-300/60">{t("quality.input.qty")}</label>
+              <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-hisense-soft/60">{t("quality.input.qty")}</label>
               <input type="number" min={1} value={form.qty} onChange={(e) => set("qty", e.target.value)} className={inputCls} />
             </div>
             {status && (
@@ -300,12 +300,12 @@ export default function QualityPage() {
                 className={cn(
                   "flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm",
                   status.type === "ok"
-                    ? "border-jade-400/30 bg-jade-500/10 text-jade-200"
+                    ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
                     : "border-gold-400/30 bg-gold-400/10 text-gold-300"
                 )}
               >
                 {status.type === "ok" ? (
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-jade-400" />
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-hisense" />
                 ) : (
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
                 )}
@@ -315,7 +315,7 @@ export default function QualityPage() {
             <button
               onClick={simpan}
               disabled={saving}
-              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-jade-500 to-jade-600 px-6 py-3 text-sm font-bold text-obsidian-950 shadow-lg shadow-jade-500/30 transition-all hover:shadow-jade-500/50 disabled:cursor-not-allowed disabled:opacity-40"
+              className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-hisense-bold via-hisense to-hisense-soft px-6 py-3 text-sm font-bold text-obsidian-950 shadow-hisense-glow/30 transition-all hover:shadow-hisense-glow/50 disabled:cursor-not-allowed disabled:opacity-40"
             >
               <Plus className="h-4 w-4 transition-transform group-hover:scale-110" />
               {saving ? t("quality.input.saving") : t("quality.input.save")}
@@ -328,12 +328,12 @@ export default function QualityPage() {
             icon={<ClipboardList className="h-4 w-4" />}
             title={t("quality.table.title")}
             subtitle={t("quality.table.subtitle")}
-            right={<span className="text-xs text-jade-300/60">{t("quality.table.total", { n: totalQty })}</span>}
+            right={<span className="text-xs text-hisense-soft/60">{t("quality.table.total", { n: totalQty })}</span>}
           />
           <div className="overflow-x-auto px-5 pb-5 pt-4">
             <table className="w-full min-w-[640px] text-left text-sm">
               <thead>
-                <tr className="border-b border-jade-400/15 text-[11px] uppercase tracking-wider text-jade-300/50">
+                <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.date")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.line")}</th>
                   <th className="pb-3 pr-4 font-semibold">{t("quality.table.model")}</th>
@@ -345,16 +345,16 @@ export default function QualityPage() {
               <tbody>
                 {sorted.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-10 text-center text-sm text-jade-300/40">{t("quality.table.empty")}</td>
+                    <td colSpan={6} className="py-10 text-center text-sm text-hisense-soft/40">{t("quality.table.empty")}</td>
                   </tr>
                 ) : (
                   sorted.map((d) => (
-                    <tr key={d.id} className="border-b border-jade-400/8 transition-colors hover:bg-jade-500/5">
-                      <td className="py-3 pr-4 font-mono text-xs text-jade-300/60">{d.date}</td>
-                      <td className="py-3 pr-4 text-jade-300/70">{d.line}</td>
-                      <td className="py-3 pr-4 text-jade-200">{d.model}</td>
-                      <td className="py-3 pr-4 text-jade-300/70">{d.defect_type}</td>
-                      <td className="py-3 pr-4 font-mono text-xs text-jade-200">{d.qty}</td>
+                    <tr key={d.id} className="border-b border-hisense/8 transition-colors hover:bg-hisense/5">
+                      <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/60">{d.date}</td>
+                      <td className="py-3 pr-4 text-hisense-soft/70">{d.line}</td>
+                      <td className="py-3 pr-4 text-hisense-soft">{d.model}</td>
+                      <td className="py-3 pr-4 text-hisense-soft/70">{d.defect_type}</td>
+                      <td className="py-3 pr-4 font-mono text-xs text-hisense-soft">{d.qty}</td>
                       <td className="py-3">
                         <button
                           onClick={() => hapus(d.id)}

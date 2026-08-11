@@ -24,14 +24,14 @@ import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 
 const AXIS = {
-  axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
-  axisLabel: { color: "rgba(147,245,238,0.5)", fontSize: 10 },
-  splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+  axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
+  axisLabel: { color: "rgba(143,240,234,0.5)", fontSize: 10 },
+  splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 
 const TOOLTIP = {
   backgroundColor: "rgba(3,9,13,0.95)",
-  borderColor: "rgba(0,214,201,0.35)",
+  borderColor: "rgba(0,179,172,0.35)",
   textStyle: { color: "#d3faf6" },
 };
 
@@ -85,7 +85,7 @@ export default function DashboardPage() {
     () => ({
       tooltip: { ...TOOLTIP, trigger: "axis" },
       legend: {
-        textStyle: { color: "rgba(147,245,238,0.65)", fontSize: 11 },
+        textStyle: { color: "rgba(143,240,234,0.65)", fontSize: 11 },
         top: 0,
         icon: "roundRect",
         itemWidth: 14,
@@ -108,15 +108,15 @@ export default function DashboardPage() {
           symbol: "circle",
           symbolSize: 5,
           data: tren.map((t) => +t.oee.toFixed(1)),
-          lineStyle: { width: 3, color: "#00d6c9" },
-          itemStyle: { color: "#00d6c9", borderColor: "#03090d", borderWidth: 1 },
+          lineStyle: { width: 3, color: "#00b3ac" },
+          itemStyle: { color: "#00b3ac", borderColor: "#03090d", borderWidth: 1 },
           areaStyle: {
             color: {
               type: "linear",
               x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: "rgba(0,214,201,0.3)" },
-              { offset: 1, color: "rgba(0,214,201,0)" },
+                { offset: 0, color: "rgba(0,179,172,0.3)" },
+              { offset: 1, color: "rgba(0,179,172,0)" },
             ],
           },
         },
@@ -136,8 +136,8 @@ export default function DashboardPage() {
         smooth: true,
         symbol: "none",
         data: tren.map((t) => +t.lineBalance.toFixed(1)),
-        lineStyle: { width: 2, color: "#93f5ee" },
-        itemStyle: { color: "#93f5ee" },
+        lineStyle: { width: 2, color: "#8ff0ea" },
+        itemStyle: { color: "#8ff0ea" },
       },
     ],
     }),
@@ -171,7 +171,7 @@ export default function DashboardPage() {
             type: "linear",
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -240,9 +240,9 @@ export default function DashboardPage() {
       {
         type: "bar",
         data: [
-          { value: 60, itemStyle: { color: "rgba(0,214,201,0.4)" } },
+          { value: 60, itemStyle: { color: "rgba(0,179,172,0.4)" } },
           { value: 69, itemStyle: { color: "rgba(56,189,248,0.4)" } },
-          { value: 63, itemStyle: { color: "#00d6c9" } },
+          { value: 63, itemStyle: { color: "#00b3ac" } },
         ],
         barWidth: 44,
         label: { show: true, position: "top", color: "#d3faf6", fontSize: 12, formatter: "{c} sec" },
@@ -277,13 +277,13 @@ export default function DashboardPage() {
         type: "text",
         left: "center",
         top: "40%",
-        style: { text: "5/10", fill: "#93f5ee", fontSize: 26, fontWeight: 700 },
+        style: { text: "5/10", fill: "#8ff0ea", fontSize: 26, fontWeight: 700 },
       },
       {
         type: "text",
         left: "center",
         top: "52%",
-        style: { text: "isu tertutup", fill: "rgba(147,245,238,0.45)", fontSize: 11 },
+        style: { text: "isu tertutup", fill: "rgba(143,240,234,0.45)", fontSize: 11 },
       },
     ],
     }),
@@ -299,25 +299,25 @@ export default function DashboardPage() {
             style={{ animationDelay: "150ms" }}
           >
             <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-50" />
-            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-jade-500 to-obsidian-700 shadow-lg shadow-jade-500/25">
+            <div className="relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-hisense to-obsidian-700 shadow-lg shadow-hisense/25">
               <Hexagon className="h-6 w-6 text-obsidian-950" strokeWidth={2.4} />
             </div>
           </div>
           <div>
             <p
-              className="anim-fade-up text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50"
+              className="anim-fade-up text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50"
               style={{ animationDelay: "80ms" }}
             >
               {t("dash.pillar")}
             </p>
             <h1
-              className="anim-fade-up font-display jade-grad-text mt-2 text-3xl font-bold tracking-wide text-glow"
+              className="anim-fade-up font-display text-hisense-gradient mt-2 text-3xl font-bold tracking-wide text-glow"
               style={{ animationDelay: "160ms" }}
             >
               {t("dash.title")}
             </h1>
             <p
-              className="anim-fade-up mt-1.5 text-sm text-jade-300/50"
+              className="anim-fade-up mt-1.5 text-sm text-hisense-soft/50"
               style={{ animationDelay: "240ms" }}
             >
               {t("dash.subtitle", { date: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }) })}
@@ -325,7 +325,7 @@ export default function DashboardPage() {
           </div>
         </div>
         <div className="anim-fade-up flex flex-wrap items-center gap-3" style={{ animationDelay: "320ms" }}>
-          <div className="flex items-center gap-1.5 rounded-full border border-jade-400/15 bg-obsidian-850/60 p-1.5">
+          <div className="flex items-center gap-1.5 rounded-full border border-hisense/15 bg-obsidian-850/60 p-1.5">
             {([1, 7, 14, 30] as const).map((n) => (
               <button
                 key={n}
@@ -333,15 +333,15 @@ export default function DashboardPage() {
                 className={cn(
                   "rounded-full border px-4 py-1.5 text-xs font-medium transition-colors",
                   periode === n
-                    ? "border-jade-400/60 bg-jade-500/15 text-jade-200"
-                    : "border-jade-400/10 text-jade-300/50 hover:text-jade-300"
+                    ? "border-hisense/60 bg-hisense/15 text-hisense-soft"
+                    : "border-hisense/10 text-hisense-soft/50 hover:text-hisense-soft"
                 )}
               >
                 {n === 1 ? t("periode.harian") : t("periode.hari", { n })}
               </button>
             ))}
           </div>
-          <div className="flex items-center gap-2.5 rounded-full border border-jade-400/20 bg-obsidian-850/60 px-4 py-2 text-xs text-jade-300/70">
+          <div className="flex items-center gap-2.5 rounded-full border border-hisense/20 bg-obsidian-850/60 px-4 py-2 text-xs text-hisense-soft/70">
             <span className="live-dot" />
             {t("dash.live")}
           </div>
@@ -399,12 +399,12 @@ export default function DashboardPage() {
 function PanelHeader({ icon, title, subtitle }: { icon: React.ReactNode; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3 px-5 pt-5">
-      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-jade-400/20 bg-jade-500/10 text-jade-300">
+      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-hisense/20 bg-hisense/10 text-hisense-soft">
         {icon}
       </div>
       <div>
-        <h3 className="font-display text-sm font-semibold text-jade-200">{title}</h3>
-        <p className="text-[11px] text-jade-300/45">{subtitle}</p>
+        <h3 className="font-display text-sm font-semibold text-hisense-soft">{title}</h3>
+        <p className="text-[11px] text-hisense-soft/45">{subtitle}</p>
       </div>
     </div>
   );

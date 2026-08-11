@@ -10,19 +10,19 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
 const AXIS = {
-  axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
-  axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
-  splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+  axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
+  axisLabel: { color: "rgba(143,240,234,0.55)", fontSize: 10 },
+  splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 
 const TOOLTIP = {
   backgroundColor: "rgba(3,9,13,0.95)",
-  borderColor: "rgba(0,214,201,0.35)",
+  borderColor: "rgba(0,179,172,0.35)",
   textStyle: { color: "#d3faf6" },
 };
 
 const LEGEND = {
-  textStyle: { color: "rgba(147,245,238,0.7)", fontSize: 11 },
+  textStyle: { color: "rgba(143,240,234,0.7)", fontSize: 11 },
   top: 0,
   icon: "roundRect",
   itemWidth: 14,
@@ -140,7 +140,7 @@ export default function SetupPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -173,7 +173,7 @@ export default function SetupPage() {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -203,8 +203,8 @@ export default function SetupPage() {
         symbol: "circle",
         symbolSize: 4,
         data: trenSetup.map((t) => +t.std.toFixed(1)),
-        lineStyle: { width: 2, color: "#00d6c9", type: "dashed" },
-        itemStyle: { color: "#00d6c9" },
+        lineStyle: { width: 2, color: "#00b3ac", type: "dashed" },
+        itemStyle: { color: "#00b3ac" },
       },
       {
         name: t("series.aktual"),
@@ -222,63 +222,63 @@ export default function SetupPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">
           {t("setup.phase")}
         </p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">
           {t("setup.title")}
         </h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">
+        <p className="mt-1.5 text-sm text-hisense-soft/50">
           {t("setup.subtitle")}
         </p>
       </header>
 
       <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Timer className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Timer className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgActual")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">
             {summary.avgAct.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("setup.kpi.avgActualSub", { n: rows.length })}</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgActualSub", { n: rows.length })}</p>
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Target className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Target className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">
             {summary.avgStd.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("setup.kpi.avgStandardSub")}</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgStandardSub")}</p>
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className={cn("flex items-center gap-2", summary.variance > 0 ? "text-red-400/70" : "text-jade-300/60")}>
-            <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-jade-400")} />
+          <div className={cn("flex items-center gap-2", summary.variance > 0 ? "text-red-400/70" : "text-hisense-soft/60")}>
+            <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-hisense")} />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.totalVariance")}</p>
           </div>
-          <p className={cn("font-display mt-3 text-4xl font-bold text-glow", summary.variance > 0 ? "text-red-400" : "text-jade-400")}>
+          <p className={cn("font-display mt-3 text-4xl font-bold text-glow", summary.variance > 0 ? "text-red-400" : "text-hisense")}>
             {summary.variance > 0 ? "+" : ""}{summary.variance.toFixed(0)}
             <span className="text-lg"> {t("common.unit.min")}</span>
           </p>
-          <p className="mt-1 text-xs text-jade-300/50">
+          <p className="mt-1 text-xs text-hisense-soft/50">
             {summary.variance > 0 ? t("setup.kpi.varianceSlower") : t("setup.kpi.varianceFaster")}
           </p>
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
+          <div className="flex items-center gap-2 text-hisense-soft/60">
             <Activity className="h-4 w-4 text-gold-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.achievement")}</p>
           </div>
           <p className="gold-grad-text font-display mt-3 text-4xl font-bold text-glow">
             {summary.achievement.toFixed(1)}<span className="text-lg">%</span>
           </p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("setup.kpi.achievementSub")}</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.achievementSub")}</p>
         </TiltPanel>
       </section>
 
@@ -304,7 +304,7 @@ export default function SetupPage() {
         <div className="overflow-x-auto px-5 pb-5 pt-4">
           <table className="w-full min-w-[640px] text-left text-sm">
             <thead>
-              <tr className="border-b border-jade-400/15 text-[11px] uppercase tracking-wider text-jade-300/50">
+              <tr className="border-b border-hisense/15 text-[11px] uppercase tracking-wider text-hisense-soft/50">
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.model")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.line")}</th>
                 <th className="pb-3 pr-4 font-semibold">{t("setup.table.setupStandard")}</th>
@@ -315,13 +315,13 @@ export default function SetupPage() {
             </thead>
             <tbody>
               {perModel.map((m) => (
-                <tr key={m.model} className="border-b border-jade-400/8 transition-colors hover:bg-jade-500/5">
-                  <td className="py-3 pr-4 font-medium text-jade-200">{m.model}</td>
-                  <td className="py-3 pr-4 text-jade-300/70">{m.line}</td>
-                  <td className="py-3 pr-4 font-mono text-xs text-jade-300/80">{m.std.toFixed(1)} {t("common.unit.min")}</td>
-                  <td className="py-3 pr-4 font-mono text-xs text-jade-300/80">{m.act.toFixed(1)} {t("common.unit.min")}</td>
+                <tr key={m.model} className="border-b border-hisense/8 transition-colors hover:bg-hisense/5">
+                  <td className="py-3 pr-4 font-medium text-hisense-soft">{m.model}</td>
+                  <td className="py-3 pr-4 text-hisense-soft/70">{m.line}</td>
+                  <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{m.std.toFixed(1)} {t("common.unit.min")}</td>
+                  <td className="py-3 pr-4 font-mono text-xs text-hisense-soft/80">{m.act.toFixed(1)} {t("common.unit.min")}</td>
                   <td className="py-3 pr-4 font-mono text-xs">
-                    <span className={m.variance > 0 ? "text-red-400" : "text-jade-400"}>
+                    <span className={m.variance > 0 ? "text-red-400" : "text-hisense"}>
                       {m.variance > 0 ? "+" : ""}{m.variance.toFixed(1)} {t("common.unit.min")}
                     </span>
                   </td>
@@ -330,7 +330,7 @@ export default function SetupPage() {
                       className={cn(
                         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px]",
                         m.achievement >= 100
-                          ? "border-jade-400/30 bg-jade-500/10 text-jade-300"
+                          ? "border-hisense/30 bg-hisense/10 text-hisense-soft"
                           : "border-gold-400/30 bg-gold-400/10 text-gold-300"
                       )}
                     >

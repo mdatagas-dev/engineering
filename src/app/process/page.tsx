@@ -12,13 +12,13 @@ import { formatSec } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
 const AXIS = {
-  axisLine: { lineStyle: { color: "rgba(0,214,201,0.15)" } },
-  axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
-  splitLine: { lineStyle: { color: "rgba(0,214,201,0.06)" } },
+  axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
+  axisLabel: { color: "rgba(143,240,234,0.55)", fontSize: 10 },
+  splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 const TOOLTIP = {
   backgroundColor: "rgba(3,9,13,0.95)",
-  borderColor: "rgba(0,214,201,0.35)",
+  borderColor: "rgba(0,179,172,0.35)",
   textStyle: { color: "#d3faf6" },
 };
 
@@ -38,8 +38,8 @@ export default function ProcessPage() {
         itemStyle: { borderRadius: 10, borderColor: "#03090d", borderWidth: 4 },
         label: { color: "#d3faf6", fontSize: 11, formatter: "{b}\n{c}%" },
         data: [
-          { name: t("process.pie.availability"), value: +kpi.availability.toFixed(1), itemStyle: { color: "#00d6c9" } },
-          { name: t("process.pie.performance"), value: +kpi.performance.toFixed(1), itemStyle: { color: "#93f5ee" } },
+          { name: t("process.pie.availability"), value: +kpi.availability.toFixed(1), itemStyle: { color: "#00b3ac" } },
+          { name: t("process.pie.performance"), value: +kpi.performance.toFixed(1), itemStyle: { color: "#8ff0ea" } },
           { name: t("process.pie.quality"), value: +kpi.quality.toFixed(1), itemStyle: { color: "#f59e0b" } },
         ],
       },
@@ -51,7 +51,7 @@ export default function ProcessPage() {
   const lineBalance = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     legend: {
-      textStyle: { color: "rgba(147,245,238,0.7)", fontSize: 11 },
+      textStyle: { color: "rgba(143,240,234,0.7)", fontSize: 11 },
       top: 0,
       icon: "roundRect",
       itemWidth: 14,
@@ -68,7 +68,7 @@ export default function ProcessPage() {
         barWidth: 26,
         itemStyle: {
           borderRadius: [6, 6, 0, 0],
-          color: "rgba(0,214,201,0.55)",
+          color: "rgba(0,179,172,0.55)",
         },
       },
       {
@@ -82,7 +82,7 @@ export default function ProcessPage() {
             type: "linear",
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#00d6c9" },
+              { offset: 0, color: "#00b3ac" },
               { offset: 1, color: "#0a5b63" },
             ],
           },
@@ -121,13 +121,13 @@ export default function ProcessPage() {
         smooth: true,
         symbol: "none",
         data: cycleAchievementData,
-        lineStyle: { width: 3, color: "#93f5ee" },
+        lineStyle: { width: 3, color: "#8ff0ea" },
         areaStyle: {
           color: {
             type: "linear", x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "rgba(147,245,238,0.3)" },
-              { offset: 1, color: "rgba(147,245,238,0)" },
+              { offset: 0, color: "rgba(143,240,234,0.3)" },
+              { offset: 1, color: "rgba(143,240,234,0)" },
             ],
           },
         },
@@ -155,7 +155,7 @@ export default function ProcessPage() {
   const setupTren = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     legend: {
-      textStyle: { color: "rgba(147,245,238,0.7)", fontSize: 11 },
+      textStyle: { color: "rgba(143,240,234,0.7)", fontSize: 11 },
       top: 0,
       icon: "roundRect",
       itemWidth: 14,
@@ -198,43 +198,43 @@ export default function ProcessPage() {
   return (
     <div className="space-y-6">
       <header className="anim-fade-up">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-jade-300/50">{t("process.pilar")}</p>
-        <h1 className="font-display jade-grad-text mt-2 text-3xl font-bold text-glow">{t("process.title")}</h1>
-        <p className="mt-1.5 text-sm text-jade-300/50">{t("process.subtitle")}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-hisense-soft/50">{t("process.pilar")}</p>
+        <h1 className="font-display text-hisense-gradient mt-2 text-3xl font-bold text-glow">{t("process.title")}</h1>
+        <p className="mt-1.5 text-sm text-hisense-soft/50">{t("process.subtitle")}</p>
       </header>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Gauge className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Gauge className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.oee.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.oee.toFixed(1)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Clock className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Clock className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{formatSec(kpi.taktTimeSec)}</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("process.kpi.taktBenchmark")}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{formatSec(kpi.taktTimeSec)}</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.taktBenchmark")}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Timer className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Timer className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.cycleTimeAchievement.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.cycleTimeAchievement.toFixed(1)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
-          <div className="flex items-center gap-2 text-jade-300/60">
-            <Scale className="h-4 w-4 text-jade-400" />
+          <div className="flex items-center gap-2 text-hisense-soft/60">
+            <Scale className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
           </div>
-          <p className="jade-grad-text font-display mt-3 text-4xl font-bold text-glow">{kpi.setupAchievement.toFixed(1)}%</p>
-          <p className="mt-1 text-xs text-jade-300/50">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
+          <p className="text-hisense-gradient font-display mt-3 text-4xl font-bold text-glow">{kpi.setupAchievement.toFixed(1)}%</p>
+          <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
         </TiltPanel>
       </div>
 

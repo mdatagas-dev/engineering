@@ -4,10 +4,10 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { TiltPanel } from "@/components/tilt-panel";
 
 const ACCENT = {
-  jade: "from-jade-400 to-jade-600 text-jade-300 shadow-jade-500/40",
+  jade: "from-hisense to-hisense-bold text-hisense-soft shadow-hisense/40",
   gold: "from-gold-300 to-gold-500 text-gold-300 shadow-gold-500/30",
-  teal: "from-teal-300 to-jade-600 text-teal-300 shadow-jade-500/40",
-  emerald: "from-emerald-300 to-jade-600 text-emerald-300 shadow-jade-600/40",
+  teal: "from-hisense-soft to-hisense-bold text-hisense-soft shadow-hisense/40",
+  emerald: "from-hisense-soft to-hisense-bold text-hisense-soft shadow-hisense-bold/40",
 } as const;
 
 export type AccentKey = keyof typeof ACCENT;
@@ -78,11 +78,11 @@ export function KpiCard({
         <div className="p-5">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-jade-300/60">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-hisense-soft/60">
                 {label}
               </p>
               <p
-                className={`jade-grad-text font-display mt-3 text-4xl font-bold tracking-tight text-glow ${
+                className={`text-hisense-gradient font-display mt-3 text-4xl font-bold tracking-tight text-glow ${
                   alert === "warning" ? "gold-grad-text" : ""
                 }`}
               >
@@ -95,11 +95,11 @@ export function KpiCard({
               <span className="icon-breathe">{icon}</span>
             </div>
           </div>
-          <div className="mt-4 flex items-center gap-2 text-xs text-jade-300/55">
+          <div className="mt-4 flex items-center gap-2 text-xs text-hisense-soft/55">
             {alert === "critical" ? (
               <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-red-400" />
             ) : (
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-jade-400" />
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-hisense" />
             )}
             {sub}
           </div>
@@ -108,8 +108,8 @@ export function KpiCard({
               <svg viewBox="0 0 120 28" preserveAspectRatio="none" className="h-full w-full">
                 <defs>
                   <linearGradient id={`spark-${label}`} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#00d6c9" stopOpacity="0.45" />
-                    <stop offset="100%" stopColor="#00d6c9" stopOpacity="0" />
+                    <stop offset="0%" stopColor="#00b3ac" stopOpacity="0.45" />
+                    <stop offset="100%" stopColor="#00b3ac" stopOpacity="0" />
                   </linearGradient>
                 </defs>
                 {(() => {
@@ -127,7 +127,7 @@ export function KpiCard({
                       <polyline
                         points={line}
                         fill="none"
-                        stroke="#00d6c9"
+                        stroke="#00b3ac"
                         strokeWidth="1.5"
                         strokeLinecap="round"
                       />

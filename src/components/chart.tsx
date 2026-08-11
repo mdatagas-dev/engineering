@@ -77,9 +77,9 @@ export function Chart({
               symbol: "circle",
               symbolSize: 7,
               itemStyle: {
-                color: "#00d6c9",
+                color: "#00b3ac",
                 shadowBlur: 14,
-                shadowColor: "rgba(0,214,201,0.9)",
+                shadowColor: "rgba(0,179,172,0.9)",
               },
               rippleEffect: { brushType: "stroke", scale: 3.2, period: 2.2 },
               yAxisIndex: line.yAxisIndex,

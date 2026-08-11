@@ -45,7 +45,7 @@ export function TiltPanel({
           className="pointer-events-none absolute inset-0 rounded-[1.25rem] opacity-0 transition-opacity duration-300"
           style={{
             background:
-              "radial-gradient(600px 300px at var(--mx,50%) 0%, rgba(0,214,201,0.1), transparent 60%)",
+              "radial-gradient(600px 300px at var(--mx,50%) 0%, rgba(0,179,172,0.1), transparent 60%)",
           }}
         />
       )}
