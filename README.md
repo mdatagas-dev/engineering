@@ -128,6 +128,35 @@ npm run backend
 
 > Port 3011 dipilih agar tidak bentrok (3000, 3005, 3008, 3010, 3007 dipakai aplikasi lain).
 
+## Deployment (PM2 — production)
+
+Frontend & backend dikelola **PM2** (`ecosystem.config.js`): frontend `next start -p 3011`,
+backend `uvicorn 2 workers` di `127.0.0.1:8101`, Postgres tetap via docker.
+
+```bash
+# 1. Pastikan Postgres jalan (lihat bagian Database di atas)
+
+# 2. Build production frontend
+npm run build
+
+# 3. Start via PM2 (auto-restart + save ke dump)
+npm run pm2:start        # atau: pm2 start ecosystem.config.js && pm2 save
+
+# 4. (Sekali saja) auto-start saat server reboot — butuh sudo, isi password:
+#    sudo env PATH=$PATH:/home/lutvi/.nvm/versions/node/v24.16.0/bin \
+#      /home/lutvi/.nvm/versions/node/v24.16.0/lib/node_modules/pm2/bin/pm2 \
+#      startup systemd -u lutvi --hp /home/lutvi
+
+# Monitoring
+npm run pm2:logs         # pm2 logs (gabungan)
+pm2 status               # status kedua app
+```
+
+Kredensial dibaca dari `ecosystem.config.js`: `DATABASE_URL` & `JWT_SECRET` bisa
+di-override via env saat `pm2 start` (mis. `DATABASE_URL=... npm run pm2:start`).
+
+Perintah lain: `npm run pm2:restart` · `npm run pm2:stop` · `pm2 save` (setelah stop/delete).
+
 ## API Backend (port 8101, docs: /docs)
 
 | Endpoint | Fungsi |
