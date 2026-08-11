@@ -18,11 +18,11 @@ export const qualityDict: DomainDict = {
     ko: "일일 FPY · 불량률 · 파레토 분석 · 라인별 불량",
   },
   "quality.pilar": {
-    id: "Pilar 2",
-    en: "Pillar 2",
-    zh: "支柱 2",
-    ja: "柱 2",
-    ko: "기둥 2",
+    id: "Quality",
+    en: "Quality",
+    zh: "质量",
+    ja: "品質",
+    ko: "품질",
   },
   "quality.kpi.defectRate": {
     id: "Defect Rate",

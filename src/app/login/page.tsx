@@ -46,7 +46,7 @@ function LoginForm() {
   useEffect(() => {
     const timer = setInterval(() => {
       setQuoteIdx((i) => (i + 1) % MANUFACTURE_QUOTES.length);
-    }, 5 * 60 * 1000);
+    }, 2 * 60 * 1000);
     return () => clearInterval(timer);
   }, []);
 
@@ -136,7 +136,7 @@ function LoginForm() {
                 />
               ))}
               <span className="ml-2 font-mono text-[10px] text-white/40">
-                {String(quoteIdx + 1).padStart(2, "0")}/{MANUFACTURE_QUOTES.length} · auto 5 mnt
+                {String(quoteIdx + 1).padStart(2, "0")}/{MANUFACTURE_QUOTES.length}
               </span>
             </div>
           </blockquote>

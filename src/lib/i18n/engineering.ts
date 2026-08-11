@@ -19,11 +19,11 @@ export const engineeringDict: DomainDict = {
     ko: "이슈 목록 · 해결 · 지연 이슈 · 도구 가용성 · 개선",
   },
   "engineering.pillar": {
-    id: "Pilar 3",
-    en: "Pillar 3",
-    zh: "支柱 3",
-    ja: "ピラー 3",
-    ko: "필라 3",
+    id: "Engineering Management",
+    en: "Engineering Management",
+    zh: "工程管理",
+    ja: "エンジニアリング管理",
+    ko: "엔지니어링 관리",
   },
   "engineering.status.open": {
     id: "Terbuka",

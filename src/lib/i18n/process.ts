@@ -16,11 +16,11 @@ export const processDict: DomainDict = {
     ko: "OEE · 택트 타임 · 사이클 타임 · 라인 밸런스 · 설정 시간",
   },
   "process.pilar": {
-    id: "Pilar 1",
-    en: "Pillar 1",
-    zh: "支柱 1",
-    ja: "柱 1",
-    ko: "기둥 1",
+    id: "Process Performance",
+    en: "Process Performance",
+    zh: "过程绩效",
+    ja: "プロセス性能",
+    ko: "프로세스 성능",
   },
   "process.kpi.taktTime": {
     id: "Takt Time",

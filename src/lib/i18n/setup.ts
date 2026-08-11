@@ -16,11 +16,11 @@ export const setupDict: DomainDict = {
     ko: "모델·라인·일일별 실제 vs 표준 설정 — 편차와 달성률",
   },
   "setup.phase": {
-    id: "Fase 2 · Setup Time",
-    en: "Phase 2 · Setup Time",
-    zh: "阶段 2 · 换线时间",
-    ja: "フェーズ 2 · 段取り時間",
-    ko: "단계 2 · 설정 시간",
+    id: "Setup Time",
+    en: "Setup Time",
+    zh: "换线时间",
+    ja: "段取り時間",
+    ko: "설정 시간",
   },
   "setup.kpi.avgActual": {
     id: "Rata-rata Setup Aktual",
