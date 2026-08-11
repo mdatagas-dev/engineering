@@ -41,10 +41,8 @@ module.exports = {
       args: "backend.main:app --host 0.0.0.0 --port 8101 --workers 2",
       interpreter: "none",
       env: {
-        DATABASE_URL:
-          process.env.DATABASE_URL ??
-          "postgresql://engineering:engineering123@localhost:5433/engineering",
-        JWT_SECRET: process.env.JWT_SECRET ?? "eng-perf-dashboard-secret-2026",
+        DATABASE_URL: process.env.DATABASE_URL,
+        JWT_SECRET: process.env.JWT_SECRET,
       },
       max_memory_restart: "512M",
       autorestart: true,

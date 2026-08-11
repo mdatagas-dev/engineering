@@ -16,7 +16,7 @@ load_env()
 
 os.environ.setdefault(
     "DATABASE_URL",
-    "postgresql://engineering:engineering123@localhost:5433/engineering_test",
+    "postgresql://engineering:ef0dd5b951c8e60fcf7d2808f6e89c23@localhost:5433/engineering_test",
 )
 
 

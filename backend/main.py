@@ -2,6 +2,7 @@
 from contextlib import asynccontextmanager
 from datetime import date, datetime
 from io import BytesIO
+import os
 from typing import Any, Literal
 
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
@@ -90,9 +91,14 @@ async def lifespan(_: FastAPI):
 
 app = FastAPI(title="Engineering Performance API", version="1.0.0", lifespan=lifespan)
 
+_allowed_origins = os.environ.get("ALLOWED_ORIGINS") or "http://localhost:3011,http://127.0.0.1:3011"
+ALLOWED_ORIGINS = [_o.strip() for _o in _allowed_origins.split(",") if _o.strip()]
+if "*" in ALLOWED_ORIGINS:
+    ALLOWED_ORIGINS = ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
     allow_credentials=False,

@@ -114,9 +114,10 @@ Start/stop manual (tanpa PM2):
 ```bash
 /usr/lib/postgresql/18/bin/initdb -D /home/lutvi/eng-pgdata
 /usr/lib/postgresql/18/bin/pg_ctl -D /home/lutvi/eng-pgdata start -o "-p 5433" -k /tmp
-psql -h /tmp -p 5433 -d postgres -c "CREATE USER engineering WITH PASSWORD 'engineering123';"
+psql -h /tmp -p 5433 -d postgres -c "CREATE USER engineering WITH PASSWORD '<password-kuat>';"
 psql -h /tmp -p 5433 -d postgres -c "CREATE DATABASE engineering OWNER engineering;"
 psql -h /tmp -p 5433 -d postgres -c "CREATE DATABASE engineering_test OWNER engineering;"
+# lalu samakan password di .env (DATABASE_URL) + backend/tests/conftest.py
 ```
 
 Restore dump (bila ada):
@@ -133,7 +134,7 @@ psql -h /tmp -p 5433 -U engineering -d engineering_test -f backup_test.sql
 Schema (`prisma/schema.prisma`) → database:
 
 ```bash
-export DATABASE_URL="postgresql://engineering:engineering123@localhost:5433/engineering"
+export DATABASE_URL="postgresql://engineering:<password-kuat>@localhost:5433/engineering"
 PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma generate   # regenerate client Python
 PATH="$(pwd)/.venv/bin:$PATH" .venv/bin/prisma db push     # sinkronisasi tabel
 ```
@@ -187,8 +188,23 @@ pm2 status               # status ketiga app
 pm2 restart eng-postgres eng-frontend eng-backend   # restart ketiganya
 ```
 
-Kredensial dibaca dari `ecosystem.config.js`: `DATABASE_URL` & `JWT_SECRET` bisa
-di-override via env saat `pm2 start` (mis. `DATABASE_URL=... npm run pm2:start`).
+Kredensial dibaca dari **`.env`** (root repo): `DATABASE_URL`, `JWT_SECRET`,
+`ALLOWED_ORIGINS` — backend memuatnya saat start (`load_env`). PM2 tidak lagi
+menyuntik fallback. `ecosystem.config.js` meneruskan env dari proses.
+Lihat `.env.example` untuk daftar variabel. **Jangan commit `.env`.**
+
+### Konfigurasi CORS backend
+
+Backend hanya melayani origin frontend yang terdaftar di `ALLOWED_ORIGINS`
+(comma-separated). Default: `http://localhost:3011,http://127.0.0.1:3011`.
+Untuk akses dari perangkat lain di LAN, tambah IP server lalu restart backend:
+
+```bash
+ALLOWED_ORIGINS="http://localhost:3011,http://127.0.0.1:3011,http://192.168.1.50:3011" \
+  pm2 restart eng-backend
+```
+
+Nilai `*` = izinkan semua origin (tidak disarankan di production).
 
 Perintah lain: `npm run pm2:restart` · `npm run pm2:stop` · `pm2 save` (setelah stop/delete).
 
