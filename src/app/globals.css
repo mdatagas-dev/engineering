@@ -498,6 +498,20 @@ body {
     linear-gradient(180deg, #eaf2f6 0%, #eef4f7 42%, #e6eef2 100%);
 }
 
+.light .grad-bg {
+  background: linear-gradient(
+    120deg,
+    #dbeef0 0%,
+    #e0edf5 20%,
+    #dde4f7 45%,
+    #eadcf2 70%,
+    #f0dceb 85%,
+    #dbeef0 100%
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 18s ease-in-out infinite;
+}
+
 .light .grid-overlay {
   background-image:
     linear-gradient(rgba(0, 179, 172, 0.07) 1px, transparent 1px),
@@ -558,6 +572,24 @@ body {
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+/* ===== gradasi latar bergerak (sama dengan halaman login) ===== */
+.grad-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: linear-gradient(
+    120deg,
+    #0a2f33 0%,
+    #123b49 20%,
+    #1e2a5e 45%,
+    #3b1e4e 70%,
+    #4b2a63 85%,
+    #0a2f33 100%
+  );
+  background-size: 300% 300%;
+  animation: gradient-shift 18s ease-in-out infinite;
 }
 @keyframes page-in {
   from {

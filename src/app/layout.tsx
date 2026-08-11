@@ -39,7 +39,7 @@ export default function RootLayout({
       <body style={{ colorScheme: "dark" }}>
         <I18nProvider>
           <ThemeProvider>
-            <div className="aurora-bg" />
+            <div className="grad-bg" />
             <div className="grid-overlay" />
             <Shell>{children}</Shell>
           </ThemeProvider>
