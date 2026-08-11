@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   Gauge,
@@ -109,6 +110,26 @@ export function Sidebar({
 }) {
   const pathname = usePathname();
   const { t } = useI18n();
+  const [role, setRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    fetch("/api/auth/session")
+      .then((r) => r.json())
+      .then((d) => {
+        if (alive) setRole(d.user?.role ?? null);
+      })
+      .catch(() => {
+        if (alive) setRole(null);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [pathname]);
+
+  const isViewer = role === "viewer";
+  const showInput = !isViewer;
+  const showSettings = !isViewer;
 
   return (
     <aside
@@ -195,29 +216,35 @@ export function Sidebar({
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
-          <div
-            className={cn(
-              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
-            )}
-          >
-            <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
-          </div>
-          {INPUT_NAV.map(({ href, key, icon }) => (
-            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
-          ))}
+          {showInput && (
+            <div
+              className={cn(
+                "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+              )}
+            >
+              <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
+            </div>
+          )}
+          {showInput &&
+            INPUT_NAV.map(({ href, key, icon }) => (
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+            ))}
 
-          <div
-            className={cn(
-              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-              collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
-            )}
-          >
-            <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
-          </div>
-          {SETTINGS_NAV.map(({ href, key, icon }) => (
-            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
-          ))}
+          {showSettings && (
+            <div
+              className={cn(
+                "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                collapsed ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+              )}
+            >
+              <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
+            </div>
+          )}
+          {showSettings &&
+            SETTINGS_NAV.map(({ href, key, icon }) => (
+              <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+            ))}
 
           <div
             className={cn(
