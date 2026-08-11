@@ -3,6 +3,7 @@ import { Playfair_Display, Cormorant_Garamond, Cinzel } from "next/font/google";
 import "./globals.css";
 import { Shell } from "@/components/shell";
 import { I18nProvider } from "@/lib/i18n/provider";
+import { ThemeProvider } from "@/lib/theme";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -37,9 +38,11 @@ export default function RootLayout({
     >
       <body style={{ colorScheme: "dark" }}>
         <I18nProvider>
-          <div className="aurora-bg" />
-          <div className="grid-overlay" />
-          <Shell>{children}</Shell>
+          <ThemeProvider>
+            <div className="aurora-bg" />
+            <div className="grid-overlay" />
+            <Shell>{children}</Shell>
+          </ThemeProvider>
         </I18nProvider>
       </body>
     </html>

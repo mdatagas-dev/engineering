@@ -38,6 +38,29 @@ html.dark {
   color-scheme: dark;
 }
 
+/* ===== Light theme ===== */
+.light {
+  color-scheme: light;
+  --color-obsidian-950: #f8fafc;
+  --color-obsidian-900: #eef4f7;
+  --color-obsidian-850: #e6eef2;
+  --color-obsidian-800: #dbe6eb;
+  --color-obsidian-700: #c9d8de;
+  --color-obsidian-600: #aabcc6;
+  --color-hisense: #00b3ac;
+  --color-hisense-soft: #0d7a74;
+  --color-hisense-bold: #007e78;
+  --color-hisense-faint: #7fd6d0;
+  --color-gold-300: #f59e0b;
+  --color-gold-400: #d97706;
+  --color-gold-500: #b45309;
+}
+
+.light body {
+  background-color: #eef4f7;
+  color: #1c2b36;
+}
+
 body {
   background-color: var(--color-obsidian-900);
   color: #e6eef2;
@@ -430,6 +453,70 @@ body {
 }
 .anim-float {
   animation: float-y 7s ease-in-out infinite;
+}
+
+.light .aurora-bg {
+  background:
+    radial-gradient(1100px 750px at 85% -12%, rgba(0, 179, 172, 0.14), transparent 62%),
+    radial-gradient(900px 650px at -8% 22%, rgba(59, 130, 246, 0.12), transparent 58%),
+    radial-gradient(950px 900px at 55% 118%, rgba(0, 179, 172, 0.08), transparent 60%),
+    linear-gradient(180deg, #eaf2f6 0%, #eef4f7 42%, #e6eef2 100%);
+}
+
+.light .grid-overlay {
+  background-image:
+    linear-gradient(rgba(0, 179, 172, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 179, 172, 0.07) 1px, transparent 1px);
+}
+
+.light .glass-premium,
+.light .panel-3d,
+.light .glass-lux {
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.75), rgba(233, 242, 246, 0.9)),
+    radial-gradient(140% 90% at 20% 0%, rgba(0, 179, 172, 0.08), transparent 55%);
+  border: 1px solid rgba(0, 179, 172, 0.22);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 18px 50px -24px rgba(28, 43, 54, 0.28),
+    0 8px 24px -14px rgba(0, 179, 172, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.light .glass-premium::before,
+.light .panel-3d::before,
+.light .glass-lux::before {
+  opacity: 0.4;
+}
+
+.light .text-glow,
+.light .text-shadow-luxe {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #e6eef2;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #aabcc6, #c9d8de);
+  border: 2px solid #e6eef2;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #8fa8b3;
+}
+
+.light ::selection {
+  background: rgba(0, 179, 172, 0.25);
+  color: #0c2430;
+}
+
+.light .lux-divider::before,
+.light .lux-divider::after {
+  background: linear-gradient(90deg, transparent, rgba(217, 119, 6, 0.4), transparent);
+}
+
+.light .divider-glow {
+  background: linear-gradient(90deg, transparent, rgba(0, 179, 172, 0.4), rgba(0, 126, 120, 0.3), transparent);
 }
 
 /* ===== page transition (dipicu perubahan pathname di Shell) ===== */

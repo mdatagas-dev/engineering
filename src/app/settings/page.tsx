@@ -21,12 +21,15 @@ import {
   HelpCircle,
   ShieldCheck,
   ChevronRight,
+  Sun,
+  Moon,
 } from "lucide-react";
 import Link from "next/link";
 import { TiltPanel } from "@/components/tilt-panel";
 import { PanelHeader } from "@/components/panel-header";
 import { useI18n, type DateFormat } from "@/lib/i18n/provider";
 import { LANGS, LANG_LABEL } from "@/lib/i18n/types";
+import { useTheme } from "@/lib/theme";
 import { useRawRows, gantiBaris } from "@/lib/store";
 import { DAILY_RAW, type DailyRaw } from "@/lib/data";
 import { resetRawData } from "@/lib/api";
@@ -291,6 +294,7 @@ function DisplayPanel({
           <LayoutGrid className="h-3.5 w-3.5" /> {t("settings.display")}
         </p>
         <p className="text-[11px] text-hisense-soft/40">{t("settings.displaySub")}</p>
+        <ThemeToggle />
         <ToggleRow label={t("settings.compact")} storageKey="eng_compact" />
       </div>
     </TiltPanel>
@@ -472,6 +476,31 @@ function HelpPanel({ t }: { t: (k: string) => string }) {
 }
 
 /* ============ TOGGLE ============ */
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  return (
+    <div className="glass-premium gold-hairline flex items-center justify-between rounded-xl px-4 py-3">
+      <p className="text-xs text-hisense-soft/70">{theme === "dark" ? "Dark Mode" : "Light Mode"}</p>
+      <button
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        className={cn(
+          "relative h-6 w-11 rounded-full transition-colors duration-300",
+          theme === "light" ? "bg-hisense" : "bg-obsidian-700"
+        )}
+      >
+        <span
+          className={cn(
+            "absolute top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-white shadow transition-all duration-300",
+            theme === "light" ? "left-[22px]" : "left-0.5"
+          )}
+        >
+          {theme === "dark" ? <Moon className="h-3 w-3 text-obsidian-600" /> : <Sun className="h-3 w-3 text-amber-500" />}
+        </span>
+      </button>
+    </div>
+  );
+}
+
 function ToggleRow({ label, storageKey, defaultOn = false }: { label: string; storageKey: string; defaultOn?: boolean }) {
   const [on, setOn] = useState(() => {
     if (typeof window === "undefined") return defaultOn;

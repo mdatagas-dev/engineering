@@ -24,6 +24,8 @@ import {
 import { cn } from "@/lib/utils";
 import { UserSession } from "@/components/user-session";
 import { useI18n } from "@/lib/i18n/provider";
+import { useTheme } from "@/lib/theme";
+import { Sun, Moon } from "lucide-react";
 
 const NAV: { href: string; key: string; icon: LucideIcon }[] = [
   { href: "/", key: "nav.dashboard", icon: LayoutDashboard },
@@ -110,6 +112,7 @@ export function Sidebar({
 }) {
   const pathname = usePathname();
   const { t } = useI18n();
+  const { theme, setTheme } = useTheme();
   const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
@@ -273,6 +276,16 @@ export function Sidebar({
           )}
         >
           <div className="p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="lux-eyebrow opacity-70">{t("system.online")}</p>
+              <button
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                title={theme === "dark" ? "Light Mode" : "Dark Mode"}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-hisense/15 text-hisense-soft/70 transition-all hover:bg-hisense/10 hover:text-hisense-soft"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
+            </div>
             <UserSession />
             <div className="gold-hairline mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
               <div className="flex items-center gap-2">
