@@ -1,0 +1,88 @@
+import type { DomainDict } from "./types";
+
+export const imporDict: DomainDict = {
+  "impor.title": {
+    id: "Impor Data Produksi Excel",
+    en: "Excel Production Data Import",
+    zh: "Excel 生产数据导入",
+    ja: "Excel生産データインポート",
+    ko: "Excel 생산 데이터 가져오기",
+  },
+  "impor.subtitle": {
+    id: "Unggah .xlsx — Pandas + Openpyxl memproses, Calculation Engine menghitung KPI.",
+    en: "Upload .xlsx — Pandas + Openpyxl process it, the Calculation Engine computes KPIs.",
+    zh: "上传 .xlsx — Pandas + Openpyxl 处理，计算引擎计算 KPI。",
+    ja: ".xlsx をアップロード — Pandas + Openpyxl が処理し、計算エンジンがKPIを算出します。",
+    ko: ".xlsx 업로드 — Pandas + Openpyxl이 처리하고 계산 엔진이 KPI를 계산합니다.",
+  },
+  "impor.upload.title": {
+    id: "Unggah File",
+    en: "Upload File",
+    zh: "上传文件",
+    ja: "ファイルアップロード",
+    ko: "파일 업로드",
+  },
+  "impor.upload.columns": {
+    id: "Format kolom: {cols}",
+    en: "Column format: {cols}",
+    zh: "列格式：{cols}",
+    ja: "列形式：{cols}",
+    ko: "열 형식: {cols}",
+  },
+  "impor.upload.processing": {
+    id: "Memproses file dengan Pandas…",
+    en: "Processing file with Pandas…",
+    zh: "正在使用 Pandas 处理文件…",
+    ja: "Pandasでファイルを処理中…",
+    ko: "Pandas로 파일 처리 중…",
+  },
+  "impor.upload.dropzone": {
+    id: "Tarik & lepas file .xlsx di sini, atau klik untuk memilih",
+    en: "Drag & drop your .xlsx file here, or click to select",
+    zh: "将 .xlsx 文件拖放到此处，或点击选择",
+    ja: ".xlsxファイルをここにドラッグ＆ドロップ、またはクリックして選択",
+    ko: ".xlsx 파일을 여기에 끌어다 놓거나 클릭하여 선택",
+  },
+  "impor.upload.hint": {
+    id: "Pandas + Openpyxl · validasi otomatis per baris",
+    en: "Pandas + Openpyxl · automatic row-by-row validation",
+    zh: "Pandas + Openpyxl · 逐行自动校验",
+    ja: "Pandas + Openpyxl · 行単位の自動検証",
+    ko: "Pandas + Openpyxl · 행 단위 자동 검증",
+  },
+  "impor.status.parsed": {
+    id: "File {name} terbaca: {total} baris valid, {warnings} baris dilewati.",
+    en: "File {name} read: {total} valid rows, {warnings} rows skipped.",
+    zh: "已读取文件 {name}：{total} 行有效，跳过 {warnings} 行。",
+    ja: "ファイル {name} を読み込み：有効 {total} 行、スキップ {warnings} 行。",
+    ko: "파일 {name} 읽음: 유효 {total}개 행, 건너뜀 {warnings}개 행.",
+  },
+  "impor.status.committed": {
+    id: "{n} baris disimpan ke Calculation Engine. KPI dihitung ulang otomatis.",
+    en: "{n} rows saved to the Calculation Engine. KPIs recalculated automatically.",
+    zh: "{n} 行已保存到计算引擎，KPI 已自动重新计算。",
+    ja: "{n} 行を計算エンジンに保存しました。KPIは自動で再計算されます。",
+    ko: "{n}개 행이 계산 엔진에 저장되었습니다. KPI가 자동으로 재계산됩니다.",
+  },
+  "impor.preview.title": {
+    id: "Pratinjau Data",
+    en: "Data Preview",
+    zh: "数据预览",
+    ja: "データプレビュー",
+    ko: "데이터 미리보기",
+  },
+  "impor.preview.subtitle": {
+    id: "{total} baris valid · menampilkan {shown} baris pertama",
+    en: "{total} valid rows · showing first {shown} rows",
+    zh: "{total} 行有效 · 显示前 {shown} 行",
+    ja: "有効 {total} 行 · 先頭 {shown} 行を表示",
+    ko: "유효 {total}개 행 · 처음 {shown}개 행 표시",
+  },
+  "impor.preview.saveRows": {
+    id: "Simpan {n} Baris",
+    en: "Save {n} Rows",
+    zh: "保存 {n} 行",
+    ja: "{n} 行を保存",
+    ko: "{n}개 행 저장",
+  },
+};

@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-py"
+  recursive_type_depth = 2
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model RawData {
+  id                   Int    @id @default(autoincrement())
+  date                 String
+  model                String
+  line                 String
+  input_qty            Int
+  first_pass_good_qty  Int
+  defect_qty           Int
+  planned_minutes      Float
+  downtime_minutes     Float
+  target_ct_sec        Float
+  actual_ct_sec        Float
+  standard_setup_min   Float
+  actual_setup_min     Float
+
+  @@map("raw_data")
+}
+
+model Issue {
+  id       Int    @id @default(autoincrement())
+  eng_id   String
+  title    String
+  line     String
+  owner    String
+  priority String
+  status   String
+  due_date String
+
+  @@map("issues")
+}
+
+model Tool {
+  id                   Int    @id @default(autoincrement())
+  name                 String
+  planned_hours        Float
+  actual_available_hours Float
+
+  @@map("tools")
+}
+
+model Improvement {
+  id       Int    @id @default(autoincrement())
+  title    String
+  baseline Float
+  after    Float
+  unit     String
+
+  @@map("improvements")
+}
+
+model Defect {
+  id          Int    @id @default(autoincrement())
+  date        String
+  line        String
+  model       String
+  defect_type String
+  qty         Int
+
+  @@map("defects")
+}

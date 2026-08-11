@@ -1,0 +1,224 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Gauge,
+  ShieldCheck,
+  Wrench,
+  Hexagon,
+  Activity,
+  ChevronRight,
+  PenLine,
+  FileSpreadsheet,
+  Clock,
+  Settings,
+  PanelLeftClose,
+  PanelLeftOpen,
+  HelpCircle,
+  Lock,
+  type LucideIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { UserSession } from "@/components/user-session";
+import { useI18n } from "@/lib/i18n/provider";
+
+const NAV: { href: string; key: string; icon: LucideIcon }[] = [
+  { href: "/", key: "nav.dashboard", icon: LayoutDashboard },
+  { href: "/process", key: "nav.process", icon: Gauge },
+  { href: "/quality", key: "nav.quality", icon: ShieldCheck },
+  { href: "/engineering", key: "nav.engineering", icon: Wrench },
+  { href: "/setup", key: "nav.setup", icon: Clock },
+];
+
+const INPUT_NAV: { href: string; key: string; icon: LucideIcon }[] = [
+  { href: "/input", key: "nav.inputManual", icon: PenLine },
+  { href: "/impor", key: "nav.impor", icon: FileSpreadsheet },
+];
+
+const SETTINGS_NAV: { href: string; key: string; icon: LucideIcon }[] = [
+  { href: "/settings", key: "menu.settings", icon: Settings },
+];
+
+const HELP_NAV: { href: string; key: string; icon: LucideIcon }[] = [
+  { href: "/bantuan", key: "nav.bantuan", icon: HelpCircle },
+  { href: "/privacy", key: "nav.privacy", icon: Lock },
+];
+
+function NavLink({
+  href,
+  label,
+  icon: Icon,
+  active,
+  collapsed,
+}: {
+  href: string;
+  label: string;
+  icon: LucideIcon;
+  active: boolean;
+  collapsed: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-300",
+        collapsed && "justify-center px-0",
+        active
+          ? "bg-gradient-to-r from-jade-500/20 to-transparent text-jade-300"
+          : "text-jade-300/60 hover:bg-jade-500/8 hover:text-jade-200"
+      )}
+    >
+      {active && (
+        <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-gradient-to-b from-jade-300 to-jade-500 shadow-[0_0_12px_rgba(0,214,201,0.8)]" />
+      )}
+      <Icon
+        className={cn(
+          "h-[18px] w-[18px] shrink-0 transition-transform duration-300",
+          active ? "text-jade-300" : "text-jade-300/50 group-hover:scale-110"
+        )}
+      />
+      {!collapsed && label}
+      {!collapsed && (
+        <ChevronRight
+          className={cn(
+            "ml-auto h-4 w-4 transition-all duration-300",
+            active ? "opacity-100 text-jade-400" : "opacity-0 group-hover:opacity-40"
+          )}
+        />
+      )}
+    </Link>
+  );
+}
+
+export function Sidebar({
+  collapsed,
+  onToggle,
+}: {
+  collapsed: boolean;
+  onToggle: () => void;
+}) {
+  const pathname = usePathname();
+  const { t } = useI18n();
+
+  return (
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-40 border-r border-jade-400/10 bg-obsidian-900/80 backdrop-blur-xl transition-[width] duration-300",
+        collapsed ? "w-16" : "w-64"
+      )}
+    >
+      <div className="flex h-full flex-col">
+        <div className={cn("pt-7", collapsed ? "flex flex-col items-center gap-4" : "px-6")}>
+          <div className={cn("flex items-center", collapsed ? "justify-center" : "justify-between gap-3")}>
+            <Link
+              href="/"
+              className="anim-scale-in flex items-center gap-3 transition-opacity hover:opacity-90"
+              style={{ animationDelay: "80ms" }}
+            >
+              <div className="relative">
+                {!collapsed && <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />}
+                <div
+                  className={cn(
+                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-jade-500 to-obsidian-700 shadow-lg shadow-jade-500/30 transition-all duration-300",
+                    collapsed ? "h-9 w-9" : "h-11 w-11"
+                  )}
+                >
+                  <Hexagon
+                    className={cn("text-obsidian-950", collapsed ? "h-5 w-5" : "h-6 w-6")}
+                    strokeWidth={2.4}
+                  />
+                </div>
+              </div>
+              {!collapsed && (
+                <div>
+                  <p className="font-display text-sm font-bold tracking-wide text-jade-300">
+                    {t("app.title")}
+                  </p>
+                  <p className="text-[11px] text-jade-300/60">{t("app.subtitle")}</p>
+                </div>
+              )}
+            </Link>
+            {!collapsed && (
+              <button
+                onClick={onToggle}
+                title={t("nav.collapse")}
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-jade-300/60 transition-all hover:bg-jade-500/10 hover:text-jade-300"
+              >
+                <PanelLeftClose className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+          {collapsed && (
+            <button
+              onClick={onToggle}
+              title={t("nav.expand")}
+              className="flex h-8 w-8 items-center justify-center rounded-lg text-jade-300/60 transition-all hover:bg-jade-500/10 hover:text-jade-300"
+            >
+              <PanelLeftOpen className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+
+        <div className="divider-glow mx-6 mt-6" />
+
+        <nav className="mt-6 flex-1 space-y-1.5 overflow-y-auto px-4">
+          {!collapsed && (
+            <p className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-jade-300/40">
+              {t("menu.main")}
+            </p>
+          )}
+          {NAV.map(({ href, key, icon }) => (
+            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+          ))}
+
+          {!collapsed && (
+            <p className="px-3 pb-2 pt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-jade-300/40">
+              {t("menu.input")}
+            </p>
+          )}
+          {INPUT_NAV.map(({ href, key, icon }) => (
+            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+          ))}
+
+          {!collapsed && (
+            <p className="px-3 pb-2 pt-5 text-[10px] font-semibold uppercase tracking-[0.2em] text-jade-300/40">
+              {t("menu.settings")}
+            </p>
+          )}
+          {SETTINGS_NAV.map(({ href, key, icon }) => (
+            <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
+          ))}
+
+          {HELP_NAV.map(({ href, key, icon }) => (
+            <NavLink
+              key={href}
+              href={href}
+              label={t(key)}
+              icon={icon}
+              active={pathname === href}
+              collapsed={collapsed}
+            />
+          ))}
+        </nav>
+
+        {!collapsed && (
+          <div className="p-4">
+            <UserSession />
+            <div className="mt-4 rounded-2xl border border-jade-400/15 bg-obsidian-850/70 p-4">
+              <div className="flex items-center gap-2">
+                <span className="live-dot" />
+                <p className="text-xs font-medium text-jade-200">{t("system.online")}</p>
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-[11px] text-jade-300/50">
+                <Activity className="h-3.5 w-3.5" />
+                <span>{t("system.lastData")}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </aside>
+  );
+}
