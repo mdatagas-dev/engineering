@@ -5,7 +5,7 @@ import { FileSpreadsheet, UploadCloud, CheckCircle2, AlertTriangle, Table2, Save
 import { TiltPanel } from "@/components/tilt-panel";
 import { PanelHeader } from "@/components/panel-header";
 import { muatDariBackend } from "@/lib/store";
-import { uploadExcel, commitExcel, type RawDataRow } from "@/lib/api";
+import { uploadExcel, commitExcel, downloadRawExport, downloadImportTemplate, type RawDataRow } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
@@ -65,12 +65,40 @@ export default function ImporPage() {
 
   return (
     <div className="space-y-6">
-      <header className="anim-fade-up">
-        <p className="lux-eyebrow mb-2">{t("menu.input")}</p>
-        <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("impor.title")}</h1>
-        <p className="mt-1.5 text-sm text-hisense-soft/75">
-          {t("impor.subtitle")}
-        </p>
+      <header className="anim-fade-up flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="lux-eyebrow mb-2">{t("menu.input")}</p>
+          <h1 className="font-display text-hisense-gradient text-4xl font-bold text-glow lg:text-5xl">{t("impor.title")}</h1>
+          <p className="mt-1.5 text-sm text-hisense-soft/75">
+            {t("impor.subtitle")}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={async () => {
+              try {
+                await downloadImportTemplate();
+              } catch (e) {
+                setStatus({ type: "err", msg: t("impor.download.error", { error: (e as Error).message }) });
+              }
+            }}
+            className="flex items-center gap-2 rounded-xl border border-hisense/25 bg-obsidian-850/60 px-5 py-3 text-sm text-hisense-soft/90 transition-all hover:border-hisense/40 hover:text-hisense-soft"
+          >
+            <FileSpreadsheet className="h-4 w-4" /> {t("impor.download.template")}
+          </button>
+          <button
+            onClick={async () => {
+              try {
+                await downloadRawExport();
+              } catch (e) {
+                setStatus({ type: "err", msg: t("impor.download.error", { error: (e as Error).message }) });
+              }
+            }}
+            className="flex items-center gap-2 rounded-xl border border-hisense/25 bg-obsidian-850/60 px-5 py-3 text-sm text-hisense-soft/90 transition-all hover:border-hisense/40 hover:text-hisense-soft"
+          >
+            <Save className="h-4 w-4" /> {t("impor.download.export")}
+          </button>
+        </div>
       </header>
 
       <TiltPanel className="anim-fade-up" intensity={3}>

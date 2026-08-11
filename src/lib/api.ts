@@ -106,6 +106,36 @@ export async function commitExcel() {
   );
 }
 
+export async function downloadRawExport(filename = "raw-data-export.xlsx") {
+  const res = await fetch(`${API_BASE}/api/raw-data/export`, { headers: authHeaders() });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error((body as { detail?: string }).detail ?? `HTTP ${res.status}`);
+  }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+export async function downloadImportTemplate(filename = "template-import-raw-data.xlsx") {
+  const res = await fetch(`${API_BASE}/api/impor-excel/template`, { headers: authHeaders() });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error((body as { detail?: string }).detail ?? `HTTP ${res.status}`);
+  }
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export interface EngineeringIssue {
   id: number;
   eng_id: string;

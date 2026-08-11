@@ -11,7 +11,7 @@ const SIDEBAR_KEY = "eng_sidebar_collapsed";
 
 export function Shell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isLogin = pathname === "/login";
+  const isBare = pathname === "/login" || pathname === "/display";
   const [collapsed, setCollapsed] = useState(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(SIDEBAR_KEY) === "1";
@@ -29,7 +29,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
     });
   };
 
-  if (isLogin) {
+  if (isBare) {
     return (
       <div key={pathname} className="page-enter min-h-screen">
         {children}

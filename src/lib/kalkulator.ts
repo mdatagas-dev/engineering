@@ -121,7 +121,11 @@ export function kalkulasiKpi(
     : 0;
 
   const improvementEffectiveness = improvements.length
-    ? avg(improvements.map((i) => ((i.baseline - i.after) / i.baseline) * 100))
+    ? avg(
+        improvements
+          .filter((i) => i.baseline > 0)
+          .map((i) => ((i.baseline - i.after) / i.baseline) * 100)
+      )
     : 0;
 
   const taktTimeSec = (PLANNED_MINUTES * 60) / DEMAND_PER_DAY;
@@ -129,7 +133,7 @@ export function kalkulasiKpi(
 
   return {
     fpy,
-    defectRate: (totals.defect / totals.input) * 100,
+    defectRate: totals.input ? (totals.defect / totals.input) * 100 : 0,
     oee,
     availability: availability * 100,
     performance: performance * 100,

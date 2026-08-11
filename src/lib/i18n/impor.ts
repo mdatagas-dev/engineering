@@ -29,6 +29,27 @@ export const imporDict: DomainDict = {
     ja: "列形式：{cols}",
     ko: "열 형식: {cols}",
   },
+  "impor.download.template": {
+    id: "Unduh Template Standar",
+    en: "Download Standard Template",
+    zh: "下载标准模板",
+    ja: "標準テンプレートをダウンロード",
+    ko: "표준 템플릿 다운로드",
+  },
+  "impor.download.export": {
+    id: "Export Data (Excel)",
+    en: "Export Data (Excel)",
+    zh: "导出数据（Excel）",
+    ja: "データをエクスポート（Excel）",
+    ko: "데이터 내보내기 (Excel)",
+  },
+  "impor.download.error": {
+    id: "Gagal mengunduh file: {error}",
+    en: "Failed to download file: {error}",
+    zh: "下载文件失败：{error}",
+    ja: "ファイルのダウンロードに失敗：{error}",
+    ko: "파일 다운로드 실패: {error}",
+  },
   "impor.upload.processing": {
     id: "Memproses file dengan Pandas…",
     en: "Processing file with Pandas…",

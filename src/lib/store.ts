@@ -27,6 +27,14 @@ export function tambahBaris(row: DailyRaw) {
   listeners.forEach((cb) => cb());
 }
 
+export function simpanBaris(row: DailyRaw) {
+  const idx = rows.findIndex(
+    (r) => r.date === row.date && r.model === row.model && r.line === row.line
+  );
+  rows = idx >= 0 ? rows.map((r, i) => (i === idx ? row : r)) : [...rows, row];
+  listeners.forEach((cb) => cb());
+}
+
 export function gantiBaris(newRows: DailyRaw[]) {
   rows = [...newRows];
   listeners.forEach((cb) => cb());

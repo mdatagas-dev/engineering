@@ -234,6 +234,38 @@ def test_token_palsu_401():
         assert "detail" in r.json()
 
 
+def test_post_upsert_ganti_baris_lama():
+    with TestClient(app) as client:
+        combo = {**_row_baru("AC SPLIT"), "date": "2025-01-01", "model": "Model Z"}
+        r1 = client.post("/api/raw-data", json=combo, headers=auth_header())
+        assert r1.status_code == 200
+        total1 = r1.json()["total_rows"]
+        r2 = client.post("/api/raw-data", json={**combo, "input_qty": 999}, headers=auth_header())
+        assert r2.status_code == 200
+        assert r2.json()["total_rows"] == total1
+        rows = client.get("/api/raw-data", headers=auth_header()).json()["rows"]
+        matches = [r for r in rows if r["line"] == "AC SPLIT" and r["model"] == "Model Z" and r["date"] == "2025-01-01"]
+        assert len(matches) == 1
+        assert matches[0]["input_qty"] == 999
+
+
+def test_post_fpg_melebihi_input_ditolak():
+    with TestClient(app) as client:
+        r = client.post("/api/raw-data", json={**_row_baru("AC SPLIT"), "first_pass_good_qty": 200, "defect_qty": 10, "input_qty": 200}, headers=auth_header())
+        assert r.status_code == 422
+
+
+def test_improvement_baseline_nol_tidak_crash():
+    from backend.engine import IMPROVEMENTS, kalkulasi_kpi
+
+    IMPROVEMENTS.append({"title": "x", "baseline": 0, "after": 5, "unit": "x"})
+    try:
+        k = kalkulasi_kpi([{"input_qty": 10, "first_pass_good_qty": 9, "defect_qty": 1, "planned_minutes": 100, "downtime_minutes": 10, "target_ct_sec": 60, "actual_ct_sec": 63, "standard_setup_min": 30, "actual_setup_min": 35}])
+        assert "improvement_effectiveness" in k
+    finally:
+        IMPROVEMENTS.pop()
+
+
 # ---------------------------------------------------------------------------
 # Rate limiting login (anti brute-force).
 # ---------------------------------------------------------------------------

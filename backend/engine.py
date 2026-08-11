@@ -180,7 +180,8 @@ def kalkulasi_kpi(rows: list[dict[str, Any]]) -> dict[str, Any]:
     tool_availability = actual_tool / planned_tool * 100 if planned_tool else 0
 
     improvement_effectiveness = _avg([
-        (i["baseline"] - i["after"]) / i["baseline"] * 100 for i in IMPROVEMENTS
+        (i["baseline"] - i["after"]) / i["baseline"] * 100
+        for i in IMPROVEMENTS if i["baseline"] > 0
     ])
 
     takt_time = PLANNED_MINUTES * 60 / DEMAND_PER_DAY

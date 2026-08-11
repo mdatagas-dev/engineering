@@ -1,13 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Database, Save, CheckCircle2, AlertTriangle, RotateCcw } from "lucide-react";
+import { Database, Save, CheckCircle2, AlertTriangle, RotateCcw, Pencil, X } from "lucide-react";
 import { TiltPanel } from "@/components/tilt-panel";
 import { PanelHeader } from "@/components/panel-header";
-import { useRawRows, tambahBaris, muatDariBackend } from "@/lib/store";
+import { useRawRows, simpanBaris, muatDariBackend } from "@/lib/store";
 import { useEngineering } from "@/lib/store-engineering";
 import { kalkulasiKpi } from "@/lib/kalkulator";
 import { postRawData, resetRawData, type RawDataRow } from "@/lib/api";
+import type { DailyRaw } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
@@ -32,14 +33,41 @@ const initial = (): RawDataRow => ({
   actual_setup_min: 35,
 });
 
+function toRow(r: DailyRaw): RawDataRow {
+  return {
+    date: r.date,
+    model: r.model,
+    line: r.line,
+    input_qty: r.inputQty,
+    first_pass_good_qty: r.firstPassGoodQty,
+    defect_qty: r.defectQty,
+    planned_minutes: r.plannedMinutes,
+    downtime_minutes: r.downtimeMinutes,
+    target_ct_sec: r.targetCtSec,
+    actual_ct_sec: r.actualCtSec,
+    standard_setup_min: r.standardSetupMin,
+    actual_setup_min: r.actualSetupMin,
+  };
+}
+
 export default function InputPage() {
-  const { t } = useI18n();
+  const { t, formatDate } = useI18n();
   const rows = useRawRows();
   const eng = useEngineering();
   const kpi = useMemo(() => kalkulasiKpi(rows, eng), [rows, eng]);
   const [form, setForm] = useState<RawDataRow>(initial);
   const [status, setStatus] = useState<{ type: "ok" | "err"; msg: string } | null>(null);
   const [saving, setSaving] = useState(false);
+  const [editing, setEditing] = useState<string | null>(null);
+
+  const existing = useMemo(() => {
+    const seen = new Map<string, DailyRaw>();
+    for (const r of rows) {
+      const key = `${r.date}|${r.model}|${r.line}`;
+      if (!seen.has(key)) seen.set(key, r);
+    }
+    return [...seen.values()].sort((a, b) => b.date.localeCompare(a.date) || a.line.localeCompare(b.line));
+  }, [rows]);
 
   const set = (key: keyof RawDataRow, value: string) => {
     const isNum = [
@@ -71,7 +99,7 @@ export default function InputPage() {
   const simpan = async () => {
     setSaving(true);
     setStatus(null);
-    tambahBaris({
+    simpanBaris({
       date: form.date,
       model: form.model,
       line: form.line,
@@ -87,7 +115,11 @@ export default function InputPage() {
     });
     try {
       await postRawData(form);
-      setStatus({ type: "ok", msg: t("input.status.saved") });
+      await muatDariBackend();
+      setStatus({
+        type: "ok",
+        msg: editing ? t("input.status.updated") : t("input.status.saved"),
+      });
     } catch (e) {
       setStatus({
         type: "err",
@@ -96,7 +128,14 @@ export default function InputPage() {
     } finally {
       setSaving(false);
       setForm(initial());
+      setEditing(null);
     }
+  };
+
+  const mulaiEdit = (r: DailyRaw) => {
+    setForm(toRow(r));
+    setEditing(`${r.date}|${r.model}|${r.line}`);
+    setStatus(null);
   };
 
   const reset = async () => {
@@ -150,6 +189,28 @@ export default function InputPage() {
             subtitle={t("input.form.subtitle", { n: rows.length })}
           />
           <div className="space-y-5 p-5">
+            {editing && (
+              <div className="flex items-center justify-between gap-3 rounded-xl border border-gold-400/40 bg-gold-400/10 px-4 py-3">
+                <p className="text-lg font-semibold text-gold-300">
+                  {t("input.edit.sedang", {
+                    date: form.date,
+                    model: form.model,
+                    line: form.line,
+                  })}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditing(null);
+                    setForm(initial());
+                    setStatus(null);
+                  }}
+                  className="flex items-center gap-1.5 rounded-lg border border-gold-400/40 px-3 py-1.5 text-base text-gold-300 transition-colors hover:bg-gold-400/15"
+                >
+                  <X className="h-4 w-4" /> {t("input.edit.batal")}
+                </button>
+              </div>
+            )}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label className="mb-1.5 block text-lg font-semibold uppercase tracking-wider text-hisense-soft/80">
@@ -271,6 +332,46 @@ export default function InputPage() {
                   <span className={cn("font-display text-3xl font-bold", item.gold ? "lux-gold-text" : "text-hisense-gradient")}>{item.value}</span>
                 </div>
               ))}
+            </div>
+          </TiltPanel>
+
+          <TiltPanel className="p-5" intensity={5}>
+            <p className="text-lg font-semibold uppercase tracking-[0.18em] text-hisense-soft/80">
+              {t("input.edit.title")}
+            </p>
+            <p className="mt-1 text-base text-hisense-soft/60">{t("input.edit.subtitle")}</p>
+            <div className="mt-4 max-h-80 space-y-2 overflow-y-auto pr-1">
+              {existing.length === 0 && (
+                <p className="text-base text-hisense-soft/50">{t("input.edit.kosong")}</p>
+              )}
+              {existing.map((r) => {
+                const key = `${r.date}|${r.model}|${r.line}`;
+                return (
+                  <div
+                    key={key}
+                    className={cn(
+                      "flex items-center justify-between gap-2 rounded-xl border px-3 py-2.5 transition-colors",
+                      editing === key
+                        ? "border-gold-400/50 bg-gold-400/10"
+                        : "border-hisense/10 bg-obsidian-900/60 hover:border-hisense/30"
+                    )}
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate text-base font-semibold text-hisense-soft">{r.model}</p>
+                      <p className="truncate text-sm text-hisense-soft/60">
+                        {formatDate(r.date)} · {r.line}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => mulaiEdit(r)}
+                      className="flex shrink-0 items-center gap-1.5 rounded-lg border border-hisense/25 px-3 py-1.5 text-sm text-hisense-soft transition-colors hover:border-hisense/50 hover:bg-hisense/10"
+                    >
+                      <Pencil className="h-3.5 w-3.5" /> {t("input.edit.button")}
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </TiltPanel>
 

@@ -53,6 +53,19 @@ async def insert_row(row: dict[str, Any]) -> None:
     await _db().rawdata.create(data={k: row[k] for k in row if k in RawData.model_fields})
 
 
+async def upsert_row(row: dict[str, Any]) -> None:
+    """Update baris yang date+model+line-nya sama, else insert (untuk backfill/edit)."""
+    db = _db()
+    clean = {k: row[k] for k in row if k in RawData.model_fields}
+    match = await db.rawdata.find_first(
+        where={"date": row["date"], "model": row["model"], "line": row["line"]}
+    )
+    if match:
+        await db.rawdata.update(where={"id": match.id}, data=clean)
+    else:
+        await db.rawdata.create(data=clean)
+
+
 async def replace_all(rows: list[dict[str, Any]]) -> None:
     """Hapus semua lalu insert ulang `rows` (dipakai reset/seed)."""
     db = _db()

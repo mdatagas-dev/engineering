@@ -7,7 +7,8 @@ from typing import Any, Literal
 
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field, field_validator
+from fastapi.responses import Response
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .ratelimit import RateLimiter
 from .security import (
@@ -202,6 +203,12 @@ class RawDataRow(BaseModel):
         if v not in LINES:
             raise ValueError(f"line tidak dikenal: {v!r}. Pilihan: {LINES}")
         return v
+
+    @model_validator(mode="after")
+    def _cek_konsistensi_fpg(self) -> "RawDataRow":
+        if self.first_pass_good_qty + self.defect_qty > self.input_qty:
+            raise ValueError("first_pass_good_qty + defect_qty tidak boleh melebihi input_qty")
+        return self
 
 
 def _koersi_tanggal(v: Any) -> str:
@@ -555,18 +562,34 @@ async def hapus_user(username: str, user: dict = Depends(get_admin)) -> dict:
     return {"deleted": True, "username": username}
 
 
+async def _upsert_raw(data: dict[str, Any]) -> None:
+    """Update baris RAW kalau date+model+line sama, else tambah baru (RAW + DB)."""
+    idx = next(
+        (
+            i
+            for i, r in enumerate(RAW)
+            if r["date"] == data["date"] and r["model"] == data["model"] and r["line"] == data["line"]
+        ),
+        None,
+    )
+    if idx is not None:
+        RAW[idx] = data
+    else:
+        RAW.append(data)
+    await db.upsert_row(data)
+
+
 @app.get("/api/raw-data", dependencies=[Depends(get_current_user)])
-def daftar_raw_data() -> dict:
+async def daftar_raw_data() -> dict:
     """Seluruh isi RAW saat ini."""
+    await _sync_runtime()
     return {"total_rows": len(RAW), "rows": RAW}
 
 
 @app.post("/api/raw-data", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def tambah_raw_data(row: RawDataRow) -> dict:
-    """Input manual satu baris raw data, langsung masuk ke RAW + DB."""
-    data = row.model_dump()
-    RAW.append(data)
-    await db.insert_row(data)
+    """Input manual satu baris raw data. Date+model+line sama = update (backfill), else tambah baru."""
+    await _upsert_raw(row.model_dump())
     return {"saved": True, "total_rows": len(RAW), "kpi": kalkulasi_kpi(RAW)}
 
 
@@ -688,6 +711,11 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
         if not model:
             warnings.append(f"Baris {excel_row_no}: model kosong")
             continue
+        if rec["first_pass_good_qty"] + rec["defect_qty"] > rec["input_qty"]:
+            warnings.append(
+                f"Baris {excel_row_no}: first_pass_good_qty + defect_qty melebihi input_qty"
+            )
+            continue
         rec["line"] = line
         rec["model"] = model
         parsed.append(rec)
@@ -703,6 +731,45 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
     }
 
 
+@app.get("/api/impor-excel/template", dependencies=[Depends(get_current_user)])
+async def template_impor_excel() -> Response:
+    """Unduh template Excel standar: kolom wajib + satu baris contoh."""
+    import pandas as pd
+
+    df = pd.DataFrame(columns=REQUIRED_COLUMNS)
+    df.loc[0] = [
+        date.today().isoformat(),
+        "AC 1 PK 9.000 BTU",
+        "AC SPLIT",
+        200, 196, 3, 450, 20, 60, 63, 30, 35,
+    ]
+    buf = BytesIO()
+    df.to_excel(buf, index=False, sheet_name="Raw Data")
+    buf.seek(0)
+    return Response(
+        content=buf.getvalue(),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": 'attachment; filename="template-import-raw-data.xlsx"'},
+    )
+
+
+@app.get("/api/raw-data/export", dependencies=[Depends(get_current_user)])
+async def export_raw_data() -> Response:
+    """Unduh seluruh raw data saat ini sebagai Excel."""
+    import pandas as pd
+
+    await _sync_runtime()
+    df = pd.DataFrame(RAW)
+    buf = BytesIO()
+    df.to_excel(buf, index=False, sheet_name="Raw Data")
+    buf.seek(0)
+    return Response(
+        content=buf.getvalue(),
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": 'attachment; filename="raw-data-export.xlsx"'},
+    )
+
+
 @app.post("/api/impor-excel/commit", dependencies=[Depends(get_editor), Depends(rate_limit_general)])
 async def commit_impor_excel() -> dict:
     """Pindahkan PENDING_ROWS ke RAW lalu hitung ulang KPI."""
@@ -711,7 +778,6 @@ async def commit_impor_excel() -> dict:
         raise HTTPException(status_code=400, detail="Tidak ada data pending, upload dulu")
     n = len(PENDING_ROWS)
     for r in PENDING_ROWS:
-        await db.insert_row(r)
-    RAW.extend(PENDING_ROWS)
+        await _upsert_raw(r)
     PENDING_ROWS = []
     return {"saved": n, "total_rows": len(RAW), "kpi": kalkulasi_kpi(RAW)}

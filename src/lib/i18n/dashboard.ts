@@ -22,12 +22,12 @@ export const dashboardDict: DomainDict = {
     ja: "プロセス性能 · 品質 · エンジニアリング管理 — {date}",
     ko: "프로세스 성능 · 품질 · 엔지니어링 관리 — {date}",
   },
-  "dash.live": {
-    id: "Live · Perhitungan otomatis Calculation Engine",
-    en: "Live · Automatic Calculation Engine",
-    zh: "实时 · 自动计算引擎",
-    ja: "ライブ · 自動計算エンジン",
-    ko: "실시간 · 자동 계산 엔진",
+  "dash.tampilDisplay": {
+    id: "Tampilkan di Display",
+    en: "Show on Display",
+    zh: "在显示器上显示",
+    ja: "ディスプレイに表示",
+    ko: "디스플레이에 표시",
   },
   "kpi.fpy": {
     id: "FPY",
