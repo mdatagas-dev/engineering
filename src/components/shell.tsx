@@ -40,7 +40,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       <Sidebar collapsed={collapsed} onToggle={onToggle} />
       <main
         className={cn(
-          "flex-1 px-8 py-8 transition-[margin] duration-300",
+          "flex-1 px-8 py-8 transition-[margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
           collapsed ? "ml-16" : "ml-64"
         )}
       >

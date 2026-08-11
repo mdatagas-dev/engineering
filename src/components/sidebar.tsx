@@ -63,7 +63,7 @@ function NavLink({
     <Link
       href={href}
       className={cn(
-        "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-300",
+        "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors duration-300",
         collapsed && "justify-center px-0",
         active
           ? "bg-gradient-to-r from-hisense/20 to-transparent text-hisense-soft"
@@ -79,15 +79,23 @@ function NavLink({
           active ? "text-hisense-soft" : "text-hisense-soft/50 group-hover:scale-110"
         )}
       />
-      {!collapsed && label}
-      {!collapsed && (
-        <ChevronRight
-          className={cn(
-            "ml-auto h-4 w-4 transition-all duration-300",
-            active ? "opacity-100 text-hisense" : "opacity-0 group-hover:opacity-40"
-          )}
-        />
-      )}
+      <span
+        className={cn(
+          "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          collapsed
+            ? "max-w-0 -translate-x-2 opacity-0"
+            : "max-w-[200px] translate-x-0 opacity-100"
+        )}
+      >
+        {label}
+      </span>
+      <ChevronRight
+        className={cn(
+          "ml-auto h-4 w-4 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          collapsed ? "max-w-0 opacity-0" : "max-w-4 opacity-100",
+          active ? "text-hisense" : "opacity-0 group-hover:opacity-40"
+        )}
+      />
     </Link>
   );
 }
@@ -105,7 +113,7 @@ export function Sidebar({
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 border-r border-hisense/10 bg-obsidian-900/80 backdrop-blur-xl transition-[width] duration-300",
+        "fixed inset-y-0 left-0 z-40 border-r border-hisense/10 bg-obsidian-900/80 backdrop-blur-xl transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -118,27 +126,38 @@ export function Sidebar({
               style={{ animationDelay: "80ms" }}
             >
               <div className="relative">
-                {!collapsed && <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />}
                 <div
                   className={cn(
-                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-hisense via-hisense-bold to-obsidian-700 shadow-hisense-glow transition-all duration-300",
+                    "glow-ring absolute -inset-2 animate-pulse-glow transition-opacity duration-500",
+                    collapsed ? "opacity-0" : "opacity-60"
+                  )}
+                />
+                <div
+                  className={cn(
+                    "relative flex items-center justify-center rounded-2xl bg-gradient-to-br from-hisense via-hisense-bold to-obsidian-700 shadow-hisense-glow transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                     collapsed ? "h-9 w-9" : "h-11 w-11"
                   )}
                 >
                   <Hexagon
-                    className={cn("text-obsidian-950", collapsed ? "h-5 w-5" : "h-6 w-6")}
+                    className={cn(
+                      "text-obsidian-950 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                      collapsed ? "h-5 w-5" : "h-6 w-6"
+                    )}
                     strokeWidth={2.4}
                   />
                 </div>
               </div>
-              {!collapsed && (
-                <div>
-                  <p className="font-cinzel text-sm font-bold tracking-[0.18em] text-hisense-gradient uppercase">
-                    {t("app.title")}
-                  </p>
-                  <p className="text-[11px] italic text-hisense-soft/60">{t("app.subtitle")}</p>
-                </div>
-              )}
+              <div
+                className={cn(
+                  "overflow-hidden whitespace-nowrap transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  collapsed ? "max-w-0 -translate-x-3 opacity-0" : "max-w-[220px] translate-x-0 opacity-100"
+                )}
+              >
+                <p className="font-cinzel text-sm font-bold tracking-[0.18em] text-hisense-gradient uppercase">
+                  {t("app.title")}
+                </p>
+                <p className="text-[11px] italic text-hisense-soft/60">{t("app.subtitle")}</p>
+              </div>
             </Link>
             {!collapsed && (
               <button
@@ -164,30 +183,50 @@ export function Sidebar({
         <div className="lux-divider mx-6 mt-6" />
 
         <nav className="mt-6 flex-1 space-y-1.5 overflow-y-auto px-4">
-          {!collapsed && (
+          <div
+            className={cn(
+              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+            )}
+          >
             <p className="lux-eyebrow px-3 pb-2 opacity-70">{t("menu.main")}</p>
-          )}
+          </div>
           {NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
-          {!collapsed && (
+          <div
+            className={cn(
+              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+            )}
+          >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.input")}</p>
-          )}
+          </div>
           {INPUT_NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
-          {!collapsed && (
+          <div
+            className={cn(
+              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+            )}
+          >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.settings")}</p>
-          )}
+          </div>
           {SETTINGS_NAV.map(({ href, key, icon }) => (
             <NavLink key={href} href={href} label={t(key)} icon={icon} active={pathname === href} collapsed={collapsed} />
           ))}
 
-          {!collapsed && (
+          <div
+            className={cn(
+              "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+              collapsed ? "max-h-0 opacity-0" : "max-h-6 opacity-100"
+            )}
+          >
             <p className="lux-eyebrow px-3 pb-2 pt-5 opacity-70">{t("menu.help")}</p>
-          )}
+          </div>
           {HELP_NAV.map(({ href, key, icon }) => (
             <NavLink
               key={href}
@@ -200,7 +239,12 @@ export function Sidebar({
           ))}
         </nav>
 
-        {!collapsed && (
+        <div
+          className={cn(
+            "overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+            collapsed ? "max-h-0 opacity-0" : "max-h-56 opacity-100"
+          )}
+        >
           <div className="p-4">
             <UserSession />
             <div className="gold-hairline mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
@@ -216,7 +260,7 @@ export function Sidebar({
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </aside>
   );
