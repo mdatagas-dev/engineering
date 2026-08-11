@@ -85,15 +85,13 @@ export default function DashboardPage() {
     () => ({
       tooltip: { ...TOOLTIP, trigger: "axis" },
       legend: {
-        textStyle: { color: "#e6eef2", fontSize: 44, fontWeight: 600, fontFamily: "Playfair Display, Georgia, serif" },
-        top: 8,
-        left: "center",
+        textStyle: { color: "rgba(143,240,234,0.65)", fontSize: 11 },
+        top: 0,
         icon: "roundRect",
-        itemWidth: 56,
-        itemHeight: 22,
-        itemGap: 64,
+        itemWidth: 14,
+        itemHeight: 6,
       },
-      grid: { top: 120, left: 44, right: 16, bottom: 24 },
+      grid: { top: 36, left: 44, right: 16, bottom: 24 },
       xAxis: { type: "category", data: dates, ...AXIS },
       yAxis: {
         type: "value",
@@ -110,15 +108,15 @@ export default function DashboardPage() {
           symbol: "circle",
           symbolSize: 5,
           data: tren.map((t) => +t.oee.toFixed(1)),
-          lineStyle: { width: 3, color: "#3b82f6" },
-          itemStyle: { color: "#3b82f6", borderColor: "#03090d", borderWidth: 1 },
+          lineStyle: { width: 3, color: "#22d3ee" },
+          itemStyle: { color: "#22d3ee", borderColor: "#03090d", borderWidth: 1 },
           areaStyle: {
             color: {
               type: "linear",
               x: 0, y: 0, x2: 0, y2: 1,
               colorStops: [
-                { offset: 0, color: "rgba(59,130,246,0.3)" },
-              { offset: 1, color: "rgba(59,130,246,0)" },
+                { offset: 0, color: "rgba(34,211,238,0.3)" },
+              { offset: 1, color: "rgba(34,211,238,0)" },
             ],
           },
         },
@@ -129,8 +127,8 @@ export default function DashboardPage() {
         smooth: true,
         symbol: "none",
         data: tren.map((t) => +t.fpy.toFixed(1)),
-        lineStyle: { width: 2, color: "#f97316" },
-        itemStyle: { color: "#f97316" },
+        lineStyle: { width: 2, color: "#f59e0b" },
+        itemStyle: { color: "#f59e0b" },
       },
       {
         name: "Line Balance",
