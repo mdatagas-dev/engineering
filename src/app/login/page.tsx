@@ -6,6 +6,7 @@ import { Hexagon, KeyRound, User, Loader2, Lock, ShieldCheck } from "lucide-reac
 import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
+import { ManufactureScene } from "@/components/manufacture-scene";
 
 const DEMO_ACCOUNTS: { username: string; password: string; role: Role }[] = [
   { username: "admin", password: "admin123", role: "admin" },
@@ -76,8 +77,10 @@ function LoginForm() {
       <div className="anim-fade-up w-full max-w-4xl">
         <div className="glass-lux grid overflow-hidden rounded-3xl shadow-[0_40px_120px_-40px_rgba(0,0,0,0.9)]">
           <div className="grid md:grid-cols-2">
-            <div className="relative hidden flex-col justify-between overflow-hidden bg-gradient-to-br from-hisense-bold/20 via-obsidian-850 to-obsidian-900 p-10 md:flex">
-              <div className="relative z-10">
+            <div className="relative hidden flex-col overflow-hidden bg-gradient-to-br from-hisense-bold/25 via-obsidian-850 to-obsidian-900 md:flex">
+              <ManufactureScene />
+
+              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col justify-between p-10">
                 <div className="flex items-center gap-3">
                   <div className="relative">
                     <div className="glow-ring absolute -inset-2 animate-pulse-glow opacity-60" />
@@ -90,31 +93,30 @@ function LoginForm() {
                     <p className="text-[11px] text-hisense-soft/60">{t("app.subtitle")}</p>
                   </div>
                 </div>
-                <div className="lux-divider mt-6 w-28" />
-              </div>
 
-              <div className="relative z-10">
-                <p className="font-display text-hisense-gradient text-3xl font-bold leading-snug text-glow">
-                  {t("login.tagline1")}
-                  <br />
-                  {t("login.tagline2")}
-                </p>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-hisense-soft/60">
-                  {t("login.taglineDesc")}
-                </p>
-                <div className="mt-8 space-y-3">
-                  {[t("nav.process"), t("nav.quality"), t("nav.engineering")].map((p) => (
-                    <div key={p} className="flex items-center gap-3 text-xs lux-gold-text">
-                      <ShieldCheck className="h-4 w-4 text-hisense" />
-                      {p}
-                    </div>
-                  ))}
+                <div>
+                  <p className="font-display text-hisense-gradient text-3xl font-bold leading-snug text-glow">
+                    {t("login.tagline1")}
+                    <br />
+                    {t("login.tagline2")}
+                  </p>
+                  <p className="mt-4 max-w-sm text-sm leading-relaxed text-hisense-soft/60">
+                    {t("login.taglineDesc")}
+                  </p>
+                  <div className="mt-8 space-y-3">
+                    {[t("nav.process"), t("nav.quality"), t("nav.engineering")].map((p) => (
+                      <div key={p} className="flex items-center gap-3 text-xs lux-gold-text">
+                        <ShieldCheck className="h-4 w-4 text-hisense" />
+                        {p}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <p className="relative z-10 text-[11px] text-hisense-soft/30">
-                {t("login.security")}
-              </p>
+                <p className="text-[11px] text-hisense-soft/30">
+                  {t("login.security")}
+                </p>
+              </div>
             </div>
 
             <div className="p-6 sm:p-10">

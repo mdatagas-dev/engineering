@@ -495,3 +495,113 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(0, 179, 172, 0.5), rgba(0, 126, 120, 0.35), transparent);
 }
+
+/* ===== Manufacturing login scene ===== */
+@keyframes gear-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes gear-spin-rev {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+@keyframes conveyor-move {
+  from { background-position: 0 0; }
+  to { background-position: -56px 0; }
+}
+@keyframes product-slide {
+  0% { transform: translateX(-120%); opacity: 0; }
+  12% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(480%); opacity: 0; }
+}
+.manu-product {
+  will-change: transform, opacity;
+}
+@keyframes arm-swing {
+  0%, 100% { transform: rotate(-8deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes arm-grab {
+  0%, 38%, 62%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(18px) rotate(3deg); }
+}
+@keyframes spark-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  12% { opacity: 1; }
+  100% { transform: translateY(-140px) scale(0.2); opacity: 0; }
+}
+@keyframes spark-flicker {
+  0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 4px rgba(0, 179, 172, 0.9)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 12px rgba(0, 179, 172, 1)); }
+}
+@keyframes hologram-scan {
+  0% { transform: translateY(-130%); opacity: 0; }
+  30% { opacity: 0.9; }
+  70% { opacity: 0.9; }
+  100% { transform: translateY(240%); opacity: 0; }
+}
+@keyframes float-panel {
+  0%, 100% { transform: translateY(0) rotateX(0.5deg); }
+  50% { transform: translateY(-10px) rotateX(1.5deg); }
+}
+@keyframes orbit-ring {
+  from { transform: rotateX(72deg) rotateZ(0deg); }
+  to { transform: rotateX(72deg) rotateZ(360deg); }
+}
+@keyframes dash-flow {
+  to { stroke-dashoffset: -60; }
+}
+@keyframes pulse-bar {
+  0%, 100% { transform: scaleY(0.25); opacity: 0.5; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes stat-tick {
+  0% { content: ""; }
+}
+.manu-stage {
+  perspective: 1100px;
+}
+.manu-scene {
+  transform-style: preserve-3d;
+  animation: float-panel 8s ease-in-out infinite;
+}
+.manu-gear {
+  animation: gear-spin 9s linear infinite;
+  transform-origin: center;
+}
+.manu-gear-rev {
+  animation: gear-spin-rev 7s linear infinite;
+  transform-origin: center;
+}
+.manu-conveyor {
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0, 179, 172, 0.5) 0 10px,
+    rgba(3, 9, 13, 0.9) 10px 22px
+  );
+  background-size: 56px 100%;
+  animation: conveyor-move 1.1s linear infinite;
+}
+.manu-arm {
+  animation: arm-swing 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.manu-arm-grab {
+  animation: arm-grab 5s ease-in-out infinite;
+  transform-origin: top center;
+}
+.manu-spark {
+  animation: spark-rise 3.2s ease-out infinite;
+}
+.manu-scanline {
+  animation: hologram-scan 4.5s ease-in-out infinite;
+}
+.manu-eq {
+  animation: pulse-bar 1.1s ease-in-out infinite;
+  transform-origin: bottom;
+}
+.manu-dash {
+  stroke-dasharray: 14 10;
+  animation: dash-flow 1.4s linear infinite;
+}
