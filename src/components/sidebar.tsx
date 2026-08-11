@@ -63,20 +63,20 @@ function NavLink({
     <Link
       href={href}
       className={cn(
-        "group relative flex items-center rounded-xl px-3 py-2.5 text-sm transition-colors duration-300",
+        "group relative flex items-center rounded-xl px-3.5 py-3 text-base font-medium transition-all duration-300",
         collapsed ? "justify-center gap-0 px-0" : "gap-3",
         active
-          ? "bg-gradient-to-r from-hisense/20 to-transparent text-hisense-soft"
-          : "text-hisense-soft/60 hover:bg-hisense/8 hover:text-hisense-bold"
+          ? "bg-gradient-to-r from-cyan-400/25 via-hisense/15 to-transparent text-cyan-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+          : "text-hisense-soft/75 hover:bg-cyan-400/10 hover:text-cyan-100"
       )}
     >
       {active && (
-        <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-gradient-to-b from-hisense-soft to-hisense shadow-[0_0_12px_rgba(0,179,172,0.8)]" />
+        <span className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-r-full bg-gradient-to-b from-cyan-200 to-cyan-500 shadow-[0_0_14px_rgba(34,211,238,0.9)]" />
       )}
       <Icon
         className={cn(
-          "h-[18px] w-[18px] shrink-0 transition-transform duration-300",
-          active ? "text-hisense-soft" : "text-hisense-soft/50 group-hover:scale-110"
+          "h-[21px] w-[21px] shrink-0 transition-transform duration-300",
+          active ? "text-cyan-200" : "text-hisense-soft/60 group-hover:scale-110 group-hover:text-cyan-100"
         )}
       />
       <span
@@ -91,9 +91,9 @@ function NavLink({
       </span>
       <ChevronRight
         className={cn(
-          "ml-auto h-4 w-4 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
-          collapsed ? "max-w-0 opacity-0" : "max-w-4 opacity-100",
-          active ? "text-hisense" : "opacity-0 group-hover:opacity-40"
+          "ml-auto h-5 w-5 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          collapsed ? "max-w-0 opacity-0" : "max-w-5 opacity-100",
+          active ? "text-cyan-300" : "opacity-0 group-hover:opacity-60"
         )}
       />
     </Link>
