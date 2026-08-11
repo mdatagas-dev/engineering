@@ -276,14 +276,14 @@ export default function EngineeringPage() {
     xAxis: {
       type: "category",
       data: data.tools.map((t) => t.name),
-      axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10, rotate: 22 },
+      axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 10, rotate: 22 },
       axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
       axisTick: { show: false },
       splitLine: { show: false },
     },
     yAxis: {
       type: "value",
-      axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10, formatter: (v: { value: number }) => `${v.value} ${t("common.unit.hr")}` },
+      axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 10, formatter: (v: { value: number }) => `${v.value} ${t("common.unit.hr")}` },
       splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
     },
     series: [
@@ -321,7 +321,7 @@ export default function EngineeringPage() {
     },
     grid: { top: 40, left: 44, right: 24, bottom: 70 },
     legend: {
-      textStyle: { color: "rgba(147,245,238,0.7)", fontSize: 11 },
+      textStyle: { color: "rgba(100,116,139,0.85)", fontSize: 11 },
       top: 0,
       icon: "roundRect",
       itemWidth: 14,
@@ -330,14 +330,14 @@ export default function EngineeringPage() {
     xAxis: {
       type: "category",
       data: data.improvements.map((i) => i.title),
-      axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 9, rotate: 28 },
+      axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 9, rotate: 28 },
       axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
       axisTick: { show: false },
       splitLine: { show: false },
     },
     yAxis: {
       type: "value",
-      axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
+      axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 10 },
       splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
     },
     series: [

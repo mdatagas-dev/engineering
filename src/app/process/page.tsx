@@ -13,7 +13,7 @@ import { useI18n } from "@/lib/i18n/provider";
 
 const AXIS = {
   axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
-  axisLabel: { color: "rgba(143,240,234,0.55)", fontSize: 10 },
+  axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 10 },
   splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 const TOOLTIP = {
@@ -51,7 +51,7 @@ export default function ProcessPage() {
   const lineBalance = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     legend: {
-      textStyle: { color: "rgba(143,240,234,0.7)", fontSize: 11 },
+      textStyle: { color: "rgba(100,116,139,0.85)", fontSize: 11 },
       top: 0,
       icon: "roundRect",
       itemWidth: 14,
@@ -157,7 +157,7 @@ export default function ProcessPage() {
   const setupTren = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     legend: {
-      textStyle: { color: "rgba(143,240,234,0.7)", fontSize: 11 },
+      textStyle: { color: "rgba(100,116,139,0.85)", fontSize: 11 },
       top: 0,
       icon: "roundRect",
       itemWidth: 14,

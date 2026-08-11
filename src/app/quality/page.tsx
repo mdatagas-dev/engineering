@@ -18,7 +18,7 @@ function todayIso() {
 }
 const AXIS = {
   axisLine: { lineStyle: { color: "rgba(0,179,172,0.15)" } },
-  axisLabel: { color: "rgba(147,245,238,0.55)", fontSize: 10 },
+  axisLabel: { color: "rgba(100,116,139,0.85)", fontSize: 10 },
   splitLine: { lineStyle: { color: "rgba(0,179,172,0.06)" } },
 };
 const TOOLTIP = {

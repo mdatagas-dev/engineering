@@ -69,8 +69,8 @@ function NavLink({
         "group relative flex items-center rounded-xl px-3.5 py-3 text-base font-medium transition-all duration-300",
         collapsed ? "justify-center gap-0 px-0" : "gap-3",
         active
-          ? "bg-gradient-to-r from-cyan-400/25 via-hisense/15 to-transparent text-cyan-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
-          : "text-hisense-soft/75 hover:bg-cyan-400/10 hover:text-cyan-100"
+          ? "bg-gradient-to-r from-cyan-400/25 via-hisense/15 to-transparent text-hisense-soft shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"
+          : "text-hisense-soft/75 hover:bg-cyan-400/10 hover:text-hisense-soft"
       )}
     >
       {active && (
@@ -79,7 +79,7 @@ function NavLink({
       <Icon
         className={cn(
           "h-[21px] w-[21px] shrink-0 transition-transform duration-300",
-          active ? "text-cyan-200" : "text-hisense-soft/60 group-hover:scale-110 group-hover:text-cyan-100"
+          active ? "text-hisense-soft" : "text-hisense-soft/60 group-hover:scale-110 group-hover:text-hisense-soft"
         )}
       />
       <span
@@ -96,7 +96,7 @@ function NavLink({
         className={cn(
           "ml-auto h-5 w-5 shrink-0 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
           collapsed ? "max-w-0 opacity-0" : "max-w-5 opacity-100",
-          active ? "text-cyan-300" : "opacity-0 group-hover:opacity-60"
+          active ? "text-hisense" : "opacity-0 group-hover:opacity-60"
         )}
       />
     </Link>
@@ -290,7 +290,7 @@ export function Sidebar({
             <div className="gold-hairline mt-4 rounded-2xl border border-hisense/15 bg-obsidian-850/70 p-4">
               <div className="flex items-center gap-2">
                 <span className="live-dot" />
-                <p className="font-cinzel text-xs font-semibold tracking-wider text-cyan-200 uppercase">
+                <p className="font-cinzel text-xs font-semibold tracking-wider text-hisense-soft uppercase">
                   {t("system.online")}
                 </p>
               </div>
