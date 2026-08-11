@@ -245,7 +245,7 @@ export default function QualityPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.fpy")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#22d3ee", textShadow: "0 0 24px #22d3ee55, 0 0 64px #22d3ee22" }}
           >
             {kpi.fpy.toFixed(1)}%
@@ -258,7 +258,7 @@ export default function QualityPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.defectRate")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#fb7185", textShadow: "0 0 24px #fb718555, 0 0 64px #fb718522" }}
           >
             {kpi.defectRate.toFixed(2)}%
@@ -271,7 +271,7 @@ export default function QualityPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("quality.kpi.topDefect")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#a78bfa", textShadow: "0 0 24px #a78bfa55, 0 0 64px #a78bfa22" }}
           >
             {pareto[0]?.model}

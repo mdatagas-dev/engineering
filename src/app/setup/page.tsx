@@ -239,7 +239,7 @@ export default function SetupPage() {
             <Timer className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgActual")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">
+          <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">
             {summary.avgAct.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
           </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.avgActualSub", { n: rows.length })}</p>
@@ -251,7 +251,7 @@ export default function SetupPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.avgStandard")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-shadow-luxe"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
             style={{ color: "#fbbf24", textShadow: "0 0 24px #fbbf2455, 0 0 64px #fbbf2422" }}
           >
             {summary.avgStd.toFixed(1)}<span className="text-lg"> {t("common.unit.min")}</span>
@@ -264,7 +264,7 @@ export default function SetupPage() {
             <TrendingUp className={cn("h-4 w-4", summary.variance > 0 ? "text-red-400" : "text-hisense")} />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.totalVariance")}</p>
           </div>
-          <p className={cn("font-display mt-3 text-4xl font-bold text-shadow-luxe", summary.variance > 0 ? "text-red-400" : "text-hisense")}>
+          <p className={cn("font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe", summary.variance > 0 ? "text-red-400" : "text-hisense")}>
             {summary.variance > 0 ? "+" : ""}{summary.variance.toFixed(0)}
             <span className="text-lg"> {t("common.unit.min")}</span>
           </p>
@@ -278,7 +278,7 @@ export default function SetupPage() {
             <Activity className="h-4 w-4 text-gold-400" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("setup.kpi.achievement")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">
+          <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">
             {summary.achievement.toFixed(1)}<span className="text-lg">%</span>
           </p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("setup.kpi.achievementSub")}</p>

@@ -403,7 +403,7 @@ export default function EngineeringPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.issueClosureRate")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#fb7185", textShadow: "0 0 24px #fb718555, 0 0 64px #fb718522" }}
           >
             {kpi.issueClosure.toFixed(0)}%
@@ -416,7 +416,7 @@ export default function EngineeringPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.overdueRate")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#f87171", textShadow: "0 0 24px #f8717155, 0 0 64px #f8717122" }}
           >
             {kpi.overdueRate.toFixed(0)}%
@@ -429,7 +429,7 @@ export default function EngineeringPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.toolAvailability")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-glow"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-glow"
             style={{ color: "#34d399", textShadow: "0 0 24px #34d39955, 0 0 64px #34d39922" }}
           >
             {kpi.toolAvailability.toFixed(0)}%
@@ -441,7 +441,7 @@ export default function EngineeringPage() {
             <TrendingUp className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("engineering.kpi.improvementEffectiveness")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-glow">−{kpi.improvementEffectiveness.toFixed(0)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("engineering.kpi.improvementEffectivenessSub")}</p>
         </TiltPanel>
       </div>

@@ -211,7 +211,7 @@ export default function ProcessPage() {
             <Gauge className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("kpi.oee")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">{kpi.oee.toFixed(1)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">{kpi.oee.toFixed(1)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.oeeFormula", { a: kpi.availability.toFixed(1), p: kpi.performance.toFixed(1), q: kpi.quality.toFixed(1) })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
@@ -220,7 +220,7 @@ export default function ProcessPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.taktTime")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-shadow-luxe"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
             style={{ color: "#60a5fa", textShadow: "0 0 24px #60a5fa55, 0 0 64px #60a5fa22" }}
           >
             {formatSec(kpi.taktTimeSec)}
@@ -233,7 +233,7 @@ export default function ProcessPage() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
           </div>
           <p
-            className="font-display mt-3 text-4xl font-semibold leading-none tracking-tight text-shadow-luxe"
+            className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
             style={{ color: "#34d399", textShadow: "0 0 24px #34d39955, 0 0 64px #34d39922" }}
           >
             {kpi.cycleTimeAchievement.toFixed(1)}%
@@ -245,7 +245,7 @@ export default function ProcessPage() {
             <Scale className="h-4 w-4 text-hisense" />
             <p className="text-[11px] font-semibold uppercase tracking-[0.15em]">{t("process.kpi.setupAchievement")}</p>
           </div>
-          <p className="lux-gold-text font-display mt-3 text-4xl font-bold text-shadow-luxe">{kpi.setupAchievement.toFixed(1)}%</p>
+          <p className="lux-gold-text font-display mt-3 text-5xl font-bold lg:text-6xl text-shadow-luxe">{kpi.setupAchievement.toFixed(1)}%</p>
           <p className="mt-1 text-xs text-hisense-soft/50">{t("process.kpi.setupVariance", { v: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })}</p>
         </TiltPanel>
       </div>

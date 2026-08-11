@@ -114,7 +114,7 @@ export function KpiCard({
               <p className="lux-eyebrow">{label}</p>
               <p
                 className={cn(
-                  "font-display mt-3 text-[3.25rem] font-semibold leading-none tracking-tight lg:text-[3.75rem]",
+                  "font-display mt-3 text-[3.75rem] font-semibold leading-none tracking-tight lg:text-[4.5rem]",
                   alert === "warning" && "lux-gold-text"
                 )}
                 style={
@@ -122,7 +122,7 @@ export function KpiCard({
                     ? undefined
                     : {
                         color: a.hex,
-                        textShadow: `0 0 28px ${a.hex}66, 0 0 72px ${a.hex}33`,
+                        textShadow: `0 0 30px ${a.hex}70, 0 0 80px ${a.hex}38`,
                       }
                 }
               >
