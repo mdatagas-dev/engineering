@@ -140,7 +140,8 @@ export function ManufactureScene() {
         <span
           key={i}
           className="anime-ember absolute bottom-[4%] h-1.5 w-1.5 rounded-full bg-orange-300 shadow-[0_0_12px_rgba(251,146,60,0.95)]"
-          style={{ left: e.left, animationDelay: e.delay, ["--sway" as string]: e.sway }}
+          style={{ left: e.left, animationDelay: e.delay }}
+          data-sway={e.sway}
         />
       ))}
 

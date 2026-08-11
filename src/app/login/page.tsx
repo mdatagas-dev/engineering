@@ -7,6 +7,7 @@ import { type Role } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n/provider";
 import { cn } from "@/lib/utils";
 import { ManufactureScene } from "@/components/manufacture-scene";
+import { SceneBoundary } from "@/components/scene-boundary";
 
 const DEMO_ACCOUNTS: { username: string; password: string; role: Role }[] = [
   { username: "admin", password: "admin123", role: "admin" },
@@ -76,7 +77,9 @@ function LoginForm() {
 
       {/* Scene 3D manufacturing — full screen background */}
       <div className="pointer-events-none absolute inset-0">
-        <ManufactureScene />
+        <SceneBoundary>
+          <ManufactureScene />
+        </SceneBoundary>
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-obsidian-950/60 via-transparent to-obsidian-950/80" />
 
