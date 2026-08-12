@@ -7,10 +7,16 @@ from typing import Any
 
 
 LINES = ["Line 1", "Line 2", "Line 3"]
-MODELS = ["Model A", "Model B", "Model C"]
+MODELS = ["AC SPLIT IDU 1 PK", "AC SPLIT ODU 1 PK", "AC SPLIT IDU 2 PK"]
 DEMAND_PER_DAY = 420
 PLANNED_MINUTES = 480
 DAYS = 30
+
+_MODEL_CATEGORY = {
+    "AC SPLIT IDU 1 PK": "IDU",
+    "AC SPLIT ODU 1 PK": "ODU",
+    "AC SPLIT IDU 2 PK": "IDU",
+}
 
 
 def _seed() -> list[dict[str, Any]]:
@@ -31,6 +37,7 @@ def _seed() -> list[dict[str, Any]]:
                         "date": d.isoformat(),
                         "model": model,
                         "line": line,
+                        "category": _MODEL_CATEGORY.get(model, ""),
                         "input_qty": input_qty,
                         "first_pass_good_qty": first_pass_good,
                         "defect_qty": defect_qty,

@@ -2,6 +2,7 @@ export interface DailyRaw {
   date: string;
   model: string;
   line: string;
+  category: string;
   inputQty: number;
   firstPassGoodQty: number;
   defectQty: number;
@@ -44,7 +45,7 @@ export interface ImprovementRecord {
 }
 
 const LINES = ["Line 1", "Line 2", "Line 3"];
-const MODELS = ["Model A", "Model B", "Model C"];
+const MODELS = ["AC SPLIT IDU 1 PK", "AC SPLIT ODU 1 PK", "AC SPLIT IDU 2 PK"];
 
 function mulberry32(seed: number) {
   let a = seed >>> 0;
@@ -85,6 +86,7 @@ export const DAILY_RAW: DailyRaw[] = (() => {
           date,
           model,
           line,
+          category: model.includes("IDU") ? "IDU" : "ODU",
           inputQty,
           firstPassGoodQty,
           defectQty,

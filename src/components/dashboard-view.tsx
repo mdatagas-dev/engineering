@@ -60,25 +60,35 @@ function DelayedChart({
 
 export function DashboardView({
   periode,
+  range,
   animFrom = 360,
 }: {
   periode: 1 | 7 | 14 | 30;
+  range?: { from: string; to: string } | null;
   animFrom?: number;
 }) {
   const { t } = useI18n();
   const rows = useRawRows();
   const eng = useEngineering();
+  const [cat, setCat] = useState<"" | "IDU" | "ODU">("");
 
   const today = new Date().toISOString().slice(0, 10);
   const overdueCount = ISSUES.filter((i) => i.status !== "closed" && i.dueDate < today).length;
 
   const filteredRows = useMemo(() => {
-    const dates = [...new Set(rows.map((r) => r.date))]
-      .sort((a, b) => b.localeCompare(a))
-      .slice(0, periode);
-    const keep = new Set(dates);
-    return rows.filter((r) => keep.has(r.date));
-  }, [rows, periode]);
+    let list = rows;
+    if (range) {
+      list = rows.filter((r) => r.date >= range.from && r.date <= range.to);
+    } else {
+      const dates = [...new Set(rows.map((r) => r.date))]
+        .sort((a, b) => b.localeCompare(a))
+        .slice(0, periode);
+      const keep = new Set(dates);
+      list = rows.filter((r) => keep.has(r.date));
+    }
+    if (cat) list = list.filter((r) => r.category === cat);
+    return list;
+  }, [rows, periode, range, cat]);
 
   const kpi = useMemo(() => kalkulasiKpi(filteredRows, eng), [filteredRows, eng]);
   const tren = useMemo(() => ambilTren(filteredRows), [filteredRows]);
@@ -300,6 +310,22 @@ export function DashboardView({
 
   return (
     <div className="space-y-6">
+      <div className="anim-fade-up flex justify-end">
+        <div className="flex items-center gap-1.5 rounded-full border border-hisense/15 bg-obsidian-850/60 p-1.5">
+          {([["", t("dash.catSemua")], ["IDU", "IDU"], ["ODU", "ODU"]] as const).map(([value, label]) => (
+            <button
+              key={value}
+              onClick={() => setCat(value)}
+              className={cn(
+                "font-cinzel rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-colors",
+                cat === value ? "border-hisense/60 bg-hisense/15 text-hisense-soft" : "border-hisense/10 text-hisense-soft/75 hover:text-hisense-soft"
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
       {overdueCount > 0 && (
         <div
           className="anim-fade-up flex items-center gap-3 rounded-2xl border border-red-500/30 bg-red-500/[0.06] px-5 py-3 text-sm text-red-200 shadow-[0_0_28px_-10px_rgba(239,68,68,0.35)]"
@@ -322,7 +348,7 @@ export function DashboardView({
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-5">
         <TiltPanel className={cn("anim-fade-up xl:col-span-3", overdueCount > 0 && "alert-glow-red")} intensity={3} glow={false}>
-          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("chart.engineeringTrend")} subtitle={t("chart.engineeringTrendSub", { p: periode === 1 ? t("dash.periodeHariIni") : t("dash.periodeTerakhir", { n: periode }) })} />
+          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("chart.engineeringTrend")} subtitle={range ? `${range.from} — ${range.to}` : t("chart.engineeringTrendSub", { p: periode === 1 ? t("dash.periodeHariIni") : t("dash.periodeTerakhir", { n: periode }) })} />
           <DelayedChart delay={1250} option={trenOption} height={300} className="px-2 pb-2" />
         </TiltPanel>
 

@@ -23,6 +23,7 @@ export interface RawDataRow {
   date: string;
   model: string;
   line: string;
+  category: string;
   input_qty: number;
   first_pass_good_qty: number;
   defect_qty: number;

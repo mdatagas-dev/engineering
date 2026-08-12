@@ -289,3 +289,31 @@ def test_login_rate_limit_429():
             assert "detik" in r.json()["detail"]
         finally:
             login_limiter.reset("testclient")
+
+
+def test_post_category_valid():
+    with TestClient(app) as client:
+        r = client.post(
+            "/api/raw-data",
+            json={**_row_baru("AC SPLIT"), "category": "idu"},
+            headers=auth_header(),
+        )
+        assert r.status_code == 200
+        rows = client.get("/api/raw-data", headers=auth_header()).json()["rows"]
+        matches = [
+            b
+            for b in rows
+            if b["line"] == "AC SPLIT" and b["model"] == "Model A" and b["date"] == "2026-08-11"
+        ]
+        assert len(matches) == 1
+        assert matches[0]["category"] == "IDU"
+
+
+def test_post_category_invalid():
+    with TestClient(app) as client:
+        r = client.post(
+            "/api/raw-data",
+            json={**_row_baru("AC SPLIT"), "category": "XXL"},
+            headers=auth_header(),
+        )
+        assert r.status_code == 422

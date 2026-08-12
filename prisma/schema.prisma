@@ -13,6 +13,7 @@ model RawData {
   date                 String
   model                String
   line                 String
+  category             String @default("")
   input_qty            Int
   first_pass_good_qty  Int
   defect_qty           Int

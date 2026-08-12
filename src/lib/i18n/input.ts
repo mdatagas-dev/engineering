@@ -106,6 +106,13 @@ export const inputDict: DomainDict = {
     ja: "生産ライン",
     ko: "생산 라인",
   },
+  "input.field.category": {
+    id: "Kategori Unit",
+    en: "Unit Category",
+    zh: "设备类别",
+    ja: "ユニット区分",
+    ko: "유닛 구분",
+  },
   "input.field.date": {
     id: "Tanggal",
     en: "Date",

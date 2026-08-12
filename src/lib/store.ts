@@ -45,6 +45,7 @@ function konversiBaris(row: RawDataRow): DailyRaw {
     date: row.date,
     model: row.model,
     line: row.line,
+    category: row.category,
     inputQty: row.input_qty,
     firstPassGoodQty: row.first_pass_good_qty,
     defectQty: row.defect_qty,

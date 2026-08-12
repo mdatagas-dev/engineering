@@ -14,6 +14,7 @@ const REFRESH_MS = 5 * 60 * 1000;
 export default function DashboardPage() {
   const { t } = useI18n();
   const [periode, setPeriode] = useState<1 | 7 | 14 | 30>(30);
+  const [range, setRange] = useState<{ from: string; to: string } | null>(null);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -22,6 +23,31 @@ export default function DashboardPage() {
     }, REFRESH_MS);
     return () => clearInterval(id);
   }, []);
+
+  const todayIso = () => new Date().toISOString().slice(0, 10);
+  const thirtyDaysAgo = () => {
+    const d = new Date();
+    d.setDate(d.getDate() - 29);
+    return d.toISOString().slice(0, 10);
+  };
+
+  const setRangeFrom = (from: string) => {
+    const to = range?.to ?? todayIso();
+    setRange(from > to ? { from: to, to: from } : { from, to });
+  };
+  const setRangeTo = (to: string) => {
+    const from = range?.from ?? thirtyDaysAgo();
+    setRange(from > to ? { from: to, to: from } : { from, to });
+  };
+
+  const dateInputCls =
+    "rounded-lg border border-hisense/20 bg-obsidian-850/70 px-3 py-1.5 text-xs text-hisense-soft outline-none transition-colors focus:border-hisense/50";
+  const inRange = !!range;
+  const modeBtn = (active: boolean) =>
+    cn(
+      "font-cinzel rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-colors",
+      active ? "border-hisense/60 bg-hisense/15 text-hisense-soft" : "border-hisense/10 text-hisense-soft/75 hover:text-hisense-soft"
+    );
 
   return (
     <div className="space-y-6">
@@ -61,22 +87,45 @@ export default function DashboardPage() {
             {([1, 7, 14, 30] as const).map((n) => (
               <button
                 key={n}
-                onClick={() => setPeriode(n)}
-                className={cn(
-                  "font-cinzel rounded-full border px-4 py-1.5 text-xs font-medium tracking-wide transition-colors",
-                  periode === n
-                    ? "border-hisense/60 bg-hisense/15 text-hisense-soft"
-                    : "border-hisense/10 text-hisense-soft/75 hover:text-hisense-soft"
-                )}
+                onClick={() => {
+                  setPeriode(n);
+                  setRange(null);
+                }}
+                className={modeBtn(!inRange && periode === n)}
               >
                 {n === 1 ? t("periode.harian") : t("periode.hari", { n })}
               </button>
             ))}
           </div>
+          <div className="flex items-center gap-1.5 rounded-full border border-hisense/15 bg-obsidian-850/60 p-1.5">
+            <input
+              type="date"
+              value={range?.from ?? thirtyDaysAgo()}
+              onChange={(e) => setRangeFrom(e.target.value)}
+              className={cn(dateInputCls, inRange && "border-hisense/60")}
+              aria-label={t("dash.dateFrom")}
+            />
+            <span className="text-xs text-hisense-soft/50">—</span>
+            <input
+              type="date"
+              value={range?.to ?? todayIso()}
+              onChange={(e) => setRangeTo(e.target.value)}
+              className={cn(dateInputCls, inRange && "border-hisense/60")}
+              aria-label={t("dash.dateTo")}
+            />
+            {inRange && (
+              <button
+                onClick={() => setRange(null)}
+                className={cn(modeBtn(false), "border-gold-400/40 text-gold-300 hover:text-gold-200")}
+              >
+                {t("dash.dateReset")}
+              </button>
+            )}
+          </div>
         </div>
       </header>
 
-      <DashboardView periode={periode} />
+      <DashboardView periode={periode} range={range} />
     </div>
   );
 }

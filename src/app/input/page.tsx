@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
 const LINES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"];
+const CATEGORIES = ["IDU", "ODU"];
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -22,6 +23,7 @@ const initial = (): RawDataRow => ({
   date: todayIso(),
   model: "",
   line: "AC SPLIT",
+  category: "",
   input_qty: 200,
   first_pass_good_qty: 196,
   defect_qty: 3,
@@ -38,6 +40,7 @@ function toRow(r: DailyRaw): RawDataRow {
     date: r.date,
     model: r.model,
     line: r.line,
+    category: r.category,
     input_qty: r.inputQty,
     first_pass_good_qty: r.firstPassGoodQty,
     defect_qty: r.defectQty,
@@ -83,6 +86,7 @@ export default function InputPage() {
     return (
       f.date &&
       f.model.trim().length > 0 &&
+      (f.line !== "AC SPLIT" || f.category !== "") &&
       f.input_qty > 0 &&
       f.first_pass_good_qty > 0 &&
       f.defect_qty >= 0 &&
@@ -103,6 +107,7 @@ export default function InputPage() {
       date: form.date,
       model: form.model,
       line: form.line,
+      category: form.category,
       inputQty: form.input_qty,
       firstPassGoodQty: form.first_pass_good_qty,
       defectQty: form.defect_qty,
@@ -260,6 +265,31 @@ export default function InputPage() {
               </div>
             </div>
 
+            {form.line === "AC SPLIT" && (
+              <div>
+                <label className="mb-1.5 block text-lg font-semibold uppercase tracking-wider text-hisense-soft/80">
+                  {t("input.field.category")}
+                </label>
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                  {CATEGORIES.map((o) => (
+                    <button
+                      key={o}
+                      type="button"
+                      onClick={() => set("category", o)}
+                      className={cn(
+                        "rounded-xl border px-3 py-3 text-base font-semibold uppercase tracking-wide transition-all",
+                        form.category === o
+                          ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
+                          : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/60 hover:border-hisense/30"
+                      )}
+                    >
+                      {o}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="lux-divider" />
 
             <p className="text-lg font-semibold uppercase tracking-[0.2em] text-gold-300/90">
@@ -361,6 +391,11 @@ export default function InputPage() {
                       <p className="truncate text-sm text-hisense-soft/60">
                         {formatDate(r.date)} · {r.line}
                       </p>
+                      {r.category && (
+                        <span className="mt-0.5 inline-block rounded-md border border-hisense/20 px-1.5 py-0.5 text-[10px] uppercase text-hisense-soft/60">
+                          {r.category}
+                        </span>
+                      )}
                     </div>
                     <button
                       type="button"

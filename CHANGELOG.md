@@ -8,6 +8,17 @@ Semua perubahan versi, patch keamanan, dan update dicatat di sini. Format: [Sema
 
 Setiap versi diberi **git tag** (`vX.Y.Z`) sebagai titik rollback. Lihat `git tag`, rollback via `git checkout vX.Y.Z`.
 
+## [1.1.0] — 2026-08-12 — Kategori Unit IDU/ODU
+
+### Fitur
+- **Kategori unit IDU (indoor) / ODU (outdoor)** untuk setiap model:
+  - Input manual: toggle IDU/ODU muncul saat lini `AC SPLIT` (wajib diisi).
+  - Impor Excel: kolom opsional `category` (alias: `kategori`, `unit_type`), nilai `IDU`/`ODU`/kosong.
+  - Template standar kini 13 kolom (termasuk `category`) dengan contoh baris IDU.
+  - Dashboard utama + display mode: **filter Semua / IDU / ODU** di atas kartu KPI.
+  - Badge kategori di daftar Edit/Backfill data lama.
+  - Validasi server: `category` hanya `"" | IDU | ODU` (case-insensitive, dinormalisasi uppercase).
+
 ## [1.0.0] — 2026-08-11 — CHECKPOINT: Web App Selesai
 
 Status: titik rollback resmi. Semua fitur inti berjalan: dashboard, input manual + backfill, impor/export Excel standar, display mode, autentikasi multi-role.

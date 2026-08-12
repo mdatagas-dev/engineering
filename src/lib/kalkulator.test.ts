@@ -29,21 +29,21 @@ const fixture: DailyRaw[] = (parityRows as SnakeRow[]).map((r) =>
 describe("kalkulasiKpi — dataset mini (hitung manual)", () => {
   const mini: DailyRaw[] = [
     {
-      date: "2026-08-01", model: "Model A", line: "Line 1",
+      date: "2026-08-01", model: "Model A", line: "Line 1", category: "",
       inputQty: 200, firstPassGoodQty: 190, defectQty: 5,
       plannedMinutes: 480, downtimeMinutes: 40,
       targetCtSec: 60, actualCtSec: 64,
       standardSetupMin: 30, actualSetupMin: 33,
     },
     {
-      date: "2026-08-01", model: "Model B", line: "Line 2",
+      date: "2026-08-01", model: "Model B", line: "Line 2", category: "",
       inputQty: 200, firstPassGoodQty: 192, defectQty: 4,
       plannedMinutes: 480, downtimeMinutes: 60,
       targetCtSec: 60, actualCtSec: 60,
       standardSetupMin: 30, actualSetupMin: 30,
     },
     {
-      date: "2026-08-01", model: "Model C", line: "Line 3",
+      date: "2026-08-01", model: "Model C", line: "Line 3", category: "",
       inputQty: 150, firstPassGoodQty: 141, defectQty: 6,
       plannedMinutes: 480, downtimeMinutes: 30,
       targetCtSec: 59, actualCtSec: 62,
@@ -104,7 +104,7 @@ describe("kalkulasiKpi — edge cases", () => {
   it("defect > input tetap menghasilkan angka terdefinisi (tidak NaN)", () => {
     const k = kalkulasiKpi([
       {
-        date: "2026-08-01", model: "Model A", line: "Line 1",
+        date: "2026-08-01", model: "Model A", line: "Line 1", category: "",
         inputQty: 100, firstPassGoodQty: 50, defectQty: 150,
         plannedMinutes: 480, downtimeMinutes: 60,
         targetCtSec: 60, actualCtSec: 65,
@@ -119,9 +119,9 @@ describe("kalkulasiKpi — edge cases", () => {
 
 describe("ambilPareto", () => {
   const rows: DailyRaw[] = [
-    { date: "d", model: "Model A", line: "Line 1", inputQty: 100, firstPassGoodQty: 90, defectQty: 10, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
-    { date: "d", model: "Model B", line: "Line 2", inputQty: 100, firstPassGoodQty: 95, defectQty: 5, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
-    { date: "d", model: "Model C", line: "Line 3", inputQty: 100, firstPassGoodQty: 97, defectQty: 3, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
+    { date: "d", model: "Model A", line: "Line 1", category: "", inputQty: 100, firstPassGoodQty: 90, defectQty: 10, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
+    { date: "d", model: "Model B", line: "Line 2", category: "", inputQty: 100, firstPassGoodQty: 95, defectQty: 5, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
+    { date: "d", model: "Model C", line: "Line 3", category: "", inputQty: 100, firstPassGoodQty: 97, defectQty: 3, plannedMinutes: 480, downtimeMinutes: 0, targetCtSec: 60, actualCtSec: 60, standardSetupMin: 30, actualSetupMin: 30 },
   ];
 
   it("urut menurun berdasarkan defects", () => {

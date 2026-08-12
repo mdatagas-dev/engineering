@@ -144,6 +144,7 @@ COLUMN_ALIASES: dict[str, list[str]] = {
     "date": ["date", "tanggal", "day", "tanggal_produksi", "production_date"],
     "model": ["model", "model_name", "product", "produk", "product_name"],
     "line": ["line", "lini", "production_line", "line_name"],
+    "category": ["category", "kategori", "unit_type", "tipe_unit"],
 }
 
 # Baris hasil parse impor excel, ditahan sampai /api/impor-excel/commit.
@@ -180,6 +181,7 @@ class RawDataRow(BaseModel):
     date: str
     model: str
     line: str
+    category: str = ""
     input_qty: int = Field(ge=0)
     first_pass_good_qty: int = Field(ge=0)
     defect_qty: int = Field(ge=0)
@@ -189,6 +191,14 @@ class RawDataRow(BaseModel):
     actual_ct_sec: float = Field(ge=0)
     standard_setup_min: float = Field(ge=0)
     actual_setup_min: float = Field(ge=0)
+
+    @field_validator("category")
+    @classmethod
+    def _validasi_kategori(cls, v: str) -> str:
+        v = v.strip().upper()
+        if v not in ("", "IDU", "ODU"):
+            raise ValueError(f"category tidak dikenal: {v!r}. Pilihan: IDU / ODU / kosong")
+        return v
 
     @field_validator("date")
     @classmethod
@@ -679,6 +689,9 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
     clean.columns = REQUIRED_COLUMNS
     for col in NUMERIC_COLUMNS:
         clean[col] = pd.to_numeric(clean[col], errors="coerce")
+    cat_col = mapping.get("category")
+    if cat_col:
+        clean["category"] = df[cat_col].astype(str).str.strip().str.upper()
 
     warnings: list[str] = []
     parsed: list[dict[str, Any]] = []
@@ -705,6 +718,7 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
             continue
         line = str(getattr(r, "line")).strip()
         model = str(getattr(r, "model")).strip()
+        cat = str(getattr(r, "category", "") or "").strip().upper()
         if line not in LINES:
             warnings.append(f"Baris {excel_row_no}: line tidak dikenal ({line!r})")
             continue
@@ -712,12 +726,16 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
             warnings.append(f"Baris {excel_row_no}: model kosong")
             continue
         if rec["first_pass_good_qty"] + rec["defect_qty"] > rec["input_qty"]:
+            warnings.append(f"Baris {excel_row_no}: first_pass_good_qty + defect_qty melebihi input_qty")
+            continue
+        if cat not in ("", "IDU", "ODU"):
             warnings.append(
-                f"Baris {excel_row_no}: first_pass_good_qty + defect_qty melebihi input_qty"
+                f"Baris {excel_row_no}: category tidak dikenal ({cat!r}) — isi IDU / ODU / kosong"
             )
             continue
         rec["line"] = line
         rec["model"] = model
+        rec["category"] = cat
         parsed.append(rec)
 
     global PENDING_ROWS
@@ -736,11 +754,12 @@ async def template_impor_excel() -> Response:
     """Unduh template Excel standar: kolom wajib + satu baris contoh."""
     import pandas as pd
 
-    df = pd.DataFrame(columns=REQUIRED_COLUMNS)
+    df = pd.DataFrame(columns=[*TEXT_COLUMNS, "category", *NUMERIC_COLUMNS])
     df.loc[0] = [
         date.today().isoformat(),
-        "AC 1 PK 9.000 BTU",
+        "AC SPLIT IDU 1 PK",
         "AC SPLIT",
+        "IDU",
         200, 196, 3, 450, 20, 60, 63, 30, 35,
     ]
     buf = BytesIO()
