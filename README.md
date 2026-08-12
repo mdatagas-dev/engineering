@@ -32,6 +32,7 @@ dihitung otomatis oleh **Calculation Engine**.
   mode ringkas, notifikasi, ekspor CSV, reset data, status sistem.
 - **Bantuan** (`/bantuan`) — panduan penggunaan lengkap: peran user, informasi per
   halaman, cara input tiap field, impor excel, pengaturan.
+  Panduan lengkap juga ada di file **`PANDUAN-PENGGUNAAN.md`**.
 - **Kebijakan Privasi** (`/privacy`) — sesuai UU PDP No. 27/2022 + prinsip GDPR.
 - **Sidebar collapse** — sembunyikan/kerutkan sidebar; logo (kiri atas) dapat diklik
   menuju dashboard.
