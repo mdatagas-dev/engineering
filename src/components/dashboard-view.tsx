@@ -86,7 +86,7 @@ export function DashboardView({
       const keep = new Set(dates);
       list = rows.filter((r) => keep.has(r.date));
     }
-    if (cat) list = list.filter((r) => r.category === cat);
+    if (cat) list = list.filter((r) => r.line === cat);
     return list;
   }, [rows, periode, range, cat]);
 

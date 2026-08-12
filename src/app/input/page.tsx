@@ -12,8 +12,8 @@ import type { DailyRaw } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
-const LINES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"];
-const CATEGORIES = ["IDU", "ODU"];
+const LINES = ["IDU", "ODU"];
+const CATEGORIES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"];
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);
@@ -22,8 +22,8 @@ function todayIso() {
 const initial = (): RawDataRow => ({
   date: todayIso(),
   model: "",
-  line: "AC SPLIT",
-  category: "",
+  line: "IDU",
+  category: "AC SPLIT",
   input_qty: 200,
   first_pass_good_qty: 196,
   defect_qty: 3,
@@ -86,7 +86,8 @@ export default function InputPage() {
     return (
       f.date &&
       f.model.trim().length > 0 &&
-      (f.line !== "AC SPLIT" || f.category !== "") &&
+      f.line &&
+      f.category &&
       f.input_qty > 0 &&
       f.first_pass_good_qty > 0 &&
       f.defect_qty >= 0 &&
@@ -265,30 +266,28 @@ export default function InputPage() {
               </div>
             </div>
 
-            {form.line === "AC SPLIT" && (
-              <div>
-                <label className="mb-1.5 block text-lg font-semibold uppercase tracking-wider text-hisense-soft/80">
-                  {t("input.field.category")}
-                </label>
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                  {CATEGORIES.map((o) => (
-                    <button
-                      key={o}
-                      type="button"
-                      onClick={() => set("category", o)}
-                      className={cn(
-                        "rounded-xl border px-3 py-3 text-base font-semibold uppercase tracking-wide transition-all",
-                        form.category === o
-                          ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
-                          : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/60 hover:border-hisense/30"
-                      )}
-                    >
-                      {o}
-                    </button>
-                  ))}
-                </div>
+            <div>
+              <label className="mb-1.5 block text-lg font-semibold uppercase tracking-wider text-hisense-soft/80">
+                {t("input.field.category")}
+              </label>
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {CATEGORIES.map((o) => (
+                  <button
+                    key={o}
+                    type="button"
+                    onClick={() => set("category", o)}
+                    className={cn(
+                      "rounded-xl border px-3 py-3 text-base font-semibold uppercase tracking-wide transition-all",
+                      form.category === o
+                        ? "border-hisense/60 bg-hisense/15 text-hisense-soft shadow-[0_0_16px_rgba(0,179,172,0.15)]"
+                        : "border-hisense/10 bg-obsidian-900/60 text-hisense-soft/60 hover:border-hisense/30"
+                    )}
+                  >
+                    {o}
+                  </button>
+                ))}
               </div>
-            )}
+            </div>
 
             <div className="lux-divider" />
 

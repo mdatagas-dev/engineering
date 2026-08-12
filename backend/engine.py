@@ -6,17 +6,13 @@ from datetime import date, timedelta
 from typing import Any
 
 
-LINES = ["Line 1", "Line 2", "Line 3"]
-MODELS = ["AC SPLIT IDU 1 PK", "AC SPLIT ODU 1 PK", "AC SPLIT IDU 2 PK"]
+LINES = ["IDU", "ODU"]
+MODELS = ["AC SPLIT 1 PK", "AC SPLIT 1.5 PK", "AC SPLIT 2 PK"]
 DEMAND_PER_DAY = 420
 PLANNED_MINUTES = 480
 DAYS = 30
 
-_MODEL_CATEGORY = {
-    "AC SPLIT IDU 1 PK": "IDU",
-    "AC SPLIT ODU 1 PK": "ODU",
-    "AC SPLIT IDU 2 PK": "IDU",
-}
+SEED_CATEGORY = "AC SPLIT"
 
 
 def _seed() -> list[dict[str, Any]]:
@@ -37,7 +33,7 @@ def _seed() -> list[dict[str, Any]]:
                         "date": d.isoformat(),
                         "model": model,
                         "line": line,
-                        "category": _MODEL_CATEGORY.get(model, ""),
+                        "category": SEED_CATEGORY,
                         "input_qty": input_qty,
                         "first_pass_good_qty": first_pass_good,
                         "defect_qty": defect_qty,

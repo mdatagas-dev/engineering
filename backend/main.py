@@ -106,7 +106,8 @@ app.add_middleware(
     allow_credentials=False,
 )
 
-LINES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"]
+LINES = ["IDU", "ODU"]
+UNIT_CATEGORIES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"]
 
 # Snapshot seed engineering asli (sebelum sync/clear memutasi ISSUES/TOOLS/IMPROVEMENTS)
 # — dipakai reset untuk memulihkan demo.
@@ -196,8 +197,8 @@ class RawDataRow(BaseModel):
     @classmethod
     def _validasi_kategori(cls, v: str) -> str:
         v = v.strip().upper()
-        if v not in ("", "IDU", "ODU"):
-            raise ValueError(f"category tidak dikenal: {v!r}. Pilihan: IDU / ODU / kosong")
+        if v not in ("", *UNIT_CATEGORIES):
+            raise ValueError(f"category tidak dikenal: {v!r}. Pilihan: {UNIT_CATEGORIES}")
         return v
 
     @field_validator("date")
@@ -728,9 +729,9 @@ async def impor_excel(file: UploadFile = File(...)) -> dict:
         if rec["first_pass_good_qty"] + rec["defect_qty"] > rec["input_qty"]:
             warnings.append(f"Baris {excel_row_no}: first_pass_good_qty + defect_qty melebihi input_qty")
             continue
-        if cat not in ("", "IDU", "ODU"):
+        if cat not in ("", *UNIT_CATEGORIES):
             warnings.append(
-                f"Baris {excel_row_no}: category tidak dikenal ({cat!r}) — isi IDU / ODU / kosong"
+                f"Baris {excel_row_no}: category tidak dikenal ({cat!r}) — isi {UNIT_CATEGORIES}"
             )
             continue
         rec["line"] = line
@@ -757,9 +758,9 @@ async def template_impor_excel() -> Response:
     df = pd.DataFrame(columns=[*TEXT_COLUMNS, "category", *NUMERIC_COLUMNS])
     df.loc[0] = [
         date.today().isoformat(),
-        "AC SPLIT IDU 1 PK",
-        "AC SPLIT",
+        "AC SPLIT 1 PK",
         "IDU",
+        "AC SPLIT",
         200, 196, 3, 450, 20, 60, 63, 30, 35,
     ]
     buf = BytesIO()

@@ -25,6 +25,7 @@ def _row_baru(line: str) -> dict:
         "date": "2026-08-11",
         "model": "Model A",
         "line": line,
+        "category": "AC SPLIT",
         "input_qty": 200,
         "first_pass_good_qty": 190,
         "defect_qty": 5,
@@ -58,7 +59,7 @@ def test_raw_data_seeded_dan_lengkap():
 def test_post_baris_line_ac_split():
     with TestClient(app) as client:
         sebelum = client.get("/api/raw-data", headers=auth_header()).json()["total_rows"]
-        r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header())
+        r = client.post("/api/raw-data", json=_row_baru("IDU"), headers=auth_header())
         assert r.status_code == 200
         body = r.json()
         assert body["saved"] is True
@@ -78,18 +79,18 @@ def test_reset_kembali_ke_seed():
     from backend.engine import RAW
 
     with TestClient(app) as client:
-        client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header())
+        client.post("/api/raw-data", json=_row_baru("IDU"), headers=auth_header())
         r = client.post("/api/raw-data/reset", headers=auth_header())
         assert r.status_code == 200
         body = r.json()
         assert body["reset"] is True
-        assert body["total_rows"] == len(RAW) == 270
+        assert body["total_rows"] == len(RAW) == 180
         assert body["total_rows"] == client.get("/api/raw-data", headers=auth_header()).json()["total_rows"]
 
 
 def test_persistensi_setelah_restart():
     with TestClient(app) as client:
-        r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header())
+        r = client.post("/api/raw-data", json=_row_baru("IDU"), headers=auth_header())
         assert r.status_code == 200
         total = r.json()["total_rows"]
 
@@ -98,7 +99,7 @@ def test_persistensi_setelah_restart():
         assert r.status_code == 200
         body = r.json()
         assert body["total_rows"] == total
-        assert any(b["line"] == "AC SPLIT" for b in body["rows"])
+        assert any(b["line"] == "IDU" for b in body["rows"])
 
 
 def _issue_baru() -> dict:
@@ -171,7 +172,7 @@ def test_improvement_crud():
 
 def test_defect_crud():
     with TestClient(app) as client:
-        r = client.post("/api/quality/defects", json={"date": "2026-08-11", "line": "AC SPLIT", "model": "M1", "defect_type": "Goresan", "qty": 3}, headers=auth_header())
+        r = client.post("/api/quality/defects", json={"date": "2026-08-11", "line": "IDU", "model": "M1", "defect_type": "Goresan", "qty": 3}, headers=auth_header())
         assert r.status_code == 200
         did = r.json()["id"]
         assert client.get("/api/quality/defects", headers=auth_header()).json()["total"] == 1
@@ -181,7 +182,7 @@ def test_defect_crud():
 
 def test_defect_validasi_qty_dan_line():
     with TestClient(app) as client:
-        r = client.post("/api/quality/defects", json={"date": "2026-08-11", "line": "AC SPLIT", "model": "M1", "defect_type": "Goresan", "qty": 0}, headers=auth_header())
+        r = client.post("/api/quality/defects", json={"date": "2026-08-11", "line": "IDU", "model": "M1", "defect_type": "Goresan", "qty": 0}, headers=auth_header())
         assert r.status_code in (400, 422)
         r = client.post("/api/quality/defects", json={"date": "2026-08-11", "line": "Line 1", "model": "M1", "defect_type": "Goresan", "qty": 1}, headers=auth_header())
         assert r.status_code in (400, 422)
@@ -200,14 +201,14 @@ def test_get_tanpa_token_401():
 
 def test_post_tanpa_token_401():
     with TestClient(app) as client:
-        r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"))
+        r = client.post("/api/raw-data", json=_row_baru("IDU"))
         assert r.status_code == 401
         assert "detail" in r.json()
 
 
 def test_post_role_viewer_403():
     with TestClient(app) as client:
-        r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header("viewer"))
+        r = client.post("/api/raw-data", json=_row_baru("IDU"), headers=auth_header("viewer"))
         assert r.status_code == 403
         assert r.json()["detail"] == "Role viewer hanya bisa membaca data"
 
@@ -229,14 +230,14 @@ def test_token_palsu_401():
     with TestClient(app) as client:
         r = client.get("/api/raw-data", headers=auth_header("admin", fake=True))
         assert r.status_code == 401
-        r = client.post("/api/raw-data", json=_row_baru("AC SPLIT"), headers=auth_header(fake=True))
+        r = client.post("/api/raw-data", json=_row_baru("IDU"), headers=auth_header(fake=True))
         assert r.status_code == 401
         assert "detail" in r.json()
 
 
 def test_post_upsert_ganti_baris_lama():
     with TestClient(app) as client:
-        combo = {**_row_baru("AC SPLIT"), "date": "2025-01-01", "model": "Model Z"}
+        combo = {**_row_baru("IDU"), "date": "2025-01-01", "model": "Model Z"}
         r1 = client.post("/api/raw-data", json=combo, headers=auth_header())
         assert r1.status_code == 200
         total1 = r1.json()["total_rows"]
@@ -244,14 +245,14 @@ def test_post_upsert_ganti_baris_lama():
         assert r2.status_code == 200
         assert r2.json()["total_rows"] == total1
         rows = client.get("/api/raw-data", headers=auth_header()).json()["rows"]
-        matches = [r for r in rows if r["line"] == "AC SPLIT" and r["model"] == "Model Z" and r["date"] == "2025-01-01"]
+        matches = [r for r in rows if r["line"] == "IDU" and r["model"] == "Model Z" and r["date"] == "2025-01-01"]
         assert len(matches) == 1
         assert matches[0]["input_qty"] == 999
 
 
 def test_post_fpg_melebihi_input_ditolak():
     with TestClient(app) as client:
-        r = client.post("/api/raw-data", json={**_row_baru("AC SPLIT"), "first_pass_good_qty": 200, "defect_qty": 10, "input_qty": 200}, headers=auth_header())
+        r = client.post("/api/raw-data", json={**_row_baru("IDU"), "first_pass_good_qty": 200, "defect_qty": 10, "input_qty": 200}, headers=auth_header())
         assert r.status_code == 422
 
 
@@ -295,7 +296,7 @@ def test_post_category_valid():
     with TestClient(app) as client:
         r = client.post(
             "/api/raw-data",
-            json={**_row_baru("AC SPLIT"), "category": "idu"},
+            json={**_row_baru("IDU"), "category": "ac split"},
             headers=auth_header(),
         )
         assert r.status_code == 200
@@ -303,17 +304,17 @@ def test_post_category_valid():
         matches = [
             b
             for b in rows
-            if b["line"] == "AC SPLIT" and b["model"] == "Model A" and b["date"] == "2026-08-11"
+            if b["line"] == "IDU" and b["model"] == "Model A" and b["date"] == "2026-08-11"
         ]
         assert len(matches) == 1
-        assert matches[0]["category"] == "IDU"
+        assert matches[0]["category"] == "AC SPLIT"
 
 
 def test_post_category_invalid():
     with TestClient(app) as client:
         r = client.post(
             "/api/raw-data",
-            json={**_row_baru("AC SPLIT"), "category": "XXL"},
+            json={**_row_baru("IDU"), "category": "XXL"},
             headers=auth_header(),
         )
         assert r.status_code == 422

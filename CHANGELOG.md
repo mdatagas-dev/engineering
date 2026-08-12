@@ -8,6 +8,18 @@ Semua perubahan versi, patch keamanan, dan update dicatat di sini. Format: [Sema
 
 Setiap versi diberi **git tag** (`vX.Y.Z`) sebagai titik rollback. Lihat `git tag`, rollback via `git checkout vX.Y.Z`.
 
+## [1.1.1] — 2026-08-12 — Perbaikan Semantik: IDU/ODU = Lini, Unit = Kategori
+
+### Fitur
+- **Pertukaran semantik** (per arahan user): IDU/ODU kini **lini produksi** (`line`),
+  dan `AC SPLIT` / `AC PORTABLE` / `WASHING MACHINE` / `AC COMERCIAL` kini
+  **unit kategori** (`category`).
+  - Input manual: lini IDU/ODU + unit kategori 4 pilihan (keduanya wajib, tampil selalu).
+  - Dashboard + display: filter **Semua / IDU / ODU** tetap, kini memfilter `line`.
+  - Impor Excel: kolom `line` (IDU/ODU) + `category` (4 unit); template & contoh diperbarui.
+  - Quality defect: lini IDU/ODU.
+  - Validasi server & excel mengikuti aturan baru.
+
 ## [1.1.0] — 2026-08-12 — Kategori Unit IDU/ODU
 
 ### Fitur
