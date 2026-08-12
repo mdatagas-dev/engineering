@@ -59,7 +59,7 @@ Menu **Input** → isi form, lalu **Simpan & Hitung KPI Otomatis**.
 |---|---|---|
 | **Model** | Nama produk / model yang diproduksi | `AC 1 PK 9.000 BTU` |
 | **Tanggal** | Tanggal produksi (default hari ini) | `2026-08-11` |
-| **Lini Produksi** | Lini unit: `IDU` (indoor) / `ODU` (outdoor) | `IDU` |
+| **Lini Produksi** | Lini unit: `IDU` (indoor) / `ODU` (outdoor) / `LINE 1` | `IDU` |
 | **Unit Kategori** | Pilih salah satu: `AC SPLIT`, `AC PORTABLE`, `WASHING MACHINE`, `AC COMERCIAL` | `AC SPLIT` |
 
 ### 3.2 Data Produksi & Kualitas
@@ -111,7 +111,7 @@ Gunakan tombol **"Unduh Template Standar"** — file `.xlsx` berisi 12 kolom waj
 |---|---|
 | `date` | Format `YYYY-MM-DD` (alias: `tanggal`, `production_date`) |
 | `model` | Nama model (alias: `model_name`, `product`, `produk`) |
-| `line` | Lini unit: `IDU` / `ODU` (alias: `lini`, `production_line`) |
+| `line` | Lini unit: `IDU` / `ODU` / `LINE 1` (alias: `lini`, `production_line`) |
 | `category` | Unit kategori: `AC SPLIT` / `AC PORTABLE` / `WASHING MACHINE` / `AC COMERCIAL` (boleh kosong; alias: `kategori`, `unit_type`) |
 | `input_qty` | Total input (alias: `input`, `qty_input`, `jumlah_input`) |
 | `first_pass_good_qty` | First pass good (alias: `fpy`, `first_pass`, `good_qty`) |

@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from typing import Any
 
 
-LINES = ["IDU", "ODU"]
+LINES = ["IDU", "ODU", "LINE 1"]
 MODELS = ["AC SPLIT 1 PK", "AC SPLIT 1.5 PK", "AC SPLIT 2 PK"]
 DEMAND_PER_DAY = 420
 PLANNED_MINUTES = 480

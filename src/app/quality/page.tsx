@@ -11,7 +11,7 @@ import { useDefects, muatDefects, tambahDefect, hapusDefect } from "@/lib/store-
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
-const LINES = ["IDU", "ODU"];
+const LINES = ["IDU", "ODU", "LINE 1"];
 
 function todayIso() {
   return new Date().toISOString().slice(0, 10);

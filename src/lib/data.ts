@@ -44,7 +44,7 @@ export interface ImprovementRecord {
   unit: string;
 }
 
-const LINES = ["IDU", "ODU"];
+const LINES = ["IDU", "ODU", "LINE 1"];
 const MODELS = ["AC SPLIT 1 PK", "AC SPLIT 1.5 PK", "AC SPLIT 2 PK"];
 const SEED_CATEGORY = "AC SPLIT";
 

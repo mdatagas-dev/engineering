@@ -12,7 +12,7 @@ import type { DailyRaw } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useI18n } from "@/lib/i18n/provider";
 
-const LINES = ["IDU", "ODU"];
+const LINES = ["IDU", "ODU", "LINE 1"];
 const CATEGORIES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"];
 
 function todayIso() {

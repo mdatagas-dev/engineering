@@ -84,7 +84,7 @@ def test_reset_kembali_ke_seed():
         assert r.status_code == 200
         body = r.json()
         assert body["reset"] is True
-        assert body["total_rows"] == len(RAW) == 180
+        assert body["total_rows"] == len(RAW) == 270
         assert body["total_rows"] == client.get("/api/raw-data", headers=auth_header()).json()["total_rows"]
 
 

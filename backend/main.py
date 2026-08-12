@@ -106,7 +106,7 @@ app.add_middleware(
     allow_credentials=False,
 )
 
-LINES = ["IDU", "ODU"]
+LINES = ["IDU", "ODU", "LINE 1"]
 UNIT_CATEGORIES = ["AC SPLIT", "AC PORTABLE", "WASHING MACHINE", "AC COMERCIAL"]
 
 # Snapshot seed engineering asli (sebelum sync/clear memutasi ISSUES/TOOLS/IMPROVEMENTS)

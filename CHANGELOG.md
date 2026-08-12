@@ -8,6 +8,12 @@ Semua perubahan versi, patch keamanan, dan update dicatat di sini. Format: [Sema
 
 Setiap versi diberi **git tag** (`vX.Y.Z`) sebagai titik rollback. Lihat `git tag`, rollback via `git checkout vX.Y.Z`.
 
+## [1.1.2] — 2026-08-12 — Tambah Lini Produksi LINE 1
+
+### Fitur
+- Lini produksi (`line`) kini: `IDU` / `ODU` / **`LINE 1`** (input manual, impor excel,
+  quality defect, seed demo 270 baris). Unit kategori tetap 4 pilihan (AC SPLIT dkk).
+
 ## [1.1.1] — 2026-08-12 — Perbaikan Semantik: IDU/ODU = Lini, Unit = Kategori
 
 ### Fitur
