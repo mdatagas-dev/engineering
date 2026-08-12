@@ -149,11 +149,11 @@ export function DashboardView({
         itemStyle: { color: "#f97316" },
       },
       {
-        name: "Line Balance",
+        name: "Output Achievement",
         type: "line",
         smooth: true,
         symbol: "none",
-        data: tren.map((t) => +t.lineBalance.toFixed(1)),
+        data: tren.map((t) => +t.outputAchievement.toFixed(1)),
         lineStyle: { width: 2, color: "#a78bfa" },
         itemStyle: { color: "#a78bfa" },
       },
@@ -245,30 +245,48 @@ export function DashboardView({
 
   const cycleOption = useMemo(
     () => ({
-    tooltip: { ...TOOLTIP },
+    tooltip: { ...TOOLTIP, trigger: "axis" },
     grid: { top: 20, left: 56, right: 24, bottom: 24 },
     xAxis: {
       type: "category",
-      data: ["Target", "Takt Time", "Aktual"],
+      data: dates,
       ...AXIS,
       axisTick: { show: false },
     },
-    yAxis: { type: "value", ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: "{value} sec" } },
+    yAxis: {
+      type: "value",
+      ...AXIS,
+      axisLabel: { ...AXIS.axisLabel, formatter: "{value}%" },
+      markLine: {
+        symbol: "none",
+        lineStyle: { color: "#f59e0b", type: "dashed" },
+        data: [{ yAxis: 0, label: { color: "#e9d5a0", formatter: t("series.target") } }],
+      },
+    },
     series: [
       {
-        type: "bar",
-        data: [
-          { value: 60, itemStyle: { color: "#fbbf24" } },
-          { value: 69, itemStyle: { color: "rgba(96,165,250,0.4)" } },
-          { value: 63, itemStyle: { color: "#4ade80" } },
-        ],
-        barWidth: 44,
-        label: { show: true, position: "top", color: "#d3faf6", fontSize: 12, formatter: "{c} sec" },
-        itemStyle: { borderRadius: [10, 10, 0, 0] },
+        name: t("chart.efficiencyDeviation"),
+        type: "line",
+        smooth: true,
+        symbol: "circle",
+        symbolSize: 5,
+        data: tren.map((t) => +(t.outputAchievement - 100).toFixed(1)),
+        lineStyle: { width: 3, color: "#34d399" },
+        itemStyle: { color: "#34d399", borderColor: "#03090d", borderWidth: 1 },
+        areaStyle: {
+          color: {
+            type: "linear",
+            x: 0, y: 0, x2: 0, y2: 1,
+            colorStops: [
+              { offset: 0, color: "rgba(52,211,153,0.3)" },
+              { offset: 1, color: "rgba(52,211,153,0)" },
+            ],
+          },
+        },
       },
     ],
     }),
-    []
+    [tren, dates, t]
   );
 
   const issueOption = useMemo(
@@ -339,7 +357,7 @@ export function DashboardView({
       <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-5">
         <KpiCard label={t("kpi.fpy")} value={`${kpi.fpy.toFixed(1)}%`} sub={t("kpi.fpySub")} icon={<Target className="h-6 w-6" />} accent="jade" spark={[97.2, 98, 98.4, 98.1, 98.7, 98.4]} delay={520} />
         <KpiCard label={t("kpi.oee")} value={`${kpi.oee.toFixed(1)}%`} sub={t("kpi.oeeSub")} icon={<Gauge className="h-6 w-6" />} accent="teal" spark={[88, 90, 89.5, 92, 91, 91.2]} delay={640} />
-        <KpiCard label={t("kpi.lineBalance")} value={`${kpi.lineBalance.toFixed(1)}%`} sub={t("kpi.lineBalanceSub")} icon={<Scale className="h-6 w-6" />} accent="emerald" spark={[90, 92, 93, 94, 93.5, 94.3]} delay={760} />
+        <KpiCard label={t("kpi.outputAchievement")} value={`${kpi.outputAchievement.toFixed(1)}%`} sub={`${kpi.efficiencyDeviation >= 0 ? "+" : ""}${kpi.efficiencyDeviation.toFixed(1)}% vs target`} icon={<Scale className="h-6 w-6" />} accent="emerald" spark={[90, 92, 93, 94, 93.5, 94.3]} delay={760} />
         <KpiCard label={t("kpi.setupTime")} value={`${kpi.avgActualSetupMin.toFixed(0)} min`} sub={t("kpi.setupTimeSub", { var: `${kpi.setupVarianceMin >= 0 ? "+" : ""}${kpi.setupVarianceMin.toFixed(0)}` })} icon={<Timer className="h-6 w-6" />} accent="gold" spark={[48, 45, 44, 46, 41, 42]} delay={880} alert={setupWarning ? "warning" : undefined} />
         <KpiCard label={t("kpi.issueClosure")} value={`${kpi.issueClosure.toFixed(0)}%`} sub={t("kpi.issueClosureSub")} icon={<ShieldCheck className="h-6 w-6" />} accent="rose" spark={[30, 40, 40, 45, 50, 50]} delay={1000} alert={overdueCount > 0 ? "critical" : undefined} />
       </section>
@@ -363,7 +381,7 @@ export function DashboardView({
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up xl:col-span-2" intensity={3} glow={false}>
-          <PanelHeader icon={<Timer className="h-4 w-4" />} title={t("chart.cycleVsTarget")} subtitle={t("chart.cycleVsTargetSub", { pct: "95.2", takt: "69" })} />
+          <PanelHeader icon={<Timer className="h-4 w-4" />} title={t("chart.efficiencyDeviation")} subtitle={t("chart.efficiencyDeviationSub")} />
           <DelayedChart delay={1700} option={cycleOption} height={280} className="px-2 pb-2" />
         </TiltPanel>
 

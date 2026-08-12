@@ -8,6 +8,20 @@ Semua perubahan versi, patch keamanan, dan update dicatat di sini. Format: [Sema
 
 Setiap versi diberi **git tag** (`vX.Y.Z`) sebagai titik rollback. Lihat `git tag`, rollback via `git checkout vX.Y.Z`.
 
+## [1.2.0] — 2026-08-12 — KPI Output Achievement & Efficiency Deviation
+
+### Fitur
+- **Cycle Time & Line Balance dihapus** dari dashboard dan engine, diganti:
+  - **Output Achievement (%)** = Actual Output ÷ Target Output × 100
+  - **Efficiency Deviation (%)** = (Actual − Target) ÷ Target × 100
+- **Takt Time kini referensi internal**: target output dihitung dari planned time ÷ takt
+  (bukan lagi perbandingan CT per detik) — perbandingan antar lini adil walau durasi
+  proses berbeda.
+- **OEE dihitung ulang**: Performance = Actual Output ÷ Target Output (berbasis takt).
+- Perubahan diterapkan: dashboard utama + display (kartu KPI & trend), Process Performance
+  (kartu + chart output per lini & tren harian), input page (KPI terbaru), backend engine,
+  i18n 5 bahasa, template export otomatis ikut (kolom tak berubah).
+
 ## [1.1.2] — 2026-08-12 — Tambah Lini Produksi LINE 1
 
 ### Fitur

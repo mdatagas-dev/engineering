@@ -7,7 +7,7 @@ Input Manual / Impor Excel  →  Raw Engineering Data  →  Calculation Engine  
 ```
 
 Aplikasi hanya butuh **data mentah** (jumlah produksi, cacat, waktu). Semua KPI
-(FPY, OEE, Line Balance, dll) dihitung otomatis oleh Calculation Engine.
+(FPY, OEE, Output Achievement, dll) dihitung otomatis oleh Calculation Engine.
 
 ---
 
@@ -34,7 +34,7 @@ Buka aplikasi (`http://<server>:3011`), login dengan akun Anda.
 ## 2. Dashboard Utama (`/`)
 
 Menampilkan ringkasan: 5 kartu KPI + grafik (Engineering Trend, Defect Pareto,
-Setup vs Standar, Cycle Time vs Target, Issue Status).
+Setup vs Standar, Efficiency Deviation, Issue Status).
 
 **Memilih periode data yang dilihat:**
 - **Tombol periode** — 1 hari / 7 / 14 / 30 hari terakhir (default 30).
@@ -183,7 +183,7 @@ tren harian. Data diambil dari kolom setup pada input manual/Excel.
 ## 9. Alur Perhitungan KPI (Calculation Engine)
 
 ```
-Demand → Takt Time → Cycle Time → Line Balance → Setup Time → OEE → Quality
+Demand → Takt Time → Output → Setup Time → OEE → Quality
 ```
 
 | KPI | Rumus |
@@ -191,8 +191,8 @@ Demand → Takt Time → Cycle Time → Line Balance → Setup Time → OEE → 
 | FPY | first_pass_good ÷ input × 100% |
 | Defect Rate | defect ÷ input × 100% |
 | OEE | Availability × Performance × Quality |
-| Cycle Time Achievement | target_ct ÷ actual_ct × 100% |
-| Line Balance | Total Work Content ÷ (Bottleneck CT × Jumlah Stasiun) × 100% |
+| Output Achievement | Actual Output ÷ Target Output × 100% |
+| Efficiency Deviation | (Actual − Target) ÷ Target × 100% |
 | Setup Time Achievement | standard_setup ÷ actual_setup × 100% |
 | Setup Time Variance | actual_setup − standard_setup |
 | Issue Closure Rate | closed ÷ total × 100% |

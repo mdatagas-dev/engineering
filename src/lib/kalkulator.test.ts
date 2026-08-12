@@ -55,16 +55,23 @@ describe("kalkulasiKpi — dataset mini (hitung manual)", () => {
     expect(kalkulasiKpi(mini).fpy).toBeCloseTo(95.09, 1);
   });
 
-  it("oee = availability(90.97) x performance(96.24) x quality(97.27) = 85.16", () => {
+  it("oee = availability(90.97) x performance(43.65) x quality(97.27) = 38.63", () => {
     const k = kalkulasiKpi(mini);
     expect(k.availability).toBeCloseTo(90.97, 1);
-    expect(k.performance).toBeCloseTo(96.24, 1);
+    expect(k.performance).toBeCloseTo(43.65, 1);
     expect(k.quality).toBeCloseTo(97.27, 1);
-    expect(k.oee).toBeCloseTo(85.16, 1);
+    expect(k.oee).toBeCloseTo(38.63, 1);
   });
 
-  it("lineBalance = rata-rata 3 line dari STATION_BALANCE = 92.02", () => {
-    expect(kalkulasiKpi(mini).lineBalance).toBeCloseTo(92.02, 1);
+  it("outputAchievement = 550/1260 = 43.65; efficiencyDeviation = -56.35", () => {
+    const k = kalkulasiKpi(mini);
+    const takt = (480 * 60) / 420;
+    const targetQty = (1440 * 60) / takt;
+    expect(targetQty).toBeCloseTo(1260, 1);
+    expect(k.outputAchievement).toBeCloseTo((550 / targetQty) * 100, 1);
+    expect(k.outputAchievement).toBeCloseTo(43.65, 1);
+    expect(k.efficiencyDeviation).toBeCloseTo((550 / targetQty) * 100 - 100, 1);
+    expect(k.efficiencyDeviation).toBeCloseTo(-56.35, 1);
   });
 
   it("setupAchievement = 89/94 = 94.68", () => {
@@ -88,9 +95,9 @@ describe("kalkulasiKpi — edge cases", () => {
     const k = kalkulasiKpi([]);
     expect(k.fpy).toBe(0);
     expect(k.oee).toBe(0);
-    expect(k.lineBalance).toBe(0);
+    expect(k.outputAchievement).toBe(0);
+    expect(k.efficiencyDeviation).toBe(0);
     expect(k.setupAchievement).toBe(0);
-    expect(k.cycleTimeAchievement).toBe(0);
     expect(k.taktTimeSec).toBeCloseTo(68.57, 1);
   });
 
@@ -141,8 +148,9 @@ describe("parity TS <-> Python (fixture bersama)", () => {
   it("kalkulasiKpi(fixture) sama dengan golden parity", () => {
     const k = kalkulasiKpi(fixture);
     expect(k.fpy).toBeCloseTo(95.56, 1);
-    expect(k.oee).toBeCloseTo(88.43, 1);
-    expect(k.lineBalance).toBeCloseTo(92.02, 1);
+    expect(k.oee).toBeCloseTo(46.38, 1);
+    expect(k.outputAchievement).toBeCloseTo(51.31, 1);
+    expect(k.efficiencyDeviation).toBeCloseTo(-48.69, 1);
     expect(k.setupAchievement).toBeCloseTo(92.6, 1);
     expect(k.issueClosure).toBeCloseTo(40.0, 1);
   });

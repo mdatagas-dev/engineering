@@ -1,11 +1,10 @@
 "use client";
 
 import { useMemo } from "react";
-import { Gauge, Timer, Scale, Layers, Clock } from "lucide-react";
+import { Gauge, Timer, Scale, TrendingUp, Clock } from "lucide-react";
 import { Chart } from "@/components/chart";
 import { TiltPanel } from "@/components/tilt-panel";
 import { PanelHeader } from "@/components/panel-header";
-import { STATION_BALANCE } from "@/lib/data";
 import { kalkulasiKpi, ambilTren } from "@/lib/kalkulator";
 import { useRawRows } from "@/lib/store";
 import { formatSec } from "@/lib/utils";
@@ -46,83 +45,58 @@ export default function ProcessPage() {
     ],
   };
 
-  const line1 = STATION_BALANCE.filter((s) => s.line === "Line 1");
-  const bottleneck = line1.reduce((a, b) => (a.cycleTimeSec > b.cycleTimeSec ? a : b));
-  const lineBalance = {
+  const perLine = useMemo(() => {
+    const lines = [...new Set(rows.map((r) => r.line))];
+    return lines.map((line) => ({
+      line,
+      achievement: kalkulasiKpi(rows.filter((r) => r.line === line)).outputAchievement,
+    }));
+  }, [rows]);
+
+  const lineOutput = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
-    legend: {
-      textStyle: { color: "rgba(100,116,139,0.85)", fontSize: 11 },
-      top: 0,
-      icon: "roundRect",
-      itemWidth: 14,
-      itemHeight: 6,
-    },
-    grid: { top: 32, left: 44, right: 16, bottom: 30 },
-    xAxis: { type: "category", data: line1.map((s) => s.station.replace("Line 1 · ", "")), ...AXIS },
-    yAxis: { type: "value", ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: `{value} ${t("common.unit.sec")}` } },
+    grid: { top: 28, left: 44, right: 16, bottom: 28 },
+    xAxis: { type: "category", data: perLine.map((p) => p.line), ...AXIS },
+    yAxis: { ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: "{value}%" } },
     series: [
       {
-        name: t("process.series.workContent"),
+        name: t("process.kpi.outputAchievement"),
         type: "bar",
-        data: line1.map((s, i) => ({
-          value: s.workContentSec,
-          itemStyle: { color: ["rgba(34,211,238,0.55)", "rgba(167,139,250,0.55)", "rgba(251,191,36,0.55)", "rgba(251,113,133,0.55)", "rgba(96,165,250,0.55)"][i % 5] },
-        })),
-        barWidth: 26,
+        data: perLine.map((p) => +p.achievement.toFixed(1)),
+        barWidth: 36,
+        label: { show: true, position: "top", color: "#d3faf6", fontSize: 11, formatter: "{c}%" },
         itemStyle: {
-          borderRadius: [6, 6, 0, 0],
-        },
-      },
-      {
-        name: t("process.series.cycleTime"),
-        type: "bar",
-        data: line1.map((s) => s.cycleTimeSec),
-        barWidth: 26,
-        itemStyle: {
-          borderRadius: [6, 6, 0, 0],
+          borderRadius: [8, 8, 0, 0],
           color: {
             type: "linear",
             x: 0, y: 0, x2: 0, y2: 1,
             colorStops: [
-              { offset: 0, color: "#a78bfa" },
-              { offset: 1, color: "#5b21b6" },
+              { offset: 0, color: "#34d399" },
+              { offset: 1, color: "#065f46" },
             ],
           },
         },
         markLine: {
           symbol: "none",
-          lineStyle: { color: "#f59e0b", type: "dashed", width: 1.5 },
-          data: [{ yAxis: bottleneck.cycleTimeSec, label: { color: "#e9d5a0", formatter: t("process.series.bottleneck", { sec: bottleneck.cycleTimeSec }) } }],
+          lineStyle: { color: "#f59e0b", type: "dashed" },
+          data: [{ yAxis: 100, label: { color: "#e9d5a0", formatter: t("process.series.target100") } }],
         },
       },
     ],
   };
 
-  const cycleTren = tren.map((t) => t.date);
-  const cycleAchievementData = useMemo(() => {
-    const map = new Map<string, { target: number[]; actual: number[] }>();
-    for (const r of rows) {
-      const e = map.get(r.date.slice(5)) ?? { target: [], actual: [] };
-      e.target.push(r.targetCtSec);
-      e.actual.push(r.actualCtSec);
-      map.set(r.date.slice(5), e);
-    }
-    const avg = (a: number[]) => a.reduce((x, y) => x + y, 0) / a.length;
-    return [...map.values()].map((e) => +((avg(e.target) / avg(e.actual)) * 100).toFixed(1));
-  }, [rows]);
-
-  const cycleAchievement = {
+  const outputTrend = {
     tooltip: { ...TOOLTIP, trigger: "axis" },
     grid: { top: 28, left: 44, right: 16, bottom: 28 },
-    xAxis: { type: "category", data: cycleTren, ...AXIS },
-    yAxis: { ...AXIS, min: 80, max: 110, axisLabel: { ...AXIS.axisLabel, formatter: "{value}%" } },
+    xAxis: { type: "category", data: tren.map((t) => t.date), ...AXIS },
+    yAxis: { ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: "{value}%" } },
     series: [
       {
-        name: t("process.kpi.cycleAchievement"),
+        name: t("process.kpi.outputAchievement"),
         type: "line",
         smooth: true,
         symbol: "none",
-        data: cycleAchievementData,
+        data: tren.map((t) => +t.outputAchievement.toFixed(1)),
         lineStyle: { width: 3, color: "#34d399" },
         areaStyle: {
           color: {
@@ -230,15 +204,15 @@ export default function ProcessPage() {
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/80">
             <Timer className="h-4 w-4 text-hisense" />
-            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.cycleAchievement")}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.15em]">{t("process.kpi.outputAchievement")}</p>
           </div>
           <p
             className="font-display mt-3 text-5xl font-semibold lg:text-6xl leading-none tracking-tight text-shadow-luxe"
             style={{ color: "#34d399", textShadow: "0 0 24px #34d39955, 0 0 64px #34d39922" }}
           >
-            {kpi.cycleTimeAchievement.toFixed(1)}%
+            {kpi.outputAchievement.toFixed(1)}%
           </p>
-          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.cycleVsTarget", { act: formatSec(63), tgt: formatSec(60) })}</p>
+          <p className="mt-1.5 text-sm text-hisense-soft/65">{t("process.kpi.outputDeviation", { v: `${kpi.efficiencyDeviation >= 0 ? "+" : ""}${kpi.efficiencyDeviation.toFixed(1)}%` })}</p>
         </TiltPanel>
         <TiltPanel className="anim-fade-up p-5" intensity={6}>
           <div className="flex items-center gap-2 text-hisense-soft/80">
@@ -259,13 +233,13 @@ export default function ProcessPage() {
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up" intensity={3}>
-          <PanelHeader icon={<Layers className="h-4 w-4" />} title={t("process.chart.lineBalance")} subtitle={t("process.chart.bottleneck", { station: bottleneck.station, sec: bottleneck.cycleTimeSec })} />
-          <Chart option={lineBalance} height={280} className="px-2 pb-2" />
+          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("process.chart.outputAchievement")} subtitle={t("process.chart.cycleAchievementSub")} />
+          <Chart option={lineOutput} height={280} className="px-2 pb-2" />
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up" intensity={3}>
-          <PanelHeader icon={<Timer className="h-4 w-4" />} title={t("process.kpi.cycleAchievement")} subtitle={t("process.chart.cycleAchievementSub")} />
-          <Chart option={cycleAchievement} height={280} className="px-2 pb-2" />
+          <PanelHeader icon={<TrendingUp className="h-4 w-4" />} title={t("process.kpi.outputAchievement")} subtitle={t("process.chart.cycleAchievementSub")} />
+          <Chart option={outputTrend} height={280} className="px-2 pb-2" />
         </TiltPanel>
 
         <TiltPanel className="anim-fade-up" intensity={3}>

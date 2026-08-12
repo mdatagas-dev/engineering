@@ -14,7 +14,7 @@ export const CHART_PALETTE = [
 export const KPI_COLORS = {
   fpy: "#22d3ee",
   oee: "#34d399",
-  lineBalance: "#a78bfa",
+  outputAchievement: "#a78bfa",
   setupTime: "#fbbf24",
   issueClosure: "#fb7185",
   cycle: "#60a5fa",

@@ -352,8 +352,8 @@ export default function InputPage() {
               {[
                 { label: t("kpi.fpy"), value: `${kpi.fpy.toFixed(1)}%`, gold: false },
                 { label: t("kpi.oee"), value: `${kpi.oee.toFixed(1)}%`, gold: false },
-                { label: t("kpi.lineBalance"), value: `${kpi.lineBalance.toFixed(1)}%`, gold: false },
-                { label: t("input.kpi.cycleTimeAchievement"), value: `${kpi.cycleTimeAchievement.toFixed(1)}%`, gold: true },
+                { label: t("input.kpi.outputAchievement"), value: `${kpi.outputAchievement.toFixed(1)}%`, gold: false },
+                { label: t("input.kpi.efficiencyDeviation"), value: `${kpi.efficiencyDeviation.toFixed(1)}%`, gold: true },
                 { label: t("input.kpi.setupAchievement"), value: `${kpi.setupAchievement.toFixed(1)}%`, gold: true },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between gap-3 glass-premium rounded-xl px-4 py-3.5">

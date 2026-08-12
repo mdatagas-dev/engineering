@@ -133,38 +133,28 @@ def _avg(nums: list[float]) -> float:
 
 
 def kalkulasi_kpi(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    """Hitung seluruh KPI dari raw data. Urutan: Demand → Takt → Cycle → Line Balance → Setup → OEE → Quality."""
+    """Hitung seluruh KPI dari raw data. Urutan: Demand → Takt → Output → Setup → OEE → Quality."""
     total = {"input": 0, "first_pass": 0, "defect": 0, "planned": 0, "downtime": 0,
-             "target_ct": 0, "actual_ct": 0, "std_setup": 0, "act_setup": 0}
+             "std_setup": 0, "act_setup": 0}
     for r in rows:
         total["input"] += r["input_qty"]
         total["first_pass"] += r["first_pass_good_qty"]
         total["defect"] += r["defect_qty"]
         total["planned"] += r["planned_minutes"]
         total["downtime"] += r["downtime_minutes"]
-        total["target_ct"] += r["target_ct_sec"]
-        total["actual_ct"] += r["actual_ct_sec"]
         total["std_setup"] += r["standard_setup_min"]
         total["act_setup"] += r["actual_setup_min"]
 
     fpy = total["first_pass"] / total["input"] * 100 if total["input"] else 0
     quality = (total["input"] - total["defect"]) / total["input"] if total["input"] else 0
     availability = (total["planned"] - total["downtime"]) / total["planned"] if total["planned"] else 0
-    target_ct_avg = total["target_ct"] / total["input"] if total["input"] else 0
-    actual_ct_avg = total["actual_ct"] / total["input"] if total["input"] else 0
-    performance = target_ct_avg / actual_ct_avg if actual_ct_avg else 0
-    oee = availability * performance * quality * 100
 
-    per_line: dict[str, list[dict[str, Any]]] = {}
-    for s in STATION_BALANCE:
-        per_line.setdefault(s["line"], []).append(s)
-    bottleneck = max(STATION_BALANCE, key=lambda s: s["cycle_time_sec"])
-    balances = []
-    for stations in per_line.values():
-        wc = sum(s["work_content_sec"] for s in stations)
-        bn = max(s["cycle_time_sec"] for s in stations)
-        balances.append(wc / (bn * len(stations)) * 100)
-    line_balance = sum(balances) / len(balances) if rows and balances else 0
+    takt_time = PLANNED_MINUTES * 60 / DEMAND_PER_DAY
+    target_qty = total["planned"] * 60 / takt_time if takt_time else 0
+    output_achievement = total["input"] / target_qty * 100 if target_qty else 0
+    efficiency_deviation = (total["input"] - target_qty) / target_qty * 100 if target_qty else 0
+    performance = total["input"] / target_qty if target_qty else 0
+    oee = availability * performance * quality * 100
 
     std_setup = total["std_setup"] / total["input"] if total["input"] else 0
     act_setup = total["act_setup"] / total["input"] if total["input"] else 0
@@ -188,7 +178,6 @@ def kalkulasi_kpi(rows: list[dict[str, Any]]) -> dict[str, Any]:
     ])
 
     takt_time = PLANNED_MINUTES * 60 / DEMAND_PER_DAY
-    cycle_achievement = target_ct_avg / actual_ct_avg * 100 if actual_ct_avg else 0
 
     return {
         "fpy": round(fpy, 2),
@@ -197,10 +186,9 @@ def kalkulasi_kpi(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "availability": round(availability * 100, 2),
         "performance": round(performance * 100, 2),
         "quality": round(quality * 100, 2),
-        "cycle_time_achievement": round(cycle_achievement, 2),
+        "output_achievement": round(output_achievement, 2),
+        "efficiency_deviation": round(efficiency_deviation, 2),
         "takt_time_sec": round(takt_time, 1),
-        "line_balance": round(line_balance, 2),
-        "bottleneck_station": f"{bottleneck['line']} · {bottleneck['station']}",
         "setup_achievement": round(setup_achievement, 2),
         "setup_variance_min": round(setup_variance, 2),
         "avg_actual_setup_min": round(act_setup, 2),
@@ -222,7 +210,7 @@ def ambil_tren() -> list[dict[str, Any]]:
             "date": day[5:],
             "fpy": k["fpy"],
             "oee": k["oee"],
-            "line_balance": k["line_balance"],
+            "output_achievement": k["output_achievement"],
             "setup_achievement": k["setup_achievement"],
             "issue_closure": k["issue_closure"],
         })

@@ -260,12 +260,19 @@ export const inputDict: DomainDict = {
     ja: "最新KPI（エンジン直接）",
     ko: "최신 KPI (엔진에서 직접)",
   },
-  "input.kpi.cycleTimeAchievement": {
-    id: "Cycle Time Achievement",
-    en: "Cycle Time Achievement",
-    zh: "周期时间达成率",
-    ja: "サイクルタイム達成率",
-    ko: "사이클 타임 달성률",
+  "input.kpi.outputAchievement": {
+    id: "Output Achievement",
+    en: "Output Achievement",
+    zh: "产量达成率",
+    ja: "生産達成率",
+    ko: "산출 달성률",
+  },
+  "input.kpi.efficiencyDeviation": {
+    id: "Efficiency Deviation",
+    en: "Efficiency Deviation",
+    zh: "效率偏差",
+    ja: "効率偏差",
+    ko: "효율 편차",
   },
   "input.kpi.setupAchievement": {
     id: "Setup Achievement",

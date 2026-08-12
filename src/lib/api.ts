@@ -38,7 +38,8 @@ export interface RawDataRow {
 export interface KpiResponse {
   fpy: number;
   oee: number;
-  line_balance: number;
+  output_achievement: number;
+  efficiency_deviation: number;
   setup_achievement: number;
   issue_closure: number;
   [key: string]: number;

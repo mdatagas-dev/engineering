@@ -6,7 +6,7 @@ import pytest
 
 from backend.engine import ISSUES, RAW, kalkulasi_kpi, sync_issues
 
-KPI_KUNCI = ["fpy", "oee", "line_balance", "setup_achievement", "issue_closure"]
+KPI_KUNCI = ["fpy", "oee", "output_achievement", "setup_achievement", "issue_closure"]
 
 FIXTURE = Path(__file__).parent / "fixtures" / "parity_rows.json"
 
@@ -22,6 +22,8 @@ def test_kalkulasi_kpi_berisi_kunci_dan_range_0_100():
         assert kunci in k
         assert isinstance(k[kunci], (int, float))
         assert 0 <= k[kunci] <= 100
+    assert "efficiency_deviation" in k
+    assert isinstance(k["efficiency_deviation"], (int, float))
 
 
 def test_kalkulasi_parity_fixture():
@@ -36,8 +38,9 @@ def test_kalkulasi_parity_fixture():
     k = kalkulasi_kpi(rows)
     golden = {
         "fpy": 95.56,
-        "oee": 88.43,
-        "line_balance": 92.02,
+        "oee": 46.38,
+        "output_achievement": 51.31,
+        "efficiency_deviation": -48.69,
         "setup_achievement": 92.6,
         "issue_closure": 40.0,
     }

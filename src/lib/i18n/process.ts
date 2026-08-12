@@ -9,11 +9,11 @@ export const processDict: DomainDict = {
     ko: "프로세스 성능",
   },
   "process.subtitle": {
-    id: "OEE · Takt Time · Cycle Time · Line Balance · Setup Time",
-    en: "OEE · Takt Time · Cycle Time · Line Balance · Setup Time",
-    zh: "OEE · 节拍时间 · 周期时间 · 生产线平衡 · 换线时间",
-    ja: "OEE · タクトタイム · サイクルタイム · ライン均衡 · 段取り時間",
-    ko: "OEE · 택트 타임 · 사이클 타임 · 라인 밸런스 · 설정 시간",
+    id: "OEE · Takt Time · Output Achievement · Setup Time",
+    en: "OEE · Takt Time · Output Achievement · Setup Time",
+    zh: "OEE · 节拍时间 · 产量达成率 · 换线时间",
+    ja: "OEE · タクトタイム · 生産達成率 · 段取り時間",
+    ko: "OEE · 택트 타임 · 산출 달성률 · 설정 시간",
   },
   "process.pilar": {
     id: "Process Performance",
@@ -29,12 +29,12 @@ export const processDict: DomainDict = {
     ja: "タクトタイム",
     ko: "택트 타임",
   },
-  "process.kpi.cycleAchievement": {
-    id: "Cycle Time Achievement",
-    en: "Cycle Time Achievement",
-    zh: "周期时间达成率",
-    ja: "サイクルタイム達成率",
-    ko: "사이클 타임 달성률",
+  "process.kpi.outputAchievement": {
+    id: "Output Achievement",
+    en: "Output Achievement",
+    zh: "产量达成率",
+    ja: "生産達成率",
+    ko: "산출 달성률",
   },
   "process.kpi.setupAchievement": {
     id: "Setup Achievement",
@@ -57,12 +57,12 @@ export const processDict: DomainDict = {
     ja: "1日420台の需要から算出",
     ko: "일 420대 수요 기준",
   },
-  "process.kpi.cycleVsTarget": {
-    id: "Aktual {act} vs target {tgt}",
-    en: "Actual {act} vs target {tgt}",
-    zh: "实际 {act} vs 目标 {tgt}",
-    ja: "実績 {act} vs 目標 {tgt}",
-    ko: "실제 {act} vs 목표 {tgt}",
+  "process.kpi.outputDeviation": {
+    id: "Deviasi vs target: {v}",
+    en: "Deviation vs target: {v}",
+    zh: "与目标偏差：{v}",
+    ja: "目標との偏差：{v}",
+    ko: "목표 대비 편차: {v}",
   },
   "process.kpi.setupVariance": {
     id: "Varian {v} min dari standar",
@@ -85,19 +85,12 @@ export const processDict: DomainDict = {
     ja: "稼働率 · 性能 · 品質 — OEE の構成要素",
     ko: "가동률 · 성능 · 품질 — OEE 구성 요소",
   },
-  "process.chart.lineBalance": {
-    id: "Line Balance — Line 1",
-    en: "Line Balance — Line 1",
-    zh: "生产线平衡 — 1 号线",
-    ja: "ライン均衡 — ライン1",
-    ko: "라인 밸런스 — 1호 라인",
-  },
-  "process.chart.bottleneck": {
-    id: "Bottleneck {station} · {sec} sec",
-    en: "Bottleneck {station} · {sec} sec",
-    zh: "瓶颈 {station} · {sec} sec",
-    ja: "ボトルネック {station} · {sec} sec",
-    ko: "병목 {station} · {sec} sec",
+  "process.chart.outputAchievement": {
+    id: "Output Achievement per Lini",
+    en: "Output Achievement per Line",
+    zh: "各产线产量达成率",
+    ja: "ライン別生産達成率",
+    ko: "라인별 산출 달성률",
   },
   "process.chart.cycleAchievementSub": {
     id: "Trend achievement vs target 100%",
@@ -140,27 +133,6 @@ export const processDict: DomainDict = {
     zh: "质量",
     ja: "品質",
     ko: "품질",
-  },
-  "process.series.workContent": {
-    id: "Work Content",
-    en: "Work Content",
-    zh: "作业内容",
-    ja: "作業内容",
-    ko: "작업 내용",
-  },
-  "process.series.cycleTime": {
-    id: "Cycle Time",
-    en: "Cycle Time",
-    zh: "周期时间",
-    ja: "サイクルタイム",
-    ko: "사이클 타임",
-  },
-  "process.series.bottleneck": {
-    id: "Bottleneck {sec} sec",
-    en: "Bottleneck {sec} sec",
-    zh: "瓶颈 {sec} sec",
-    ja: "ボトルネック {sec} sec",
-    ko: "병목 {sec} sec",
   },
   "process.series.target100": {
     id: "Target 100%",

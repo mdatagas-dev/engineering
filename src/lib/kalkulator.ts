@@ -1,11 +1,4 @@
-import {
-  STATION_BALANCE,
-  ISSUES,
-  TOOLS,
-  IMPROVEMENTS,
-  type DailyRaw,
-  type StationBalance,
-} from "./data";
+import { ISSUES, TOOLS, IMPROVEMENTS, type DailyRaw } from "./data";
 
 export interface KpiSnapshot {
   fpy: number;
@@ -14,10 +7,9 @@ export interface KpiSnapshot {
   availability: number;
   performance: number;
   quality: number;
-  cycleTimeAchievement: number;
+  outputAchievement: number;
+  efficiencyDeviation: number;
   taktTimeSec: number;
-  lineBalance: number;
-  bottleneckStation: string;
   setupAchievement: number;
   setupVarianceMin: number;
   avgActualSetupMin: number;
@@ -31,7 +23,7 @@ export interface TrendPoint {
   date: string;
   fpy: number;
   oee: number;
-  lineBalance: number;
+  outputAchievement: number;
   setupAchievement: number;
   issueClosure: number;
 }
@@ -65,40 +57,23 @@ export function kalkulasiKpi(
       acc.defect += r.defectQty;
       acc.planned += r.plannedMinutes;
       acc.downtime += r.downtimeMinutes;
-      acc.targetCt += r.targetCtSec;
-      acc.actualCt += r.actualCtSec;
       acc.stdSetup += r.standardSetupMin;
       acc.actSetup += r.actualSetupMin;
       return acc;
     },
-    { input: 0, firstPass: 0, defect: 0, planned: 0, downtime: 0, targetCt: 0, actualCt: 0, stdSetup: 0, actSetup: 0 }
+    { input: 0, firstPass: 0, defect: 0, planned: 0, downtime: 0, stdSetup: 0, actSetup: 0 }
   );
 
   const fpy = totals.input ? (totals.firstPass / totals.input) * 100 : 0;
   const quality = totals.input ? (totals.input - totals.defect) / totals.input : 0;
   const availability = totals.planned ? (totals.planned - totals.downtime) / totals.planned : 0;
-  const targetCtAvg = totals.targetCt / totals.input || 0;
-  const actualCtAvg = totals.actualCt / totals.input || 0;
-  const performance = actualCtAvg ? targetCtAvg / actualCtAvg : 0;
-  const oee = availability * performance * quality * 100;
 
-  const byLine = new Map<string, StationBalance[]>();
-  for (const s of STATION_BALANCE) {
-    const list = byLine.get(s.line) ?? [];
-    list.push(s);
-    byLine.set(s.line, list);
-  }
-  let balanceSum = 0;
-  let lineCount = 0;
-  let bottleneck: StationBalance | null = null;
-  for (const stations of byLine.values()) {
-    const bt = stations.reduce((a, b) => (a.cycleTimeSec > b.cycleTimeSec ? a : b));
-    const totalWork = stations.reduce((a, s) => a + s.workContentSec, 0);
-    balanceSum += (totalWork / (bt.cycleTimeSec * stations.length)) * 100;
-    lineCount++;
-    if (!bottleneck || bt.cycleTimeSec > bottleneck.cycleTimeSec) bottleneck = bt;
-  }
-  const lineBalance = rows.length && bottleneck ? balanceSum / lineCount : 0;
+  const taktTimeSec = (PLANNED_MINUTES * 60) / DEMAND_PER_DAY;
+  const targetQty = totals.planned ? (totals.planned * 60) / taktTimeSec : 0;
+  const outputAchievement = targetQty > 0 ? (totals.input / targetQty) * 100 : 0;
+  const efficiencyDeviation = targetQty > 0 ? ((totals.input - targetQty) / targetQty) * 100 : 0;
+  const performance = targetQty > 0 ? totals.input / targetQty : 0;
+  const oee = availability * performance * quality * 100;
 
   const stdSetup = totals.stdSetup / totals.input || 0;
   const actSetup = totals.actSetup / totals.input || 0;
@@ -128,9 +103,6 @@ export function kalkulasiKpi(
       )
     : 0;
 
-  const taktTimeSec = (PLANNED_MINUTES * 60) / DEMAND_PER_DAY;
-  const cycleTimeAchievement = actualCtAvg ? (targetCtAvg / actualCtAvg) * 100 : 0;
-
   return {
     fpy,
     defectRate: totals.input ? (totals.defect / totals.input) * 100 : 0,
@@ -138,10 +110,9 @@ export function kalkulasiKpi(
     availability: availability * 100,
     performance: performance * 100,
     quality: quality * 100,
-    cycleTimeAchievement,
+    outputAchievement,
+    efficiencyDeviation,
     taktTimeSec,
-    lineBalance,
-    bottleneckStation: bottleneck ? `${bottleneck.line} · ${bottleneck.station}` : "-",
     setupAchievement,
     setupVarianceMin: setupVariance,
     avgActualSetupMin: actSetup,
@@ -166,7 +137,7 @@ export function ambilTren(all: DailyRaw[]): TrendPoint[] {
       date: date.slice(5),
       fpy: k.fpy,
       oee: k.oee,
-      lineBalance: k.lineBalance,
+      outputAchievement: k.outputAchievement,
       setupAchievement: k.setupAchievement,
       issueClosure: k.issueClosure,
     });
